@@ -16,6 +16,11 @@
 
 package org.microg.gms.common;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
+import static org.microg.gms.common.Constants.GMS_PACKAGE_SIGNATURE_SHA1;
+import static org.microg.gms.common.Constants.GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1;
+
 import android.app.ActivityManager;
 import android.app.Application;
 import android.app.PendingIntent;
@@ -35,11 +40,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.os.Build.VERSION.SDK_INT;
-import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
-import static org.microg.gms.common.Constants.GMS_PACKAGE_SIGNATURE_SHA1;
-import static org.microg.gms.common.Constants.GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1;
 
 public class PackageUtils {
 
@@ -76,7 +76,7 @@ public class PackageUtils {
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.walletnfcrel", "82759e2db43f9ccbafce313bc674f35748fabd7a");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.recorder", "394d84cd2cf89d3453702c663f98ec6554afc3cd");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.messaging", "0980a12be993528c19107bc21ad811478c63cefc");
-        KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.tachyon", "a0bc09af527b6397c7a9ef171d6cf76f757becc3");
+        KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.tachyon","a0bc09af527b6397c7a9ef171d6cf76f757becc3");
     }
 
     public static boolean isGooglePackage(Context context, String packageName) {
@@ -142,6 +142,24 @@ public class PackageUtils {
             }
         }
         return null;
+    }
+
+    @Nullable
+    public static byte[] getHexSign(Context context, String packageName) {
+
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            if (packageInfo.signatures == null || packageInfo.signatures.length != 1) {
+                return null;
+            }
+            return md.digest(packageInfo.signatures[0].toByteArray());
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 
     @Nullable

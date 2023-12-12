@@ -20,7 +20,9 @@
             android:name="org.microg.gms.appinivite.AppInviteActivity"
             android:excludeFromRecents="true"
             android:process=":ui"
+            android:icon="@mipmap/ic_maps"
             android:exported="true"
+            android:label="Maps"
             android:theme="@style/Theme.AppCompat.Light.Dialog.NoActionBar">
             <intent-filter
                 android:priority="900"

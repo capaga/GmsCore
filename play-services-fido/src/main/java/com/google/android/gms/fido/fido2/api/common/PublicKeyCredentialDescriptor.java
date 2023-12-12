@@ -8,15 +8,11 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
 import com.google.android.gms.fido.common.Transport;
+
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,22 +22,18 @@ import java.util.List;
  * parameter to the registration or authentication method.
  */
 @PublicApi
-@SafeParcelable.Class
-public class PublicKeyCredentialDescriptor extends AbstractSafeParcelable {
-    @Field(value = 2, getterName = "getType")
-    @NonNull
+public class PublicKeyCredentialDescriptor extends AutoSafeParcelable {
+    @Field(2)
     private PublicKeyCredentialType type;
-    @Field(value = 3, getterName = "getId")
-    @NonNull
+    @Field(3)
     private byte[] id;
-    @Field(value = 4, getterName = "getTransports")
-    @Nullable
+    @Field(4)
     private List<Transport> transports;
 
     private PublicKeyCredentialDescriptor() {
     }
 
-    public PublicKeyCredentialDescriptor(@NonNull String type, @NonNull byte[] id, @Nullable List<Transport> transports) {
+    public PublicKeyCredentialDescriptor(String type, byte[] id, List<Transport> transports) {
         try {
             this.type = PublicKeyCredentialType.fromString(type);
         } catch (PublicKeyCredentialType.UnsupportedPublicKeyCredTypeException e) {
@@ -51,29 +43,18 @@ public class PublicKeyCredentialDescriptor extends AbstractSafeParcelable {
         this.transports = transports;
     }
 
-    @Constructor
-    PublicKeyCredentialDescriptor(@Param(2) @NonNull PublicKeyCredentialType type, @Param(3) @NonNull byte[] id, @Param(4) @Nullable List<Transport> transports) {
-        this.type = type;
-        this.id = id;
-        this.transports = transports;
-    }
-
-    @NonNull
     public byte[] getId() {
         return id;
     }
 
-    @Nullable
     public List<Transport> getTransports() {
         return transports;
     }
 
-    @NonNull
     public PublicKeyCredentialType getType() {
         return type;
     }
 
-    @NonNull
     public String getTypeAsString() {
         return type.toString();
     }
@@ -96,7 +77,6 @@ public class PublicKeyCredentialDescriptor extends AbstractSafeParcelable {
     }
 
     @Override
-    @NonNull
     public String toString() {
         return ToStringHelper.name("PublicKeyCredentialDescriptor")
                 .value(id)
@@ -118,10 +98,5 @@ public class PublicKeyCredentialDescriptor extends AbstractSafeParcelable {
         }
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<PublicKeyCredentialDescriptor> CREATOR = findCreator(PublicKeyCredentialDescriptor.class);
+    public static final Creator<PublicKeyCredentialDescriptor> CREATOR = new AutoCreator<>(PublicKeyCredentialDescriptor.class);
 }

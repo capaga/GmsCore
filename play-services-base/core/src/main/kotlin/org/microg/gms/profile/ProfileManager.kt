@@ -96,7 +96,8 @@ object ProfileManager {
     private fun getProfileData(context: Context, profile: String, realData: Map<String, String>): Map<String, String> {
         try {
             if (profile in listOf(PROFILE_REAL, PROFILE_NATIVE)) return realData
-            if (profile != PROFILE_USER && getProfileResId(context, profile) == 0) return realData
+            val profileResId = getProfileResId(context, profile)
+            if (profileResId == 0) return realData
             val resultData = mutableMapOf<String, String>()
             resultData.putAll(realData)
             val parser = getProfileXml(context, profile)
@@ -338,7 +339,7 @@ object ProfileManager {
         val profileName = getProfileName { FileXmlResourceParser(file) } ?: return false
         try {
             Log.d(TAG, "Importing user profile '$profileName'")
-            file.copyTo(getUserProfileFile(context), overwrite = true)
+            file.copyTo(getUserProfileFile(context))
             if (activeProfile == PROFILE_USER) applyProfile(context, PROFILE_USER)
             return true
         } catch (e: Exception) {

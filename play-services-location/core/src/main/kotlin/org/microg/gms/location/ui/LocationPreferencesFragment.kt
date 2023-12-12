@@ -5,10 +5,8 @@
 
 package org.microg.gms.location.ui
 
-import android.location.LocationManager
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,9 +17,8 @@ import androidx.preference.TwoStatePreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.microg.gms.location.LocationSettings
+import org.microg.gms.location.LocationUtil
 import org.microg.gms.location.core.R
-import org.microg.gms.location.hasMozillaLocationServiceSupport
-import org.microg.gms.location.hasNetworkLocationServiceBuiltIn
 import org.microg.gms.location.manager.LocationAppsDatabase
 import org.microg.gms.ui.AppIconPreference
 import org.microg.gms.ui.getApplicationInfoIfExists
@@ -46,55 +43,71 @@ class LocationPreferencesFragment : PreferenceFragmentCompat() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.preferences_location)
+        if (LocationUtil.isNetWorkLocationServiceAvailable(context)) {
+            addPreferencesFromResource(R.xml.preferences_location)
+        } else {
+            addPreferencesFromResource(R.xml.preferences_location_without_network_service)
+        }
 
         locationApps = preferenceScreen.findPreference("prefcat_location_apps") ?: locationApps
-        locationAppsAll = preferenceScreen.findPreference("pref_location_apps_all") ?: locationAppsAll
-        locationAppsNone = preferenceScreen.findPreference("pref_location_apps_none") ?: locationAppsNone
-        networkProviderCategory = preferenceScreen.findPreference("prefcat_location_network_provider") ?: networkProviderCategory
-        wifiMls = preferenceScreen.findPreference("pref_location_wifi_mls_enabled") ?: wifiMls
-        wifiMoving = preferenceScreen.findPreference("pref_location_wifi_moving_enabled") ?: wifiMoving
-        wifiLearning = preferenceScreen.findPreference("pref_location_wifi_learning_enabled") ?: wifiLearning
-        cellMls = preferenceScreen.findPreference("pref_location_cell_mls_enabled") ?: cellMls
-        cellLearning = preferenceScreen.findPreference("pref_location_cell_learning_enabled") ?: cellLearning
-        nominatim = preferenceScreen.findPreference("pref_geocoder_nominatim_enabled") ?: nominatim
+        locationAppsAll = preferenceScreen.findPreference("pref_location_apps_all")
+                ?: locationAppsAll
+        locationAppsNone = preferenceScreen.findPreference("pref_location_apps_none")
+                ?: locationAppsNone
+
+        if (LocationUtil.isNetWorkLocationServiceAvailable(context)) {
+            networkProviderCategory = preferenceScreen.findPreference("prefcat_location_network_provider")
+                    ?: networkProviderCategory
+
+            wifiLearning = preferenceScreen.findPreference("pref_location_wifi_learning_enabled")
+                    ?: wifiLearning
+            wifiMls = preferenceScreen.findPreference("pref_location_wifi_mls_enabled") ?: wifiMls
+            wifiMoving = preferenceScreen.findPreference("pref_location_wifi_moving_enabled")
+                    ?: wifiMoving
+            cellMls = preferenceScreen.findPreference("pref_location_cell_mls_enabled") ?: cellMls
+
+            cellLearning = preferenceScreen.findPreference("pref_location_cell_learning_enabled")
+                    ?: cellLearning
+            nominatim = preferenceScreen.findPreference("pref_geocoder_nominatim_enabled") ?: nominatim
+        }
+
 
         locationAppsAll.setOnPreferenceClickListener {
             findNavController().navigate(requireContext(), R.id.openAllLocationApps)
             true
         }
-        wifiMls.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).wifiMls = newValue as Boolean
-            true
-        }
-        wifiMoving.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).wifiMoving = newValue as Boolean
-            true
-        }
-        wifiLearning.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).wifiLearning = newValue as Boolean
-            true
-        }
-        cellMls.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).cellMls = newValue as Boolean
-            true
-        }
-        cellLearning.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).cellLearning = newValue as Boolean
-            true
-        }
-        nominatim.setOnPreferenceChangeListener { _, newValue ->
-            LocationSettings(requireContext()).geocoderNominatim = newValue as Boolean
-            true
+        if (LocationUtil.isNetWorkLocationServiceAvailable(context)) {
+            wifiMls.setOnPreferenceChangeListener { _, newValue ->
+                LocationSettings(requireContext()).wifiMls = newValue as Boolean
+                true
+            }
+            wifiMoving.setOnPreferenceChangeListener { _, newValue ->
+                LocationSettings(requireContext()).wifiMoving = newValue as Boolean
+                true
+            }
+            cellMls.setOnPreferenceChangeListener { _, newValue ->
+                LocationSettings(requireContext()).cellMls = newValue as Boolean
+                true
+            }
+
+            cellLearning.setOnPreferenceChangeListener { _, newValue ->
+                LocationSettings(requireContext()).cellLearning = newValue as Boolean
+                true
+            }
+            nominatim.setOnPreferenceChangeListener { _, newValue ->
+                LocationSettings(requireContext()).geocoderNominatim = newValue as Boolean
+                true
+            }
+
+            wifiLearning.isVisible = SDK_INT >= 17
+            cellLearning.isVisible = SDK_INT >= 17
         }
 
-        networkProviderCategory.isVisible = requireContext().hasNetworkLocationServiceBuiltIn()
+
+        /*networkProviderCategory.isVisible = requireContext().hasNetworkLocationServiceBuiltIn()
         wifiMls.isVisible = requireContext().hasMozillaLocationServiceSupport()
-        cellMls.isVisible = requireContext().hasMozillaLocationServiceSupport()
-        wifiLearning.isVisible =
-            SDK_INT >= 17 && requireContext().getSystemService<LocationManager>()?.allProviders.orEmpty().contains(LocationManager.GPS_PROVIDER)
-        cellLearning.isVisible =
-            SDK_INT >= 17 && requireContext().getSystemService<LocationManager>()?.allProviders.orEmpty().contains(LocationManager.GPS_PROVIDER)
+        cellMls.isVisible = requireContext().hasMozillaLocationServiceSupport()*/
+
     }
 
     override fun onResume() {
@@ -110,12 +123,15 @@ class LocationPreferencesFragment : PreferenceFragmentCompat() {
     private fun updateContent() {
         lifecycleScope.launchWhenResumed {
             val context = requireContext()
-            wifiMls.isChecked = LocationSettings(context).wifiMls
-            wifiMoving.isChecked = LocationSettings(context).wifiMoving
-            wifiLearning.isChecked = LocationSettings(context).wifiLearning
-            cellMls.isChecked = LocationSettings(context).cellMls
-            cellLearning.isChecked = LocationSettings(context).cellLearning
-            nominatim.isChecked = LocationSettings(context).geocoderNominatim
+            if (LocationUtil.isNetWorkLocationServiceAvailable(context)) {
+                wifiMls.isChecked = LocationSettings(context).wifiMls
+                wifiMoving.isChecked = LocationSettings(context).wifiMoving
+                cellMls.isChecked = LocationSettings(context).cellMls
+                wifiLearning.isChecked = LocationSettings(context).wifiLearning
+                cellLearning.isChecked = LocationSettings(context).cellLearning
+                nominatim.isChecked = LocationSettings(context).geocoderNominatim
+            }
+
             val (apps, showAll) = withContext(Dispatchers.IO) {
                 val apps = database.listAppsByAccessTime()
                 val res = apps.map { app ->

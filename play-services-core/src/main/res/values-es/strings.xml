@@ -57,6 +57,13 @@ Esto podría tardar algunos minutos."</string>
     <string name="service_name_mcs">Cloud Messaging</string>
     <string name="service_name_snet">Google SafetyNet</string>
 
+    <string name="service_status_disabled">Desactivado</string>
+    <string name="service_status_enabled">Activado</string>
+    <string name="service_status_automatic">Automático</string>
+    <string name="service_status_manual">Manual</string>
+    <string name="service_status_enabled_short">Encendido</string>
+    <string name="service_status_disabled_short">Apagado</string>
+
     <string name="games_title">Google Play Juegos</string>
     <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> quiere usar Play Juegos</string>
     <string name="games_info_content">Para usar Play Juegos es necesario instalar la aplicación Google Play Juegos. La aplicación puede continuar sin Play Juegos, pero es posible que funcione inesperadamente.</string>
@@ -177,4 +184,13 @@ Esto podría tardar algunos minutos."</string>
     <string name="pref_safetynet_test_title">Probar el certificado de SafetyNet</string>
     <string name="pref_droidguard_operation_mode">Modo de operación</string>
 
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">política de privacidad</string>
+    <string name="services_info">términos de servicio</string>
+    <string name="continue_use">seguir usando\"$$\"</string>
+    <string name="protobuf">Para continuar, Google proporcionará su nombre, dirección de correo electrónico y foto de perfil a\"$$\". Consulte la política de privacidad y los términos del servicio antes de usar esta aplicación.</string>
+    <string name="protobuf2">Para continuar, Google proporcionará su nombre, dirección de correo electrónico y foto de perfil a\"$$\".</string>
+    <string name="select_account_title">Seleccionar cuenta</string>
+    <string name="add_more_account">Agregar otra cuenta</string>
+    <string name="device_is_not_supported">Este dispositivo no es compatible y no se puede usar microG.</string>
 </resources>

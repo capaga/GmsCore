@@ -364,12 +364,7 @@ public interface GoogleApiClient {
         }
 
         private ApiClientSettings getClientSettings() {
-            ApiClientSettings clientSettings = new ApiClientSettings();
-            clientSettings.accountName = accountName;
-            clientSettings.scopes = new HashSet<>(scopes);
-            clientSettings.gravityForPopups = gravityForPopups;
-            clientSettings.viewForPopups = viewForPopups;
-            return clientSettings;
+            return null;
         }
 
         public Builder enableAutoManage(FragmentActivity fragmentActivity, int cliendId,

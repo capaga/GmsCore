@@ -8,15 +8,9 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.Arrays;
 
@@ -24,48 +18,38 @@ import java.util.Arrays;
  * This class is used to supply additional parameters about the user account when creating a new Credential.
  */
 @PublicApi
-@SafeParcelable.Class
-public class PublicKeyCredentialUserEntity extends AbstractSafeParcelable {
-    @Field(value = 2, getterName = "getId")
-    @NonNull
+public class PublicKeyCredentialUserEntity extends AutoSafeParcelable {
+    @Field(2)
     private byte[] id;
-    @Field(value = 3, getterName = "getName")
-    @NonNull
+    @Field(3)
     private String name;
-    @Field(value = 4, getterName = "getIcon")
-    @Nullable
+    @Field(4)
     private String icon;
-    @Field(value = 5, getterName = "getDisplayName")
-    @NonNull
+    @Field(5)
     private String displayName;
 
     private PublicKeyCredentialUserEntity() {
     }
 
-    @Constructor
-    public PublicKeyCredentialUserEntity(@Param(2) @NonNull byte[] id, @Param(3) @NonNull String name, @Param(4) @Nullable String icon, @Param(5) @NonNull String displayName) {
+    public PublicKeyCredentialUserEntity(byte[] id, String name, String icon, String displayName) {
         this.id = id;
         this.name = name;
         this.icon = icon;
         this.displayName = displayName;
     }
 
-    @NonNull
     public String getDisplayName() {
         return displayName;
     }
 
-    @Nullable
     public String getIcon() {
         return icon;
     }
 
-    @NonNull
     public byte[] getId() {
         return id;
     }
 
-    @NonNull
     public String getName() {
         return name;
     }
@@ -89,7 +73,6 @@ public class PublicKeyCredentialUserEntity extends AbstractSafeParcelable {
     }
 
     @Override
-    @NonNull
     public String toString() {
         return ToStringHelper.name("PublicKeyCredentialUserEntity")
                 .value(id)
@@ -99,11 +82,6 @@ public class PublicKeyCredentialUserEntity extends AbstractSafeParcelable {
                 .end();
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    @Hide
-    public static final SafeParcelableCreatorAndWriter<PublicKeyCredentialUserEntity> CREATOR = findCreator(PublicKeyCredentialUserEntity.class);
+    @PublicApi(exclude = true)
+    public static final Creator<PublicKeyCredentialUserEntity> CREATOR = new AutoCreator<>(PublicKeyCredentialUserEntity.class);
 }

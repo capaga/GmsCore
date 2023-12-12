@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_hint">建议给MicroG服务授予"始终允许"权限，缺少此权限可能将导致部分APP在后台运行时无法获取当前位置的问题，如Microsoft Teams的位置分享功能可能会受影响。
+</string>
+    <string name="permission_hint_title">提示信息:</string>
+    <string name="permission_setting_hint_title">设置方法:</string>
+    <string name="open_settings">打开设置</string>
+    <string name="dont_remind_again">不再提醒</string>
+</resources>

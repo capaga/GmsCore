@@ -8,12 +8,8 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
 import org.microg.gms.common.PublicApi;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.Arrays;
 
@@ -27,21 +23,17 @@ import java.util.Arrays;
  * Note that this extension is only valid if used during the get() call; other usage should result in client error.
  */
 @PublicApi
-@SafeParcelable.Class
-public class FidoAppIdExtension extends AbstractSafeParcelable {
-    @Field(value = 2, getterName = "getAppId")
-    @NonNull
+public class FidoAppIdExtension extends AutoSafeParcelable {
+    @Field(2)
     private String appId;
 
     private FidoAppIdExtension() {
     }
 
-    @Constructor
-    public FidoAppIdExtension(@Param(2) @NonNull String appId) {
+    public FidoAppIdExtension(String appId) {
         this.appId = appId;
     }
 
-    @NonNull
     public String getAppId() {
         return appId;
     }
@@ -61,10 +53,5 @@ public class FidoAppIdExtension extends AbstractSafeParcelable {
         return Arrays.hashCode(new Object[]{appId});
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<FidoAppIdExtension> CREATOR = findCreator(FidoAppIdExtension.class);
+    public static final Creator<FidoAppIdExtension> CREATOR = new AutoCreator<>(FidoAppIdExtension.class);
 }

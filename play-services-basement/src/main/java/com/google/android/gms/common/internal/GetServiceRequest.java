@@ -19,22 +19,20 @@ package com.google.android.gms.common.internal;
 import android.accounts.Account;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcel;
-import androidx.annotation.NonNull;
+
 import com.google.android.gms.common.Feature;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+
 import org.microg.gms.common.Constants;
 import org.microg.gms.common.GmsService;
+import org.microg.safeparcel.AutoSafeParcelable;
+import org.microg.safeparcel.SafeParceled;
 
 import java.util.Arrays;
 
-@SafeParcelable.Class
-public class GetServiceRequest extends AbstractSafeParcelable {
+public class GetServiceRequest extends AutoSafeParcelable {
     @Field(1)
-    int versionCode = 6;
+    private int versionCode = 6;
     @Field(2)
     public final int serviceId;
     @Field(3)
@@ -51,30 +49,29 @@ public class GetServiceRequest extends AbstractSafeParcelable {
     public Account account;
     @Field(9)
     @Deprecated
-    long field9;
+    private long field9;
     @Field(10)
     public Feature[] defaultFeatures;
     @Field(11)
     public Feature[] apiFeatures;
     @Field(12)
-    boolean supportsConnectionInfo;
+    private boolean field12;
     @Field(13)
-    int field13;
+    private int field13;
     @Field(14)
-    boolean field14;
+    private boolean field14;
     @Field(15)
-    String attributionTag;
+    private String attributionTag;
 
     private GetServiceRequest() {
         serviceId = -1;
         gmsVersion = Constants.GMS_VERSION_CODE;
     }
 
-    @Constructor
-    public GetServiceRequest(@Param(2) int serviceId) {
+    public GetServiceRequest(int serviceId) {
         this.serviceId = serviceId;
         this.gmsVersion = Constants.GMS_VERSION_CODE;
-        this.supportsConnectionInfo = true;
+        this.field12 = true;
     }
 
     @Override
@@ -89,10 +86,5 @@ public class GetServiceRequest extends AbstractSafeParcelable {
                 '}';
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static SafeParcelableCreatorAndWriter<GetServiceRequest> CREATOR = findCreator(GetServiceRequest.class);
+    public static Creator<GetServiceRequest> CREATOR = new AutoCreator<GetServiceRequest>(GetServiceRequest.class);
 }

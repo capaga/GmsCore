@@ -11,7 +11,7 @@ interface IRemindersCallbacks {
     void onNoStatus() = 2;
     void onDataHolderNoStatus(in DataHolder data, in Status status) = 3;
     void onBool(boolean b, in Status status) = 4;
-    void onString(in String s, in Status status) = 5;
+    void onString(in String s, in String s2) = 5;
     void onAccountState(in AccountState accountState, in Status status) = 6;
     void onAsyncDataHolder(in DataHolder data) = 7;
 }

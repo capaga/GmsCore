@@ -32,6 +32,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
         android:orientation="vertical">
 
         <ImageView
@@ -42,7 +43,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
             app:imageDrawable="@{appIcon}"
-            tools:src="@mipmap/ic_app" />
+            tools:src="@mipmap/ic_app_new" />
 
         <TextView
             android:layout_margin="2dp"

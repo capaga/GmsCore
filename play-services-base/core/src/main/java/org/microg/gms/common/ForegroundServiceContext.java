@@ -1,5 +1,7 @@
 package org.microg.gms.common;
 
+import static android.os.Build.VERSION.SDK_INT;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,8 +16,6 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import org.microg.gms.base.core.R;
-
-import static android.os.Build.VERSION.SDK_INT;
 
 public class ForegroundServiceContext extends ContextWrapper {
     private static final String TAG = "ForegroundService";

@@ -16,9 +16,9 @@
 
 package org.microg.gms.common;
 
-import com.google.android.gms.common.api.Api;
+import org.microg.gms.common.api.ApiClient;
 
-public class DummyApiClient implements Api.Client {
+public class DummyApiClient implements ApiClient {
     private boolean connected = false;
 
     @Override

@@ -16,6 +16,7 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.preference.PreferenceManager
 import org.microg.gms.common.PackageUtils.warnIfNotMainProcess
+import org.microg.gms.profile.ProfileManager
 import org.microg.gms.settings.SettingsContract.Auth
 import org.microg.gms.settings.SettingsContract.CheckIn
 import org.microg.gms.settings.SettingsContract.DroidGuard
@@ -26,8 +27,6 @@ import org.microg.gms.settings.SettingsContract.Profile
 import org.microg.gms.settings.SettingsContract.SafetyNet
 import org.microg.gms.settings.SettingsContract.getAuthority
 import java.io.File
-
-private const val SETTINGS_PREFIX = "org.microg.gms.settings."
 
 /**
  * All settings access should go through this [ContentProvider],
@@ -54,9 +53,6 @@ class SettingsProvider : ContentProvider() {
         } catch (ignored: Exception) {
             null
         }
-    }
-    private val metaDataPreferences: SharedPreferences by lazy {
-        MetaDataPreferences(context!!, SETTINGS_PREFIX)
     }
 
     override fun onCreate(): Boolean {
@@ -105,7 +101,7 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryCheckIn(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            CheckIn.ENABLED -> getSettingsBoolean(key, false)
+            CheckIn.ENABLED -> getSettingsBoolean(key, true)
             CheckIn.ANDROID_ID -> checkInPrefs.getLong(key, 0)
             CheckIn.DIGEST -> checkInPrefs.getString(key, CheckIn.INITIAL_DIGEST)
                 ?: CheckIn.INITIAL_DIGEST
@@ -113,6 +109,7 @@ class SettingsProvider : ContentProvider() {
             CheckIn.SECURITY_TOKEN -> checkInPrefs.getLong(key, 0)
             CheckIn.VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
             CheckIn.DEVICE_DATA_VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
+            CheckIn.BRAND_SPOOF -> getSettingsBoolean(key, false)
             else -> throw IllegalArgumentException()
         }
     }
@@ -130,6 +127,10 @@ class SettingsProvider : ContentProvider() {
                 // special case: not saved in checkInPrefs
                 updateCheckInEnabled(value as Boolean)
             }
+            if (key == CheckIn.BRAND_SPOOF) {
+                // special case: not saved in checkInPrefs
+                updateSpoofingEnabled(value as Boolean)
+            }
             when (key) {
                 CheckIn.ANDROID_ID -> editor.putLong(key, value as Long)
                 CheckIn.DIGEST -> editor.putString(key, value as String?)
@@ -142,6 +143,12 @@ class SettingsProvider : ContentProvider() {
         editor.apply()
     }
 
+    private fun updateSpoofingEnabled(enabled: Boolean) {
+        preferences.edit()
+            .putBoolean(CheckIn.BRAND_SPOOF, enabled)
+            .apply()
+    }
+
     private fun updateCheckInEnabled(enabled: Boolean) {
         preferences.edit()
             .putBoolean(CheckIn.ENABLED, enabled)
@@ -150,7 +157,7 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryGcm(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            Gcm.ENABLE_GCM -> getSettingsBoolean(key, false)
+            Gcm.ENABLE_GCM -> getSettingsBoolean(key, true)
             Gcm.FULL_LOG -> getSettingsBoolean(key, true)
             Gcm.CONFIRM_NEW_APPS -> getSettingsBoolean(key, false)
 
@@ -198,7 +205,7 @@ class SettingsProvider : ContentProvider() {
     private fun queryAuth(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
             Auth.TRUST_GOOGLE -> getSettingsBoolean(key, true)
-            Auth.VISIBLE -> getSettingsBoolean(key, false)
+            Auth.VISIBLE -> getSettingsBoolean(key, true)
             Auth.INCLUDE_ANDROID_ID -> getSettingsBoolean(key, true)
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
@@ -211,7 +218,6 @@ class SettingsProvider : ContentProvider() {
             when (key) {
                 Auth.TRUST_GOOGLE -> editor.putBoolean(key, value as Boolean)
                 Auth.VISIBLE -> editor.putBoolean(key, value as Boolean)
-                Auth.INCLUDE_ANDROID_ID -> editor.putBoolean(key, value as Boolean)
                 else -> throw IllegalArgumentException("Unknown key: $key")
             }
         }
@@ -241,7 +247,7 @@ class SettingsProvider : ContentProvider() {
 
     private fun querySafetyNet(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            SafetyNet.ENABLED -> getSettingsBoolean(key, false)
+            SafetyNet.ENABLED -> getSettingsBoolean(key, true)
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
     }
@@ -260,7 +266,7 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryDroidGuard(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            DroidGuard.ENABLED -> getSettingsBoolean(key, false)
+            DroidGuard.ENABLED -> getSettingsBoolean(key, true)
             DroidGuard.MODE -> getSettingsString(key)
             DroidGuard.NETWORK_SERVER_URL -> getSettingsString(key)
             DroidGuard.FORCE_LOCAL_DISABLED -> systemDefaultPreferences?.getBoolean(key, false) ?: false
@@ -284,7 +290,7 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryProfile(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            Profile.PROFILE -> getSettingsString(key, "auto")
+            Profile.PROFILE -> getSettingsString(key, ProfileManager.PROFILE_REAL)
             Profile.SERIAL -> getSettingsString(key)
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
@@ -362,12 +368,12 @@ class SettingsProvider : ContentProvider() {
      * @return the current setting as [Int], because [ContentProvider] does not support [Boolean].
      */
     private fun getSettingsBoolean(key: String, def: Boolean): Int {
-        return listOf(preferences, systemDefaultPreferences, metaDataPreferences).getBooleanAsInt(key, def)
+        return listOf(preferences, systemDefaultPreferences).getBooleanAsInt(key, def)
     }
 
-    private fun getSettingsString(key: String, def: String? = null): String? = listOf(preferences, systemDefaultPreferences, metaDataPreferences).getString(key, def)
-    private fun getSettingsInt(key: String, def: Int): Int = listOf(preferences, systemDefaultPreferences, metaDataPreferences).getInt(key, def)
-    private fun getSettingsLong(key: String, def: Long): Long = listOf(preferences, systemDefaultPreferences, metaDataPreferences).getLong(key, def)
+    private fun getSettingsString(key: String, def: String? = null): String? = listOf(preferences, systemDefaultPreferences).getString(key, def)
+    private fun getSettingsInt(key: String, def: Int): Int = listOf(preferences, systemDefaultPreferences).getInt(key, def)
+    private fun getSettingsLong(key: String, def: Long): Long = listOf(preferences, systemDefaultPreferences).getLong(key, def)
     private fun getUnifiedNlpSettingsStringSetCompat(key: String, def: Set<String>): Set<String> = listOf(unifiedNlpPreferences, preferences, systemDefaultPreferences).getStringSetCompat(key, def)
 
     private fun SharedPreferences.getStringSetCompat(key: String, def: Set<String>): Set<String> {

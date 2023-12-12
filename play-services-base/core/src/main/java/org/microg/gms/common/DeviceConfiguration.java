@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.opengl.GLES10;
 import android.util.DisplayMetrics;
+
 import org.microg.gms.profile.Build;
 import org.microg.gms.profile.ProfileManager;
 

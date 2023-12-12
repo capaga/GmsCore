@@ -52,8 +52,10 @@ public class DynamiteModule {
 
     public interface VersionPolicy {
         interface IVersions {
+            /* renamed from: zza */
             int getLocalVersion(@NonNull Context context, @NonNull String moduleId);
 
+            /* renamed from: zzb */
             int getRemoteVersion(@NonNull Context context, @NonNull String moduleId, boolean forceStaging) throws LoadingException;
 
             IVersions Default = new IVersions() {

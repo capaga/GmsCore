@@ -8,13 +8,7 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
 
@@ -25,90 +19,58 @@ import java.util.List;
  * This class is used to supply an authentication request with the data it needs to generate an assertion.
  */
 @PublicApi
-@SafeParcelable.Class
 public class PublicKeyCredentialRequestOptions extends RequestOptions {
-    @Field(value = 2, getterName = "getChallenge")
-    @NonNull
+    @Field(2)
     private byte[] challenge;
-    @Field(value = 3, getterName = "getTimeoutSeconds")
-    @Nullable
+    @Field(3)
     private Double timeoutSeconds;
-    @Field(value = 4, getterName = "getRpId")
-    @NonNull
+    @Field(4)
     private String rpId;
-    @Field(value = 5, getterName = "getAllowList")
-    @Nullable
+    @Field(5)
     private List<PublicKeyCredentialDescriptor> allowList;
-    @Field(value = 6, getterName = "getRequestId")
-    @Nullable
+    @Field(6)
     private Integer requestId;
-    @Field(value = 7, getterName = "getTokenBinding")
-    @Nullable
+    @Field(7)
     private TokenBinding tokenBinding;
-    @Field(value = 8, getterName = "getRequireUserVerification")
-    @Nullable
+    @Field(8)
     private UserVerificationRequirement requireUserVerification;
-    @Field(value = 9, getterName = "getAuthenticationExtensions")
-    @Nullable
+    @Field(9)
     private AuthenticationExtensions authenticationExtensions;
-    @Field(10)
-    @Nullable
-    Long longRequestId;
 
-    @Constructor
-    public PublicKeyCredentialRequestOptions(@Param(2)@NonNull byte[] challenge,@Param(3) @Nullable Double timeoutSeconds, @Param(4)@NonNull String rpId, @Param(5)@Nullable List<PublicKeyCredentialDescriptor> allowList,@Param(6) @Nullable Integer requestId,@Param(7) @Nullable TokenBinding tokenBinding,@Param(8) @Nullable UserVerificationRequirement requireUserVerification, @Param(9)@Nullable AuthenticationExtensions authenticationExtensions) {
-        this.challenge = challenge;
-        this.timeoutSeconds = timeoutSeconds;
-        this.rpId = rpId;
-        this.allowList = allowList;
-        this.requestId = requestId;
-        this.tokenBinding = tokenBinding;
-        this.requireUserVerification = requireUserVerification;
-        this.authenticationExtensions = authenticationExtensions;
-    }
-
-    @Nullable
     public List<PublicKeyCredentialDescriptor> getAllowList() {
         return allowList;
     }
 
     @Override
-    @Nullable
     public AuthenticationExtensions getAuthenticationExtensions() {
         return authenticationExtensions;
     }
 
-    @Hide
-    @Nullable
+    @PublicApi(exclude = true)
     public UserVerificationRequirement getRequireUserVerification() {
         return requireUserVerification;
     }
 
     @Override
-    @NonNull
     public byte[] getChallenge() {
         return challenge;
     }
 
     @Override
-    @Nullable
     public Integer getRequestId() {
         return requestId;
     }
 
-    @NonNull
     public String getRpId() {
         return rpId;
     }
 
     @Override
-    @Nullable
     public Double getTimeoutSeconds() {
         return timeoutSeconds;
     }
 
     @Override
-    @Nullable
     public TokenBinding getTokenBinding() {
         return tokenBinding;
     }
@@ -137,7 +99,6 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
     }
 
     @Override
-    @NonNull
     public String toString() {
         return ToStringHelper.name("PublicKeyCredentialRequestOptions")
                 .field("challenge", challenge)
@@ -155,19 +116,12 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
      * Builder for {@link PublicKeyCredentialRequestOptions}.
      */
     public static class Builder {
-        @NonNull
         private byte[] challenge;
-        @Nullable
         private Double timeoutSeconds;
-        @NonNull
         private String rpId;
-        @Nullable
         private List<PublicKeyCredentialDescriptor> allowList;
-        @Nullable
         private Integer requestId;
-        @Nullable
         private TokenBinding tokenBinding;
-        @Nullable
         private AuthenticationExtensions authenticationExtensions;
 
         /**
@@ -180,7 +134,7 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * Sets a list of public key credentials which constrain authentication to authenticators that contain a
          * private key for at least one of the supplied public keys.
          */
-        public Builder setAllowList(@Nullable List<PublicKeyCredentialDescriptor> allowList) {
+        public Builder setAllowList(List<PublicKeyCredentialDescriptor> allowList) {
             this.allowList = allowList;
             return this;
         }
@@ -189,7 +143,7 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * Sets additional extensions that may dictate some client behavior during an exchange with a connected
          * authenticator.
          */
-        public Builder setAuthenticationExtensions(@Nullable AuthenticationExtensions authenticationExtensions) {
+        public Builder setAuthenticationExtensions(AuthenticationExtensions authenticationExtensions) {
             this.authenticationExtensions = authenticationExtensions;
             return this;
         }
@@ -198,7 +152,7 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * Sets the nonce value that the authenticator should sign using a private key corresponding to a public key
          * credential that is acceptable for this authentication session.
          */
-        public Builder setChallenge(@NonNull byte[] challenge) {
+        public Builder setChallenge(byte[] challenge) {
             this.challenge = challenge;
             return this;
         }
@@ -208,7 +162,7 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * time that the server initiates a single FIDO2 request to the client and receives reply) on a single device.
          * This field is optional.
          */
-        public Builder setRequestId(@Nullable Integer requestId) {
+        public Builder setRequestId(Integer requestId) {
             this.requestId = requestId;
             return this;
         }
@@ -222,12 +176,12 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * context (aka https connection). Apps-facing API needs to check the package signature against Digital Asset
          * Links, whose resource is the RP ID with prepended "//". Privileged (browser) API doesn't need the check.
          */
-        public Builder setRpId(@NonNull String rpId) {
+        public Builder setRpId(String rpId) {
             this.rpId = rpId;
             return this;
         }
 
-        public Builder setTimeoutSeconds(@Nullable Double timeoutSeconds) {
+        public Builder setTimeoutSeconds(Double timeoutSeconds) {
             this.timeoutSeconds = timeoutSeconds;
             return this;
         }
@@ -235,7 +189,7 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
         /**
          * Sets the {@link TokenBinding} associated with the calling origin.
          */
-        public Builder setTokenBinding(@Nullable TokenBinding tokenBinding) {
+        public Builder setTokenBinding(TokenBinding tokenBinding) {
             this.tokenBinding = tokenBinding;
             return this;
         }
@@ -244,7 +198,15 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
          * Builds the {@link PublicKeyCredentialRequestOptions} object.
          */
         public PublicKeyCredentialRequestOptions build() {
-            return new PublicKeyCredentialRequestOptions(challenge, timeoutSeconds, rpId, allowList, requestId, tokenBinding, null, authenticationExtensions);
+            PublicKeyCredentialRequestOptions options = new PublicKeyCredentialRequestOptions();
+            options.challenge = challenge;
+            options.timeoutSeconds = timeoutSeconds;
+            options.rpId = rpId;
+            options.allowList = allowList;
+            options.requestId = requestId;
+            options.tokenBinding = tokenBinding;
+            options.authenticationExtensions = authenticationExtensions;
+            return options;
         }
     }
 
@@ -254,16 +216,10 @@ public class PublicKeyCredentialRequestOptions extends RequestOptions {
      * @param serializedBytes The serialized bytes.
      * @return The deserialized {@link PublicKeyCredentialRequestOptions}.
      */
-    @NonNull
     public static PublicKeyCredentialRequestOptions deserializeFromBytes(byte[] serializedBytes) {
         return SafeParcelableSerializer.deserializeFromBytes(serializedBytes, CREATOR);
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    @Hide
-    public static final SafeParcelableCreatorAndWriter<PublicKeyCredentialRequestOptions> CREATOR = findCreator(PublicKeyCredentialRequestOptions.class);
+    @PublicApi(exclude = true)
+    public static final Creator<PublicKeyCredentialRequestOptions> CREATOR = new AutoCreator<>(PublicKeyCredentialRequestOptions.class);
 }

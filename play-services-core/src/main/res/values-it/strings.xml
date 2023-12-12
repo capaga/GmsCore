@@ -51,6 +51,13 @@ Questa operazione può richiedere alcuni secondi."</string>
     <string name="service_name_mcs">Messaggistica cloud</string>
     <string name="service_name_snet">SafetyNet</string>
 
+    <string name="service_status_disabled">Disabilitato</string>
+    <string name="service_status_enabled">Abilitato</string>
+    <string name="service_status_automatic">Automatico</string>
+    <string name="service_status_manual">Manuale</string>
+    <string name="service_status_enabled_short">Abilitato</string>
+    <string name="service_status_disabled_short">Disabilitato</string>
+
     <string name="games_title">Google Play Giochi</string>
     <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> vorrebbe utilizzare Play Giochi</string>
     <string name="games_info_content">Per usare Play Giochi è necessario installare l\'applicazione Google Play Giochi. L\'applicazione può continuare ad essere utilizzata senza Play Giochi, ma è possibile che funzioni in modo anomalo.</string>
@@ -214,4 +221,13 @@ Questa operazione può richiedere alcuni secondi."</string>
     <string name="pref_safetynet_test_cts_failed">CTS non superato</string>
     <string name="pref_safetynet_test_integrity_failed">Integrità non superata</string>
 
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">politica sulla riservatezza</string>
+    <string name="services_info">termini di servizio</string>
+    <string name="continue_use">continua a usare\"$$\"</string>
+    <string name="protobuf">Per continuare, Google fornirà il tuo nome, indirizzo email e foto del profilo a\"$$\". Prima di utilizzare questa app, controlla le norme sulla privacy e i termini del servizio</string>
+    <string name="protobuf2">Per continuare, Google fornirà il tuo nome, indirizzo email e foto del profilo a\"$$\".</string>
+    <string name="select_account_title">Seleziona conto</string>
+    <string name="add_more_account">Aggiungi un altro account</string>
+    <string name="device_is_not_supported">Questo dispositivo non è supportato e non è possibile utilizzare microG.</string>
 </resources>

@@ -5,6 +5,7 @@
 
 package org.microg.gms.nearby.exposurenotification
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.AlarmManager
@@ -18,12 +19,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.*
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import org.microg.gms.common.ForegroundServiceContext
 import org.microg.gms.common.ForegroundServiceInfo
+import org.microg.gms.ui.AskPermissionActivity
+import org.microg.gms.ui.EXTRA_PERMISSIONS
 import java.io.FileDescriptor
 import java.io.PrintWriter
 import java.util.*
@@ -116,7 +121,7 @@ class ScannerService : LifecycleService() {
         stopScan()
     }
 
-    @SuppressLint("WakelockTimeout", "MissingPermission")
+    @SuppressLint("WakelockTimeout")
     @Synchronized
     private fun startScan() {
         if (scanning) return
@@ -125,14 +130,23 @@ class ScannerService : LifecycleService() {
         seenAdvertisements = 0
         wakeLock.acquire()
         try {
-            scanner.startScan(
-                    listOf(ScanFilter.Builder()
-                            .setServiceUuid(SERVICE_UUID)
-                            .setServiceData(SERVICE_UUID, byteArrayOf(0), byteArrayOf(0))
-                            .build()),
-                    ScanSettings.Builder().build(),
-                    callback
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(this, AskPermissionActivity::class.java)
+                val permissions: Array<String> = arrayOf(Manifest.permission.BLUETOOTH_SCAN)
+                intent.putExtra(EXTRA_PERMISSIONS, permissions)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            } else {
+                scanner.startScan(
+                        listOf(ScanFilter.Builder()
+                                .setServiceUuid(SERVICE_UUID)
+                                .setServiceData(SERVICE_UUID, byteArrayOf(0), byteArrayOf(0))
+                                .build()),
+                        ScanSettings.Builder().build(),
+                        callback
+                )
+            }
         } catch (e: SecurityException) {
             Log.e(TAG, "Couldn't start ScannerService, need android.permission.BLUETOOTH_SCAN permission.")
         }
@@ -141,7 +155,6 @@ class ScannerService : LifecycleService() {
         handler.postDelayed(stopLaterRunnable, SCANNING_TIME_MS)
     }
 
-    @SuppressLint("MissingPermission")
     @Synchronized
     private fun stopScan() {
         if (!scanning) return
@@ -149,7 +162,13 @@ class ScannerService : LifecycleService() {
         handler.removeCallbacks(stopLaterRunnable)
         scanning = false
         try {
-            scanner?.stopScan(callback)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED) {
+                    scanner?.stopScan(callback)
+                }
+            } else {
+                scanner?.stopScan(callback)
+            }
         } catch (e: Exception) {
             // Ignored
         }

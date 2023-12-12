@@ -54,6 +54,13 @@
     <string name="service_name_checkin">Googleデバイス登録</string>
     <string name="service_name_mcs">Cloud Messaging</string>
 
+    <string name="service_status_disabled">無効</string>
+    <string name="service_status_enabled">有効</string>
+    <string name="service_status_automatic">自動</string>
+    <string name="service_status_manual">手動</string>
+    <string name="service_status_enabled_short">On</string>
+    <string name="service_status_disabled_short">Off</string>
+
     <string name="games_title">Google Play ゲーム</string>
     <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> が Play Gamesの使用を要求しています。</string>
     <string name="games_info_content">Play Gamesを使用するには、Google Play ゲーム アプリが必要です。 Google Playゲームアプリ無しでも続行できますが、予期しない動作をする可能性があります。</string>
@@ -168,4 +175,14 @@
 
     <string name="pref_safetynet_test_title">SafetyNetテストの実行</string>
     <string name="pref_droidguard_operation_mode">動作モード</string>
+
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="services_info">サービス規約</string>
+    <string name="continue_use">引き続き\"$$\"を使用してください</string>
+    <string name="protobuf">続行するために、Google はあなたの名前、メール アドレス、プロフィール写真を\"$$\"に提供します。このアプリを使用する前に、プライバシー ポリシーとサービス規約を確認してください。</string>
+    <string name="protobuf2">続行するために、Google はあなたの名前、メール アドレス、プロフィール写真を\"$$\"に提供します。</string>
+    <string name="select_account_title">アカウントの選択</string>
+    <string name="add_more_account">別のアカウントを追加する</string>
+    <string name="device_is_not_supported">このデバイスはサポートされていないため、microG は使用できません。</string>
 </resources>

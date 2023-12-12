@@ -38,6 +38,4 @@ dependencies {
     api project(':play-services-base')
     api project(':play-services-basement')
     api project(':play-services-tasks')
-
-    annotationProcessor project(':safe-parcel-processor')
 }

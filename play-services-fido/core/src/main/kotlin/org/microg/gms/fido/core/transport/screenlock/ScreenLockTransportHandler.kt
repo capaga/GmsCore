@@ -148,8 +148,7 @@ class ScreenLockTransportHandler(private val activity: FragmentActivity, callbac
         return AuthenticatorAttestationResponse(
             credentialId.encode(),
             clientData,
-            attestationObject.encode(),
-            arrayOf("internal")
+            attestationObject.encode()
         )
     }
 
@@ -191,7 +190,7 @@ class ScreenLockTransportHandler(private val activity: FragmentActivity, callbac
     ): AuthenticatorAssertionResponse {
         if (options.type != RequestOptionsType.SIGN) throw RequestHandlingException(ErrorCode.INVALID_STATE_ERR)
         val candidates = mutableListOf<CredentialId>()
-        for (descriptor in options.signOptions.allowList.orEmpty()) {
+        for (descriptor in options.signOptions.allowList) {
             try {
                 val (type, data) = CredentialId.decodeTypeAndData(descriptor.id)
                 if (type == 1.toByte() && store.containsKey(options.rpId, data)) {
@@ -238,7 +237,7 @@ class ScreenLockTransportHandler(private val activity: FragmentActivity, callbac
 
     override fun shouldBeUsedInstantly(options: RequestOptions): Boolean {
         if (options.type != RequestOptionsType.SIGN) return false
-        for (descriptor in options.signOptions.allowList.orEmpty()) {
+        for (descriptor in options.signOptions.allowList) {
             try {
                 val (type, data) = CredentialId.decodeTypeAndData(descriptor.id)
                 if (type == 1.toByte() && store.containsKey(options.rpId, data)) {

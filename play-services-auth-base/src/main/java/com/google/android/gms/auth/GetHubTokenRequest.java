@@ -5,10 +5,8 @@
 
 package com.google.android.gms.auth;
 
-import org.microg.gms.common.Hide;
 import org.microg.safeparcel.AutoSafeParcelable;
 
-@Hide
 public class GetHubTokenRequest extends AutoSafeParcelable {
     @Field(1)
     public String accountName;

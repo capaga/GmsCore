@@ -48,6 +48,13 @@
     <string name="service_name_mcs">Воблачны абмен паведамленнямі</string>
     <string name="service_name_snet">Google SafetyNet</string>
 
+    <string name="service_status_disabled">Выключана</string>
+    <string name="service_status_enabled">Уключана</string>
+    <string name="service_status_automatic">Аўтаматычна</string>
+    <string name="service_status_manual">Уручную</string>
+    <string name="service_status_enabled_short">Укл.</string>
+    <string name="service_status_disabled_short">Выкл.</string>
+
     <string name="games_title">Google Play Гульні</string>
     <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> хоча выкарыстоўваць Play Гульні</string>
     <string name="games_info_content">Каб выкарыстоўваць магчымасці Play Гульні, трэба ўсталяваць прыкладанне Google Play Гульні. Прыкладанне можа працаваць і без яго, але магчымыя праблемы у яго рабоце.</string>
@@ -199,4 +206,13 @@
     <string name="pref_safetynet_recent_cat_basic">Асноўныя дадзеныя</string>
     <string name="pref_safetynet_recent_token">Токен</string>
 
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">Палітыка прыватнасці</string>
+    <string name="services_info">ўмовы абслугоўвання</string>
+    <string name="continue_use">працягвайце выкарыстоўваць \"$$\"</string>
+    <string name="protobuf">Каб працягнуць, Google прадаставіць ваша імя, адрас электроннай пошты і фатаграфію профілю \"$$\". Перад выкарыстаннем гэтай праграмы азнаёмцеся з палітыкай прыватнасці і ўмовамі абслугоўвання</string>
+    <string name="protobuf2">Каб працягнуць, Google прадаставіць ваша імя, адрас электроннай пошты і фатаграфію профілю \"$$\".</string>
+    <string name="select_account_title">Выберыце ўліковы запіс</string>
+    <string name="add_more_account">Дадайце іншы ўліковы запіс</string>
+    <string name="device_is_not_supported">Гэта прылада не падтрымліваецца, і microG нельга выкарыстоўваць.</string>
 </resources>

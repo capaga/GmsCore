@@ -16,7 +16,9 @@
 
 package org.microg.gms.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -71,7 +73,7 @@ PlacePickerActivity extends AppCompatActivity /*implements Map.UpdateListener*/ 
     private static final String TAG = "GmsPlacePicker";
 
     private PlaceImpl place;
-//    private BackendMapView mapView;
+    //    private BackendMapView mapView;
     private Intent resultIntent;
     private AtomicBoolean geocoderInProgress = new AtomicBoolean(false);
 
@@ -126,8 +128,12 @@ PlacePickerActivity extends AppCompatActivity /*implements Map.UpdateListener*/ 
         });
     }
 
-    @SuppressWarnings("MissingPermission")
     private void updateMapFromLocationManager() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.w(TAG, "updateMapFromLocationManager permission is denied");
+            return;
+        }
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         Location last = null;
         for (String provider : lm.getAllProviders()) {

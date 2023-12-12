@@ -19,5 +19,11 @@ package com.google.android.gms.reminders;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 public class UpdateRecurrenceOptions extends AutoSafeParcelable {
-    public static Creator<UpdateRecurrenceOptions> CREATOR = new AutoCreator<UpdateRecurrenceOptions>(UpdateRecurrenceOptions.class);
+    public static Creator<UpdateRecurrenceOptions> CREATOR = new AutoCreator<>(UpdateRecurrenceOptions.class);
+    @Field(2)
+    public int isDateFiltered;
+    @Field(3)
+    public boolean isRecurrenceExceptional;
+    @Field(4)
+    public Long recurrenceEndMillis;
 }

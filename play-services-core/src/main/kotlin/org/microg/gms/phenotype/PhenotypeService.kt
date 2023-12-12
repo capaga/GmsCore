@@ -56,7 +56,9 @@ class PhenotypeServiceImpl : IPhenotypeService.Stub() {
 
     override fun getExperimentTokens(callbacks: IPhenotypeCallbacks, p1: String?, logSourceName: String?) {
         Log.d(TAG, "getExperimentTokens($p1, $logSourceName)")
-        callbacks.onExperimentTokens(Status.SUCCESS, ExperimentTokens())
+        val experimentTokens = ExperimentTokens()
+        experimentTokens.field2 = "";
+        callbacks.onExperimentTokens(Status.SUCCESS, experimentTokens)
     }
 
     override fun getDogfoodsToken(callbacks: IPhenotypeCallbacks) {
@@ -84,6 +86,8 @@ class PhenotypeServiceImpl : IPhenotypeService.Stub() {
     override fun getConfigurationSnapshot2(callbacks: IPhenotypeCallbacks, p1: String?, p2: String?, p3: String?) {
         Log.d(TAG, "getConfigurationSnapshot2($p1, $p2, $p3)")
         callbacks.onConfiguration(Status.SUCCESS, Configurations().apply {
+            snapshotToken=""
+            serverToken=""
             field4 = emptyArray()
         })
     }
@@ -137,9 +141,7 @@ class PhenotypeServiceImpl : IPhenotypeService.Stub() {
 
     override fun getExperimentTokens2(callbacks: IPhenotypeCallbacks, p1: String?, p2: String?, p3: String?, p4: String?) {
         Log.d(TAG, "getExperimentTokens2($p1, $p2, $p3, $p4)")
-        callbacks.onExperimentTokens(Status.SUCCESS, ExperimentTokens().apply {
-            field2 = ""
-        })
+        callbacks.onExperimentTokens(Status.SUCCESS, ExperimentTokens())
     }
 
     override fun syncAfterOperation2(callbacks: IPhenotypeCallbacks?, p1: Long) {

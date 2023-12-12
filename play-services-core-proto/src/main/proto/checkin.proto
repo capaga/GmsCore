@@ -222,6 +222,11 @@ message CheckinRequest {
         optional int32 deviceClass = 16;
         // unused
         optional int32 maxApkDownloadSizeMb = 17;
+        repeated SystemFeature systemFeature = 26;
+        message SystemFeature {
+            required string name = 1;
+            required int32 value = 2;
+        }
     }
 
     // "ethernet" or "wifi"

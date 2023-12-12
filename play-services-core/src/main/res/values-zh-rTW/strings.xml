@@ -141,4 +141,14 @@
     	microG GmsCore包含了SafetyNet的自由執行，但官方伺服器需要SafetyNet請求經非自由軟體性質的DroidGuard系統簽名。</string>
 
     <string name="pref_safetynet_test_title">測試SafetyNet驗證</string>
+
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">隱私權政策</string>
+    <string name="services_info">服務條款</string>
+    <string name="continue_use">繼續使用\"$$\"</string>
+    <string name="protobuf">為了繼續進行,Google會將您的姓名、電子郵件地址和個人資料照片提供給\"$$\"。在使用此應用前，請先查看隱私權政策和服務條款</string>
+    <string name="protobuf2">為了繼續進行,Google會將您的姓名、電子郵件地址和個人資料照片提供給\"$$\"。</string>
+    <string name="select_account_title">選擇賬號</string>
+    <string name="add_more_account">再添加一個賬號</string>
+    <string name="device_is_not_supported">該設備不受支持，無法使用 microG。</string>
 </resources>

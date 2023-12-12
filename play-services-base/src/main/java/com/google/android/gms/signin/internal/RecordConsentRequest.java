@@ -6,20 +6,37 @@
 package com.google.android.gms.signin.internal;
 
 import android.accounts.Account;
+
 import com.google.android.gms.common.api.Scope;
-import org.microg.gms.common.Hide;
+
 import org.microg.safeparcel.AutoSafeParcelable;
 
-@Hide
 public class RecordConsentRequest extends AutoSafeParcelable {
-    @Field(1)
-    private int versionCode = 1;
+    private static final int VERSION_CODE = 1;
     @Field(2)
-    public Account account;
+    private Account mAccount;
     @Field(3)
-    public Scope[] scopesToConsent;
+    private Scope[] mScopesToConsent;
     @Field(4)
-    public String serverClientId;
+    private String mServerClientId;
+    @Field(1)
+    private int mVersionCode = VERSION_CODE;
 
-    public static final Creator<RecordConsentRequest> CREATOR = findCreator(RecordConsentRequest.class);
+    public RecordConsentRequest() {
+
+    }
+
+    public Account getAccount() {
+        return this.mAccount;
+    }
+
+    public Scope[] getScopesToConsent() {
+        return this.mScopesToConsent;
+    }
+
+    public String getServerClientId() {
+        return this.mServerClientId;
+    }
+
+    public static final Creator<RecordConsentRequest> CREATOR = new AutoCreator<>(RecordConsentRequest.class);
 }

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option java_package = "com.google.android.mg.proto";
+// 生成类的文件名，否则默认生成的类名为proto文件名的驼峰命名
+//option java_outer_classname = "SignInGaia";
+// 定义的所有消息、枚举和服务生成对应的多个类文件，而不是以内部类的形式出现
+option java_multiple_files = true;
+
+message CipherKey {
+  int32 a = 1;
+  bytes value = 3;
+}
+
+message KeyData {
+  string typeUrl = 1;
+  CipherKey value = 2;
+  int32 keyMaterialType = 3;
+}
+
+message Key {
+    KeyData data = 1;
+    int32 status = 2;
+    int32 keyId = 3;
+    int32 outputPrefixType = 4;
+}
+
+message KeySet {
+  int32 primaryKeyId = 1;
+  repeated Key keyList = 2;
+}
+
+message POTokenInfo {
+  int32 a = 6;
+  int32 time = 1;
+  bytes inputData = 2;
+  string pkgName = 3;
+  bytes pkgSignSha256 = 4;
+  bytes pITokenK1 = 5;
+}
+
+message GetPoIntegrityTokenRequest {
+  int32 mode = 1;
+  bytes dgResult = 2;
+  bytes dgRandKey = 3;
+}
+
+message GetPoIntegrityTokenResponse {
+    bytes k1 = 1;
+    int32 b = 2;
+    bytes k2 = 3;
+    bytes d = 4;
+    bytes e = 5;
+}
+
+message POTokenResult {
+  bytes encryptData = 1;
+  bytes pITokenK2 = 2;
+}
+
+message POTokenResultWrap {
+    POTokenResult data = 1;
+}

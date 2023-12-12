@@ -5,30 +5,17 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+import org.microg.safeparcel.AutoSafeParcelable;
 
-@SafeParcelable.Class
-public class CableAuthenticationData extends AbstractSafeParcelable {
+public class CableAuthenticationData extends AutoSafeParcelable {
     @Field(1)
-    long version;
+    private long version;
     @Field(2)
-    @NonNull
-    byte[] clientEid;
+    private byte[] clientEid;
     @Field(3)
-    @NonNull
-    byte[] authenticatorEid;
+    private byte[] authenticatorEid;
     @Field(4)
-    @NonNull
-    byte[] sessionPreKey;
+    private byte[] sessionPreKey;
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<CableAuthenticationData> CREATOR = findCreator(CableAuthenticationData.class);
+    public static final Creator<CableAuthenticationData> CREATOR = new AutoCreator<>(CableAuthenticationData.class);
 }

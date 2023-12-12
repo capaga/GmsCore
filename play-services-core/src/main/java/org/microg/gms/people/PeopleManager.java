@@ -17,7 +17,6 @@
 package org.microg.gms.people;
 
 import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,10 +25,9 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.android.gms.common.Scopes;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 import org.microg.gms.auth.AuthManager;
-import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.common.Constants;
 import org.microg.gms.common.Utils;

@@ -28,7 +28,7 @@ public class ResolvableApiException extends ApiException {
 
     /**
      * A pending intent to resolve the failure. This intent can be started with
-     * {@link android.app.Activity#startIntentSenderForResult(IntentSender, int, Intent, int, int, int)}
+     * {@link Activity#startIntentSenderForResult(IntentSender, int, Intent, int, int, int)}
      * to present UI to solve the issue.
      * @return The pending intent to resolve the failure.
      */
@@ -39,11 +39,11 @@ public class ResolvableApiException extends ApiException {
 
     /**
      * Resolves an error by starting any intents requiring user interaction.
-     * See {@link com.google.android.gms.common.api.CommonStatusCodes#SIGN_IN_REQUIRED}, and
-     * {@link com.google.android.gms.common.api.CommonStatusCodes#RESOLUTION_REQUIRED}.
+     * See {@link CommonStatusCodes#SIGN_IN_REQUIRED}, and
+     * {@link CommonStatusCodes#RESOLUTION_REQUIRED}.
      * @param activity An Activity context to use to resolve the issue. The activity's
      *                 onActivityResult method will be invoked after the user is done.
-     *                 If the resultCode is {@link android.app.Activity#RESULT_OK},
+     *                 If the resultCode is {@link Activity#RESULT_OK},
      *                 the application should try to connect again.
      * @param requestCode The request code to pass to onActivityResult.
      */

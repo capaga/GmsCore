@@ -9,7 +9,6 @@
 package com.google.android.gms.fido.fido2.api.common;
 
 import android.net.Uri;
-import androidx.annotation.NonNull;
 
 /**
  * An abstract class representing browser-based request parameters.
@@ -18,9 +17,7 @@ public abstract class BrowserRequestOptions extends RequestOptions {
     /**
      * Gets value of the client data hash.
      */
-    @NonNull
     public abstract byte[] getClientDataHash();
 
-    @NonNull
     public abstract Uri getOrigin();
 }

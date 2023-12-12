@@ -5,26 +5,20 @@
 
 package com.google.android.gms.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+import org.microg.safeparcel.AutoSafeParcelable;
 
-@SafeParcelable.Class
-public class Feature extends AbstractSafeParcelable {
-    @Field(value = 1, getterName = "getName")
+public class Feature extends AutoSafeParcelable {
+    @Field(1)
     private String name;
     @Field(2)
-    int oldVersion;
-    @Field(value = 3, getterName = "getVersion", defaultValue = "-1")
+    private int oldVersion;
+    @Field(3)
     private long version = -1;
 
     private Feature() {
     }
 
-    @Constructor
-    public Feature(@Param(1) String name, @Param(3) long version) {
+    public Feature(String name, long version) {
         this.name = name;
         this.version = version;
     }
@@ -38,10 +32,5 @@ public class Feature extends AbstractSafeParcelable {
         return version;
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<Feature> CREATOR = findCreator(Feature.class);
+    public static final Creator<Feature> CREATOR = new AutoCreator<>(Feature.class);
 }

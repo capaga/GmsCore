@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_radius"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="0dp"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/select_account_title"
+            android:textSize="20sp"
+            android:textColor="#202124"
+           />
+
+        <TextView
+            android:id="@+id/tv_platform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/continue_use"
+            android:textSize="20sp"
+            android:textColor="#202124"
+            />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/accounts_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ll_header"/>
+
+    <LinearLayout
+        android:layout_below="@+id/accounts_lv"
+        android:id="@+id/ll_add_account"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:onClick="addOneMoreAccount"
+        android:orientation="horizontal"
+        android:background="@drawable/item_click_selector"
+        tools:ignore="OnClick">
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/add_account"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:layout_marginLeft="20dp"
+            android:textColor="#3e3f41"
+            android:text="@string/add_more_account"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/diver"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_add_account"
+        android:layout_height="1px"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="#e0e0e0"/>
+
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="37dp"
+        android:layout_below="@+id/diver"
+        android:textColor="#626469"
+        android:text="@string/protobuf" />
+
+
+</RelativeLayout>

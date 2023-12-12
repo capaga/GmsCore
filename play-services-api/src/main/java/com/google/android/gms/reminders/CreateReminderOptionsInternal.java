@@ -19,5 +19,20 @@ package com.google.android.gms.reminders;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 public class CreateReminderOptionsInternal extends AutoSafeParcelable {
-    public static Creator<CreateReminderOptionsInternal> CREATOR = new AutoCreator<CreateReminderOptionsInternal>(CreateReminderOptionsInternal.class);
+    @Field(2)
+    public String b;
+    @Field(3)
+    public String c;
+    @Field(4)
+    public Boolean d;
+    public static Creator<CreateReminderOptionsInternal> CREATOR = new AutoCreator<>(CreateReminderOptionsInternal.class);
+
+    @Override
+    public String toString() {
+        return "CreateReminderOptionsInternal{" +
+                "b='" + b + '\'' +
+                ", c='" + c + '\'' +
+                ", d=" + d +
+                '}';
+    }
 }

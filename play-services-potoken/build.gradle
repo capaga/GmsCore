@@ -1,0 +1,37 @@
+/*
+ * SPDX-FileCopyrightText: 2022 microG Project Team
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+apply plugin: 'com.android.library'
+
+
+android {
+    namespace 'com.google.android.gms.potoken.impl'
+    compileSdkVersion androidCompileSdk
+    buildToolsVersion "$androidBuildVersionTools"
+
+    defaultConfig {
+        versionName version
+        minSdkVersion androidMinSdk
+        targetSdkVersion androidTargetSdk
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    buildFeatures {
+        aidl = true
+    }
+}
+
+//apply from: '../gradle/publish-android.gradle'
+//
+//description = 'microG API for play-services-gmscompliance'
+
+dependencies {
+    api project(':play-services-basement')
+    api project(':play-services-base')
+}

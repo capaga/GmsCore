@@ -8,8 +8,8 @@ apply plugin: 'kotlin-android'
 
 dependencies {
     api project(':play-services-location')
+    compileOnly project(':play-services-location-system-api')
     implementation project(':play-services-base-core')
-    implementation project(':play-services-location-core-base')
 
     implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
@@ -23,6 +23,7 @@ dependencies {
 
     implementation "com.android.volley:volley:$volleyVersion"
 
+    implementation 'org.microg:address-formatter:0.3.1'
     compileOnly project(':play-services-maps')
 }
 
@@ -45,26 +46,6 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-    }
-
-    lintOptions {
-        disable 'MissingTranslation'
-    }
-
-    flavorDimensions = ['target']
-    productFlavors {
-        "default" {
-            buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
-            dimension 'target'
-        }
-        "huawei" {
-            buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
-            dimension 'target'
-        }
-        "huaweilh" {
-            buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"com.huawei.permission.sec.MDM.v2\""
-            dimension 'target'
-        }
     }
 
     compileOptions {

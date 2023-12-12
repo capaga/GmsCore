@@ -18,6 +18,60 @@ package com.google.android.gms.reminders;
 
 import org.microg.safeparcel.AutoSafeParcelable;
 
+import java.util.ArrayList;
+
 public class LoadRemindersOptions extends AutoSafeParcelable {
-    public static Creator<LoadRemindersOptions> CREATOR = new AutoCreator<LoadRemindersOptions>(LoadRemindersOptions.class);
+    @Field(value = 3, useDirectList = true)
+    public ArrayList<String> clientAssignedIds;
+    @Field(value = 4, useDirectList = true)
+    public ArrayList<Integer> taskList;
+    @Field(5)
+    public Long startTimeTodayMidnight;
+    @Field(6)
+    public Long endTimeLaterMidnight;
+    @Field(7)
+    public Long e;
+    @Field(8)
+    public Long f;
+    @Field(9)
+    public boolean archived;
+    @Field(10)
+    public int h;
+    @Field(11)
+    public boolean isExceptional;
+    @Field(12)
+    public boolean recurrenceIdNotNull;
+    @Field(13)
+    public int reminderType;
+    @Field(14)
+    public int sortKey;
+    @Field(value = 15, useDirectList = true)
+    public ArrayList<String> recurrenceIds;
+    @Field(16)
+    public Long firedTimeMillisBegin;
+    @Field(17)
+    public Long firedTimeMillisEnd;
+
+    public static Creator<LoadRemindersOptions> CREATOR = new AutoCreator<>(LoadRemindersOptions.class);
+
+    @Override
+    public String toString() {
+        return "LoadRemindersOptions{" +
+                "clientAssignedIds=" + clientAssignedIds +
+                ", taskList=" + taskList +
+                ", startTimeTodayMidnight=" + startTimeTodayMidnight +
+                ", endTimeLaterMidnight=" + endTimeLaterMidnight +
+                ", e=" + e +
+                ", f=" + f +
+                ", archived=" + archived +
+                ", h=" + h +
+                ", isExceptional=" + isExceptional +
+                ", recurrenceIdNotNull=" + recurrenceIdNotNull +
+                ", reminderType=" + reminderType +
+                ", sortKey=" + sortKey +
+                ", recurrenceIds=" + recurrenceIds +
+                ", firedTimeMillisBegin=" + firedTimeMillisBegin +
+                ", firedTimeMillisEnd=" + firedTimeMillisEnd +
+                '}';
+    }
 }

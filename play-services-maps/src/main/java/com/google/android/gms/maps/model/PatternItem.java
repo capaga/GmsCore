@@ -26,8 +26,15 @@ public class PatternItem extends AutoSafeParcelable {
     private PatternItem() {
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public float getLength() {
+        return length;
+    }
     @PublicApi(exclude = true)
-    PatternItem(int type, Float length) {
+    public PatternItem(int type, Float length) {
         this.type = type;
         this.length = length;
     }

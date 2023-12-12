@@ -221,15 +221,6 @@ public class GroundOverlayOptions extends AutoSafeParcelable {
     }
 
     /**
-     * Gets the clickability setting for this {@link GroundOverlayOptions} object.
-     *
-     * @return {@code true} if the ground overlay is clickable; {@code false} if it is not.
-     */
-    public boolean isClickable() {
-        return clickable;
-    }
-
-    /**
      * Gets the visibility setting for this options object.
      *
      * @return {@code true} if the ground overlay is to be visible; {@code false} if it is not.
@@ -291,6 +282,7 @@ public class GroundOverlayOptions extends AutoSafeParcelable {
             throw new IllegalStateException("Position already set using positionFromBounds()");
         this.location = location;
         this.width = width;
+        this.height = -1.0F;
         return this;
     }
 
@@ -348,6 +340,27 @@ public class GroundOverlayOptions extends AutoSafeParcelable {
     public GroundOverlayOptions zIndex(float zIndex) {
         this.zIndex = zIndex;
         return this;
+    }
+
+    public boolean isClickable() {
+        return this.clickable;
+    }
+
+    @Override
+    public String toString() {
+        return "GroundOverlayOptions{" +
+                ", location=" + location +
+                ", width=" + width +
+                ", height=" + height +
+                ", bounds=" + bounds +
+                ", bearing=" + bearing +
+                ", zIndex=" + zIndex +
+                ", visible=" + visible +
+                ", transparency=" + transparency +
+                ", anchorU=" + anchorU +
+                ", anchorV=" + anchorV +
+                ", clickable=" + clickable +
+                '}';
     }
 
     public static Creator<GroundOverlayOptions> CREATOR = new AutoCreator<GroundOverlayOptions>(GroundOverlayOptions.class);

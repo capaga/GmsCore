@@ -46,10 +46,12 @@ import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.GET_ACCOUNTS;
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.READ_SMS;
 import static android.Manifest.permission.RECEIVE_SMS;
+import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP_MR1;
@@ -72,6 +74,8 @@ public class SelfCheckFragment extends AbstractSelfCheckFragment {
             permissions.add(GET_ACCOUNTS);
             permissions.add(READ_PHONE_STATE);
             permissions.add(RECEIVE_SMS);
+            permissions.add(WRITE_CONTACTS);
+            permissions.add(READ_CONTACTS);
             checks.add(new PermissionCheckGroup(permissions.toArray(new String[0])) {
                 @Override
                 public void doChecks(Context context, ResultCollector collector) {

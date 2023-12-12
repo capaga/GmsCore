@@ -16,29 +16,45 @@
 
 package org.microg.gms.people;
 
-import android.accounts.Account;
+import static org.microg.gms.ui.AskPermissionActivityKt.EXTRA_PERMISSIONS;
+
+import android.Manifest;
 import android.app.Service;
-import android.content.AbstractThreadedSyncAdapter;
-import android.content.ContentProviderClient;
 import android.content.Intent;
-import android.content.SyncResult;
-import android.os.Bundle;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import org.microg.gms.ui.AskPermissionActivity;
+
 
 public class ContactSyncService extends Service {
-    private static final String TAG = "GmsContactSync";
+    private static final String TAG = ContactSyncService.class.getSimpleName();
+    private static ContactSyncAdapter instance;
+    private final Object obj = new Object();
 
-    @Nullable
+    @Override
+    public void onCreate() {
+        synchronized(this.obj) {
+            if(instance == null){
+                instance = new ContactSyncAdapter(getApplicationContext(),true);
+            }
+        }
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
-        return (new AbstractThreadedSyncAdapter(this, true) {
-            @Override
-            public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-                Log.d(TAG, "unimplemented Method: onPerformSync");
-            }
-        }).getSyncAdapterBinder();
+        Log.d(TAG,"enter onbind");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "onPerformSync: ");
+            Intent permissionIntent = new Intent(this, AskPermissionActivity.class);
+            permissionIntent.putExtra(EXTRA_PERMISSIONS, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS});
+            permissionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(permissionIntent);
+        }
+        return instance.getSyncAdapterBinder();
     }
 }

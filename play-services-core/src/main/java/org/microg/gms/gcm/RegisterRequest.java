@@ -123,7 +123,7 @@ public class RegisterRequest extends HttpFormClient.Request {
 
     public RegisterRequest extraParams(Bundle extraBundle) {
         for (String key : extraBundle.keySet()) {
-            if (!key.equals(GcmConstants.EXTRA_SENDER) && !key.equals(GcmConstants.EXTRA_DELETE) && !key.equals(GcmConstants.EXTRA_APP)) {
+            if (!key.equals(GcmConstants.EXTRA_SENDER) && !key.equals(GcmConstants.EXTRA_DELETE)) {
                 extraParam(key, extraBundle.getString(key));
             }
         }

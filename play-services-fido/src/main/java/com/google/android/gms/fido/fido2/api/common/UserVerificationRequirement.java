@@ -8,7 +8,6 @@ package com.google.android.gms.fido.fido2.api.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 
 public enum UserVerificationRequirement implements Parcelable {
@@ -37,7 +36,7 @@ public enum UserVerificationRequirement implements Parcelable {
         dest.writeString(toString());
     }
 
-    @Hide
+    @PublicApi(exclude = true)
     public static UserVerificationRequirement fromString(String attachment) throws UnsupportedUserVerificationRequirementException {
         for (UserVerificationRequirement value : values()) {
             if (value.value.equals(attachment)) return value;

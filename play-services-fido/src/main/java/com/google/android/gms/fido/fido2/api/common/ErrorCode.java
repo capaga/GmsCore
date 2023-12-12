@@ -11,7 +11,6 @@ package com.google.android.gms.fido.fido2.api.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 
 /**
@@ -75,7 +74,7 @@ public enum ErrorCode implements Parcelable {
         this.code = code;
     }
 
-    @Hide
+    @PublicApi(exclude = true)
     public int getCode() {
         return code;
     }
@@ -90,7 +89,7 @@ public enum ErrorCode implements Parcelable {
         dest.writeInt(code);
     }
 
-    @Hide
+    @PublicApi(exclude = true)
     public static ErrorCode toErrorCode(int errorCode) throws UnsupportedErrorCodeException {
         for (ErrorCode value : values()) {
             if (value.code == errorCode) return value;
@@ -110,7 +109,7 @@ public enum ErrorCode implements Parcelable {
         }
     }
 
-    @Hide
+    @PublicApi(exclude = true)
     public static final Creator<ErrorCode> CREATOR = new Creator<ErrorCode>() {
         @Override
         public ErrorCode createFromParcel(Parcel source) {

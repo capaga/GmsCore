@@ -28,7 +28,7 @@ import java.util.List;
 public class AboutFragment extends AbstractAboutFragment {
 
     @Override
-    protected void collectLibraries(List<AbstractAboutFragment.Library> libraries) {
+    protected void collectLibraries(List<Library> libraries) {
         if (BuildConfig.FLAVOR.toLowerCase().contains("vtm")) {
             libraries.add(new AbstractAboutFragment.Library("org.oscim.android", "V™", "GNU LGPLv3, Hannes Janetzek and devemux86"));
             libraries.add(new AbstractAboutFragment.Library("org.slf4j", "SLF4J", "MIT License, QOS.ch"));

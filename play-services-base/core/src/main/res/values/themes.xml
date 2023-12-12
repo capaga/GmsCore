@@ -19,6 +19,7 @@
     <style name="Theme.AppCompat.DayNight.Dialog.Alert.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="Theme.Translucent" parent="Theme.AppCompat.DayNight.Dialog.Alert.NoActionBar">

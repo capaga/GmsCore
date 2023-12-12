@@ -12,12 +12,8 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.os.Parcel;
 import android.text.TextUtils;
-import androidx.annotation.NonNull;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.Arrays;
 
@@ -25,8 +21,7 @@ import java.util.Arrays;
  * Contains all possible error codes for when a client fails to connect to Google Play services.
  * These error codes are used by {@link GoogleApiClient.OnConnectionFailedListener}.
  */
-@SafeParcelable.Class
-public class ConnectionResult extends AbstractSafeParcelable {
+public class ConnectionResult extends AutoSafeParcelable {
     /**
      * The connection was successful.
      */
@@ -163,15 +158,24 @@ public class ConnectionResult extends AbstractSafeParcelable {
     public static final int DRIVE_EXTERNAL_STORAGE_REQUIRED = 1500;
 
     @Field(1)
-    int versionCode = 1;
-    @Field(value = 2, getterName = "getErrorCode")
+    private int versionCode = 1;
+    @Field(2)
     private int statusCode;
-    @Field(value = 3, getterName = "getResolution")
+    @Field(3)
     private PendingIntent resolution;
-    @Field(value = 4, getterName = "getErrorMessage")
+    @Field(4)
     private String message;
 
+    public static final ConnectionResult RESULT_SUCCESS = new ConnectionResult(SUCCESS);
+
     private ConnectionResult() {
+    }
+
+    public ConnectionResult(int versionCode, int statusCode, PendingIntent pendingIntent, String statusMessage) {
+        this.versionCode = versionCode;
+        this.statusCode = statusCode;
+        this.resolution = pendingIntent;
+        this.message = statusMessage;
     }
 
     /**
@@ -200,11 +204,14 @@ public class ConnectionResult extends AbstractSafeParcelable {
      * @param resolution A pending intent that will resolve the issue when started, or null.
      * @param message    An additional error message for the connection result, or null.
      */
-    @Constructor
-    public ConnectionResult(@Param(2) int statusCode, @Param(3) PendingIntent resolution, @Param(4) String message) {
+    public ConnectionResult(int statusCode, PendingIntent resolution, String message) {
         this.statusCode = statusCode;
         this.resolution = resolution;
         this.message = message;
+    }
+
+    public int getVersionCode() {
+        return versionCode;
     }
 
     static String getStatusString(int statusCode) {
@@ -348,10 +355,5 @@ public class ConnectionResult extends AbstractSafeParcelable {
         }
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<ConnectionResult> CREATOR = findCreator(ConnectionResult.class);
+    public static final Creator<ConnectionResult> CREATOR = new AutoCreator<>(ConnectionResult.class);
 }

@@ -5,16 +5,19 @@
 
 package org.microg.gms.nearby.exposurenotification.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.os.bundleOf
@@ -80,17 +83,22 @@ class ExposureNotificationsFragment : PreferenceFragmentCompat() {
         }
 
         exposureBluetoothOff.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            lifecycleScope.launchWhenStarted {
-                turningBluetoothOn = true
-                it.isVisible = false
-                val adapter = BluetoothAdapter.getDefaultAdapter()
-                if (adapter != null && !adapter.enableAsync(requireContext())) {
-                    turningBluetoothOn = false
-                    val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                    startActivityForResult(intent, 144)
-                } else {
-                    turningBluetoothOn = false
-                    updateStatus()
+            if (SDK_INT >= Build.VERSION_CODES.S && ActivityCompat.checkSelfPermission(requireContext(),
+                            Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 0)
+            } else {
+                lifecycleScope.launchWhenStarted {
+                    turningBluetoothOn = true
+                    it.isVisible = false
+                    val adapter = BluetoothAdapter.getDefaultAdapter()
+                    if (adapter != null && !adapter.enableAsync(requireContext())) {
+                        turningBluetoothOn = false
+                        val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                        startActivityForResult(intent, 144)
+                    } else {
+                        turningBluetoothOn = false
+                        updateStatus()
+                    }
                 }
             }
             true

@@ -5,29 +5,42 @@
 
 package com.google.android.gms.signin.internal;
 
-import androidx.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.internal.ResolveAccountResponse;
+
 import org.microg.gms.common.Hide;
-import org.microg.gms.utils.ToStringHelper;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 @Hide
 public class SignInResponse extends AutoSafeParcelable {
-    @Field(1)
-    private final int versionCode = 1;
+    private static final int VERSION_CODE = 1;
     @Field(2)
-    public ConnectionResult connectionResult;
+    private ConnectionResult mConnectionResult;
     @Field(3)
-    public ResolveAccountResponse response;
+    private ResolveAccountResponse mResolveAccountResponse;
+    @Field(1)
+    private int mVersionCode = VERSION_CODE;
 
-    @NonNull
-    @Override
-    public String toString() {
-        return ToStringHelper.name("SignInResponse")
-                .field("connectionResult", connectionResult)
-                .field("response", response)
-                .end();
+    public SignInResponse() {
+        this(new ConnectionResult(8, null), null);
+    }
+
+    public SignInResponse(ConnectionResult result, ResolveAccountResponse resolveAccountResponse) {
+        this(VERSION_CODE, result, resolveAccountResponse);
+    }
+
+    public SignInResponse(int versionCode, ConnectionResult connectionResult, ResolveAccountResponse resolveAccountResponse) {
+        this.mVersionCode = versionCode;
+        this.mConnectionResult = connectionResult;
+        this.mResolveAccountResponse = resolveAccountResponse;
+    }
+
+    public ConnectionResult getConnectionResult() {
+        return this.mConnectionResult;
+    }
+
+    public ResolveAccountResponse getResolveAccountResponse() {
+        return this.mResolveAccountResponse;
     }
 
     public static final Creator<SignInResponse> CREATOR = new AutoCreator<>(SignInResponse.class);

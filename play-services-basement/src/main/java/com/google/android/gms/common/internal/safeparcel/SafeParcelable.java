@@ -43,13 +43,5 @@ public interface SafeParcelable extends Parcelable {
         boolean useDirectList() default false;
 
         long versionCode() default -1;
-
-        String defaultValue() default "";
-
-        String type() default "";
-
-        String getterName() default "";
-
-        String getter() default "";
     }
 }

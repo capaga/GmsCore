@@ -108,6 +108,10 @@ class DroidGuardHandleImpl(private val context: Context, private val packageName
         handleInitError = null
     }
 
+    fun onDestroy() {
+        factory.close()
+    }
+
     companion object {
         private const val TAG = "GmsGuardHandleImpl"
         private val LOW_LATENCY_ENABLED = false

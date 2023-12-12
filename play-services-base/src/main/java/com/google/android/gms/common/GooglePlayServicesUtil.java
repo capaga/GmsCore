@@ -220,7 +220,7 @@ public class GooglePlayServicesUtil {
 
     /**
      * Displays a notification relevant to the provided error code. This method is similar to
-     * {@link #getErrorDialog(int, android.app.Activity, int)}, but is provided for background
+     * {@link #getErrorDialog(int, Activity, int)}, but is provided for background
      * tasks that cannot or shouldn't display dialogs.
      *
      * @param errorCode error code returned by {@link #isGooglePlayServicesAvailable(Context)} call.

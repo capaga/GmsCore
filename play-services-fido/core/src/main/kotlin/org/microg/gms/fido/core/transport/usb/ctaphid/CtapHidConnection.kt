@@ -31,7 +31,6 @@ class CtapHidConnection(
     private val outEndpoint = iface.endpoints.first { it.direction == USB_DIR_OUT }
     private var channelIdentifier = 0xffffffff.toInt()
     override var capabilities: Int = 0
-    override var transports: List<String> = listOf("usb")
 
     suspend fun open(): Boolean {
         Log.d(TAG, "Opening connection")
@@ -77,10 +76,7 @@ class CtapHidConnection(
         Log.d(TAG, "Got info: $response")
         capabilities = capabilities or CAPABILITY_CTAP_2 or
                 (if (response.versions.contains("FIDO_2_1")) CAPABILITY_CTAP_2_1 else 0) or
-                (if (response.options.clientPin == true) CAPABILITY_CLIENT_PIN else 0) or
-                (if (response.options.userVerification == true) CAPABILITY_USER_VERIFICATION else 0) or
-                (if (response.options.residentKey == true) CAPABILITY_RESIDENT_KEY else 0)
-        if (response.transports != null) transports = response.transports
+                (if (response.options.clientPin == true) CAPABILITY_CLIENT_PIN else 0)
     }
 
     suspend fun sendRequest(request: CtapHidRequest) {

@@ -1,0 +1,162 @@
+
+
+syntax  = "proto3";
+
+option java_package = "org.microg.common.beans";
+
+message PeopleResponse{
+  PeopleResponseInternal people_response_internal = 1;
+}
+
+message ProfileConfig{
+  PeopleResponse people_response = 1;
+  DownloadFileList download_file_list = 2;
+}
+
+message DownloadFileList{
+  string url_a = 1;
+  string url_b = 2;
+  string url_c = 3;
+  string url_d = 4;
+  string url_e = 5;
+  string url_f = 6;
+}
+
+message PeopleResponseInternal{
+  string owner = 1;
+  int64 flag = 2;
+  PeopleResponseInfo response_info = 3;
+  string reserve = 5;
+}
+
+message PeopleResponseInfo{
+  string id = 1;
+  configA config_A = 2;
+  configB config_B = 3;
+  configC config_C = 4;
+  configD config_D = 10;
+  string key = 26; //"%EgsBAgMJLjQ2Nzg5OxoDAQUH"
+  configE config_E = 48;
+  configF config_F = 50;
+}
+
+message configA{
+  string id = 4;
+  int64 a = 5;
+  int64 b = 12;
+  int64 c = 13;
+  int64 time = 16; //1678390922069
+  configAInternal config_A_internal = 22;
+  int64 d = 25;
+}
+
+message configAInternal{
+  string owner = 2;
+  encryptInfo encrypt_info = 3;
+}
+
+message encryptInfo{
+  int64 a = 1;
+  string id = 2;
+  int64 time_nami = 4; //1678390922069867
+  string key_a = 5; //"#hp08DmOiRos="
+  int64 b = 6;
+  timeInfo time_info = 7;
+}
+
+message timeInfo{
+  int64 a = 1;
+  int64 b = 2;
+}
+
+message configB{
+  configBInternal1 config_B_internal_1 = 1;
+  string user_name = 2;
+  string user_ming = 4;
+  string user_xing = 5;
+//  configBInternal13 config_B_internal_13 = 13;
+  string account_name = 13 ;
+  string account_name_bak = 16;
+}
+
+message configBInternal1{
+  int64 a = 1;
+  int64 b = 2;
+  int64 c = 3;
+  string id = 9;
+  int64 d = 12;
+  int64 e = 15;
+}
+
+message configBInternal13{
+  string a = 12; //0x6e656863202c676e
+  string b = 13;
+}
+
+message configC{
+  configCInternal config_c_internal = 1;
+  string url = 2;
+  int64 a = 3;
+  string key_b = 4; //"EhUxMDQ2NTAxOTIzMzEwMDAyMTAxNjMoATCZhKrO_P____8B"
+  int64 b = 7;
+  string other = 8;
+}
+
+message configCInternal{
+  int64 a = 1;
+  int64 b = 2;
+  int64 c = 3;
+  string id = 9;
+  int64 d = 15;
+}
+
+message configD{
+  configDInternal1 config_d_internal_1 = 1;
+  string account_email = 2;
+  int64 a = 9;
+  configDInternal10 config_d_internal_10 = 10;
+}
+
+message configDInternal1{
+  int64 a = 2;
+  int64 b = 3;
+  string id = 9;
+  int64 c = 12;
+  int64 d = 15;
+}
+
+message configDInternal10{
+  int64 a = 1;
+}
+
+message configE{
+  configEInternal1 config_e_internal_1 = 1;
+  string id = 2;
+  int64 a = 3;
+  int64 b = 8;
+  configEInternal11 config_e_internal_11 = 11;
+}
+
+message configEInternal1{
+  int64 a = 2;
+  string id = 9;
+  int64 b = 15;
+}
+
+message configEInternal11{
+  string account_email = 1;
+}
+
+message configF{
+  configFInternal config_e_internal = 1;
+  int64 a = 2;
+  int64 b = 3;
+  int64 c = 6;
+}
+
+message configFInternal{
+  int64 a = 3;
+  string id = 9;
+  int64 b = 15;
+}
+

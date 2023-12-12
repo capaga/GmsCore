@@ -8,15 +8,9 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.Arrays;
 
@@ -28,37 +22,18 @@ import java.util.Arrays;
  * for each supported extension.
  */
 @PublicApi
-@SafeParcelable.Class
-public class AuthenticationExtensions extends AbstractSafeParcelable {
-    @Field(value = 2, getterName = "getFidoAppIdExtension")
-    @Nullable
+public class AuthenticationExtensions extends AutoSafeParcelable {
+    @Field(2)
     private FidoAppIdExtension fidoAppIdExtension;
-    @Field(value = 3, getterName = "getCableAuthenticationExtension")
-    @Nullable
+    @Field(3)
     private CableAuthenticationExtension cableAuthenticationExtension;
-    @Field(value = 4, getterName = "getUserVerificationMethodExtension")
-    @Nullable
+    @Field(4)
     private UserVerificationMethodExtension userVerificationMethodExtension;
 
-    @Constructor
-    public AuthenticationExtensions(@Param(2) @Nullable FidoAppIdExtension fidoAppIdExtension, @Param(3) @Nullable CableAuthenticationExtension cableAuthenticationExtension, @Param(4) @Nullable UserVerificationMethodExtension userVerificationMethodExtension) {
-        this.fidoAppIdExtension = fidoAppIdExtension;
-        this.cableAuthenticationExtension = cableAuthenticationExtension;
-        this.userVerificationMethodExtension = userVerificationMethodExtension;
-    }
-
-    @Nullable
     public FidoAppIdExtension getFidoAppIdExtension() {
         return fidoAppIdExtension;
     }
 
-    @Hide
-    @Nullable
-    public CableAuthenticationExtension getCableAuthenticationExtension() {
-        return cableAuthenticationExtension;
-    }
-
-    @Nullable
     public UserVerificationMethodExtension getUserVerificationMethodExtension() {
         return userVerificationMethodExtension;
     }
@@ -95,9 +70,7 @@ public class AuthenticationExtensions extends AbstractSafeParcelable {
      * Builder for {@link AuthenticationExtensions}.
      */
     public static class Builder {
-        @Nullable
         private FidoAppIdExtension fidoAppIdExtension;
-        @Nullable
         private UserVerificationMethodExtension userVerificationMethodExtension;
 
         /**
@@ -110,7 +83,7 @@ public class AuthenticationExtensions extends AbstractSafeParcelable {
          * Sets the App ID extension, which allows for authentication of U2F authenticators previously registered
          * under the supplied App ID.
          */
-        public Builder setFido2Extension(@Nullable FidoAppIdExtension appIdExtension) {
+        public Builder setFido2Extension(FidoAppIdExtension appIdExtension) {
             this.fidoAppIdExtension = appIdExtension;
             return this;
         }
@@ -119,7 +92,7 @@ public class AuthenticationExtensions extends AbstractSafeParcelable {
          * Sets the User Verification Method extension, which allows the relying party to ascertain up to three
          * authentication methods that were used.
          */
-        public Builder setUserVerificationMethodExtension(@Nullable UserVerificationMethodExtension userVerificationMethodExtension) {
+        public Builder setUserVerificationMethodExtension(UserVerificationMethodExtension userVerificationMethodExtension) {
             this.userVerificationMethodExtension = userVerificationMethodExtension;
             return this;
         }
@@ -127,16 +100,13 @@ public class AuthenticationExtensions extends AbstractSafeParcelable {
         /**
          * Builds the {@link AuthenticationExtensions} object.
          */
-        @NonNull
         public AuthenticationExtensions build() {
-            return new AuthenticationExtensions(fidoAppIdExtension, null, userVerificationMethodExtension);
+            AuthenticationExtensions extensions = new AuthenticationExtensions();
+            extensions.fidoAppIdExtension = fidoAppIdExtension;
+            extensions.userVerificationMethodExtension = userVerificationMethodExtension;
+            return extensions;
         }
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    public static final SafeParcelableCreatorAndWriter<AuthenticationExtensions> CREATOR = findCreator(AuthenticationExtensions.class);
+    public static final Creator<AuthenticationExtensions> CREATOR = new AutoCreator<>(AuthenticationExtensions.class);
 }

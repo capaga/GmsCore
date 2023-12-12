@@ -269,7 +269,7 @@ public class GoogleApiAvailability {
      * Displays a notification for an error code returned from
      * {@link #isGooglePlayServicesAvailable(Context)}, if it is resolvable by the user.
      * <p/>
-     * This method is similar to {@link #getErrorDialog(int, android.app.Activity, int)}, but is
+     * This method is similar to {@link #getErrorDialog(int, Activity, int)}, but is
      * provided for background tasks that cannot or should not display dialogs.
      *
      * @param errorCode error code returned by {@link #isGooglePlayServicesAvailable(Context)} call.

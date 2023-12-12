@@ -15,3 +15,19 @@ message ConsentData {
     }
     repeated ScopeDetails scopes = 2;
 }
+
+message RequestOptions {
+    message TokenBinding {
+        optional string token_request_options = 1;  //0x1
+    }
+    optional bool  unknow_boolean_1 = 1;  //0x1
+    optional string  unknow_string_1 = 2;  //0x2
+    optional string  unknow_string_2 = 3;  //0x4
+    optional int32  unknow_int32_1 = 4;  //0x8
+    optional int32  unknow_int32_2 = 5;  //0x10
+    optional int32  unknow_int32_3 = 7;  //0x20
+    optional TokenBinding  tokenBinding = 8;  //0x40
+    optional int32  unknow_int32_4 = 10;  //0x80
+    optional string  unknow_string_3 = 11;  //0x100
+    optional bool  unknow_boolean_2 = 12;  //0x200
+}

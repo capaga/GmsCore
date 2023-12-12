@@ -18,6 +18,8 @@ package org.microg.gms.auth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -38,7 +40,7 @@ import com.google.android.gms.auth.AccountChangeEventsRequest;
 import com.google.android.gms.auth.AccountChangeEventsResponse;
 import com.google.android.gms.auth.GetHubTokenInternalResponse;
 import com.google.android.gms.auth.GetHubTokenRequest;
-import com.google.android.gms.auth.HasCapabilitiesRequest;
+import com.google.android.gms.auth.HasCababilitiesRequest;
 import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.common.api.Scope;
 
@@ -69,7 +71,8 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     public static final String KEY_SUPPRESS_PROGRESS_SCREEN = "suppressProgressScreen";
     public static final String KEY_SYNC_EXTRAS = "sync_extras";
     public static final String KEY_DELEGATION_TYPE = "delegation_type";
-    public static final String KEY_DELEGATEE_USER_ID = "delegatee_user_id";
+    public static final String KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE = "keyTokenRequestOptionsAuthExtrasBundle";
+    public static final String KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE = "keyTokenRequestOptionsWrapperBundle";
 
     public static final String KEY_ERROR = "Error";
     public static final String KEY_USER_RECOVERY_INTENT = "userRecoveryIntent";
@@ -116,8 +119,7 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
         packageName = PackageUtils.getAndCheckCallingPackage(context, packageName, extras.getInt(KEY_CALLER_UID, 0), extras.getInt(KEY_CALLER_PID, 0));
         boolean notify = extras.getBoolean(KEY_HANDLE_NOTIFICATION, false);
 
-        if (!AuthConstants.SCOPE_GET_ACCOUNT_ID.equals(scope))
-            Log.d(TAG, "getToken: account:" + account.name + " scope:" + scope + " extras:" + extras + ", notify: " + notify);
+        Log.d(TAG, "getToken: account:" + account.name + " scope:" + scope + " extras:" + extras + ", notify: " + notify);
 
         /*
          * TODO: This scope seems to be invalid (according to https://developers.google.com/oauthplayground/),
@@ -126,10 +128,33 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
         scope = scope.replace("https://www.googleapis.com/auth/identity.plus.page.impersonation ", "");
 
         AuthManager authManager = new AuthManager(context, account.name, packageName, scope);
+
         if (extras.containsKey(KEY_DELEGATION_TYPE) && extras.getInt(KEY_DELEGATION_TYPE) != 0 ) {
             authManager.setDelegation(extras.getInt(KEY_DELEGATION_TYPE), extras.getString("delegatee_user_id"));
         }
-        authManager.setOauth2Foreground(notify ? "0" : "1");
+
+        if (extras.getBoolean(KEY_HANDLE_NOTIFICATION)) {
+            authManager.setOauth2Foreground("0");
+        } else {
+            authManager.setOauth2Foreground("1");
+        }
+
+        if (extras.containsKey(KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE)) {
+            Bundle bundle = extras.getBundle(KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE);
+            if (bundle.containsKey(KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE)) {
+                RequestOptions options = null;
+                try {
+                    options = RequestOptions.ADAPTER.decode(bundle.getByteArray(KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE));
+                } catch (Exception e) {
+                    Log.w(TAG, e);
+                }
+
+                if(options != null && options.tokenBinding != null && options.tokenBinding.token_request_options != null) {
+                    authManager.setTokenRequestOptions(options.tokenBinding.token_request_options);
+                }
+            }
+        }
+
         Bundle result = new Bundle();
         result.putString(KEY_ACCOUNT_NAME, account.name);
         result.putString(KEY_ACCOUNT_TYPE, authManager.getAccountType());
@@ -140,11 +165,10 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
         try {
             AuthResponse res = authManager.requestAuth(false);
             if (res.auth != null) {
-                if (!AuthConstants.SCOPE_GET_ACCOUNT_ID.equals(scope))
-                    Log.d(TAG, "getToken: " + res);
+                Log.d(TAG, "getToken: " + res);
                 result.putString(KEY_AUTHTOKEN, res.auth);
                 Bundle details = new Bundle();
-                details.putParcelable("TokenData", new TokenData(res.auth, res.expiry, scope.startsWith("oauth2:"), getScopes(res.grantedScopes != null ? res.grantedScopes : scope)));
+                details.putParcelable("TokenData", new TokenData(res.auth, res.expiry, scope.startsWith("oauth2:"), getScopes(scope)));
                 result.putBundle("tokenDetails", details);
                 result.putString(KEY_ERROR, "OK");
             } else {
@@ -155,6 +179,7 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
                 i.putExtra(KEY_ACCOUNT_TYPE, authManager.getAccountType());
                 i.putExtra(KEY_ACCOUNT_NAME, account.name);
                 i.putExtra(KEY_AUTHTOKEN, scope);
+
                 i.putExtra(KEY_CALLER_UID, getCallingUid());
                 i.putExtra(KEY_CALLER_PID, getCallingPid());
                 try {
@@ -225,7 +250,7 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     }
 
     @Override
-    public int hasCapabilities(HasCapabilitiesRequest request) throws RemoteException {
+    public int hasCapabilities(HasCababilitiesRequest request) throws RemoteException {
         Log.w(TAG, "Not implemented: hasCapabilities(" + request.account + ", " + Arrays.toString(request.capabilities) + ")");
         return 1;
     }
@@ -237,7 +262,6 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     }
 
     @Override
-    @SuppressLint("MissingPermission") // Workaround bug in Android Linter
     public Bundle clearToken(String token, Bundle extras) {
         String packageName = extras.getString(KEY_ANDROID_PACKAGE_NAME);
         if (packageName == null) packageName = extras.getString(KEY_CLIENT_PACKAGE_NAME);
@@ -246,6 +270,12 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
         Log.d(TAG, "clearToken: token:" + token + " extras:" + extras);
         AccountManager.get(context).invalidateAuthToken(AuthConstants.DEFAULT_ACCOUNT_TYPE, token);
 
+        if ("com.google.android.gm".equals(packageName) || "com.google.android.apps.meetings".equals(packageName)) {
+            Bundle bundle = new Bundle();
+            Log.d(TAG, "clearToken packageName" + packageName);
+            bundle.putBoolean("booleanResult", true);
+            return bundle;
+        }
         Bundle res = new Bundle();
         res.putString("Error", "Ok");
         res.putBoolean("booleanResult", true);

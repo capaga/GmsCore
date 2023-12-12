@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.google.android.gms.games.core">
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission
+        android:name="android.permission.MANAGE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+
+    <application>
+        <activity
+            android:name="org.microg.gms.games.signin.ConsentSignInActivity"
+            android:process=":ui"
+            android:exported="false" />
+        <!-- Games -->
+        <service android:name="com.google.android.gms.games.GamesAndroidStubService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.games.service.START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.google.android.gms.games.GamesConnectStubService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.games.internal.connect.service.START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="org.microg.gms.games.signin.GamesSignInActivity"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":ui"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+
+        <provider
+            android:authorities="com.google.android.gms.SharedData"
+            android:name="org.microg.gms.games.signin.contentproviders.SharedDataContentProvider"
+            android:exported="true"
+            />
+    </application>
+</manifest>

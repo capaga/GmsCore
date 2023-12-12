@@ -1,0 +1,302 @@
+//option java_multiple_files = false;
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "org.microg.gms.reminders.sync";
+//option java_outer_classname = "TaksService";
+//caribou.tasks.service.TasksApiService/ListTasks
+package caribou.tasks.service;
+
+service TasksApiService {
+  rpc ListTasks (TaskRequest) returns (TaskResponse) {}
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse) {}
+  rpc UpdateTask (UpdateTaskRequest) returns (UpdateTaskResponse) {}
+  rpc DeleteTask (DeleteTaskRequest) returns (EmptyResponse) {}
+  rpc CreateRecurrence (CreateRecurrenceRequest) returns (RecurrenceResponse) {}
+  rpc DeleteRecurrence (DeleteRecurrenceRequest) returns (EmptyResponse) {}
+  rpc ChangeRecurrence (ChangeRecurrenceRequest) returns (RecurrenceResponse) {}
+}
+
+message RecurrenceResponse {
+  optional RecurrenceData recurrenceData = 1;
+}
+
+message EmptyResponse {}
+
+message DeleteTaskRequest {
+  optional HttpHeaderInfo  httpHeaderInfo = 1;  //0x1
+  repeated AssignInfo  assignInfo = 2;  //0x2
+}
+
+message UpdateTaskResponse {
+  optional ReminderInfo  reminderInfo = 4;  //0x1
+}
+
+message RecurrenceIdInfo {
+  optional string recurrenceId = 1;
+}
+
+message TimeZoneId{
+  optional string id = 1;
+}
+
+message HttpHeaderInfo {
+  optional TimeZoneId timeZoneId = 3;
+  optional string httpHeader = 4;
+}
+
+message EmptyBody{}
+
+message TaskRequest {
+  optional HttpHeaderInfo httpHeaderInfo = 1;
+  optional bool g = 5;
+  optional RecurrenceIdInfo recurrenceIdInfo = 12;
+  optional EmptyBody d = 13;
+  optional EmptyBody emptyBody = 14;
+}
+
+message AssignInfo {
+  optional string clientAssignedId = 2;
+  optional string clientAssignedThreadId = 3;
+}
+
+message SynthesizedVersionInfo {
+  optional string info = 2;
+}
+
+message TaskListInfo {
+  optional int32 taskList = 1;
+}
+
+message ProtoTimeEntity {
+  optional int32 hour = 1;
+  optional int32 minute = 2;
+  optional int32 second = 3;
+}
+
+message ProtoDateTimeEntity {
+  optional int32 year = 1;
+  optional int32 month = 2;
+  optional int32 day = 3;
+  optional ProtoTimeEntity protoTimeEntity = 4;
+  optional int32 period = 5;
+  optional int32 dateRange = 6;
+  optional fixed64 absoluteTimeMs = 7;
+  optional bool unspecifiedFutureTime = 8;
+  optional bool allDay = 9;
+}
+
+message FeatureIdProto {
+  optional fixed64  cellId = 1;
+  optional fixed64  fprint = 2;
+}
+
+message DetailedAddress  {
+  optional string  addressCountry = 1;
+  optional string  addressLocality = 2;
+  optional string  addressRegion = 3;
+  optional string  addressStreetAddress = 4;
+  optional string  addressStreetNumber = 5;
+  optional string  addressStreetName = 6;
+  optional string  addressPostalCode = 7;
+  optional string  addressName = 8;
+}
+
+message LocationAlias {
+  optional string  locationAliasId = 1;
+}
+
+message LocationAddress {
+  optional double  latitude = 1;
+  optional double  longitude = 2;
+  optional string  name = 3;
+  optional int32  radiusMeters = 4;
+  optional int32  locationType = 5;
+  optional FeatureIdProto  featureIdProto = 6;
+  optional string  displayAddress = 7;
+  optional LocationAlias  j = 8;
+  optional DetailedAddress  detailedAddress = 9;
+}
+
+message ChainIdInfo {
+  optional FeatureIdProto  featureIdProto = 1;
+}
+
+message Chain {
+  optional string  chainName = 2;
+  optional ChainIdInfo  chainId = 3;
+}
+
+message PlaceCategory {
+  optional string  categoryId = 1;
+  optional string  displayName = 2;
+  repeated string  placeTypes = 3;
+}
+
+message LocationGroup {
+  optional string  locationQuery = 1;
+  optional int32  locationQueryType = 2;
+  optional Chain  chain = 4;
+  optional PlaceCategory  placeCategory = 5;
+}
+
+message Extensions {}
+
+message RecurrenceStart {
+  optional ProtoDateTimeEntity  protoDateTimeEntity = 1;
+}
+
+message RecurrenceEnd {
+  optional ProtoDateTimeEntity  recurrenceEndTime = 1;
+  optional int32  recurrenceEndNumOccurrences = 3;
+  optional bool  isAutoRenew = 4;
+  optional ProtoDateTimeEntity  recurrenceEndAutoRenewTime = 5;
+}
+
+message DailyPattern {
+  optional ProtoTimeEntity  timeEntity = 1;
+  optional int32  dailyPatternPeriod = 2;
+  optional bool  isAllDay = 3;
+}
+
+
+message WeeklyPattern {
+  repeated int32 weekday = 1;  //0x1
+}
+
+message MonthlyPattern {
+  repeated int32  monthDayList = 1;
+  optional int32  weekDay = 3;
+  optional int32  weekDayNumber = 4;
+}
+
+message YearlyPattern {
+  optional MonthlyPattern  monthlyPattern = 1;
+  repeated int32  yearMonth = 2;
+}
+
+message RecurrenceData {
+  optional int32  frequency = 1;
+  optional int32  recurrenceEvery = 2;
+  optional RecurrenceStart  recurrenceStart = 3;
+  optional RecurrenceEnd  recurrenceEnd = 4;
+  optional DailyPattern  dailyPattern = 5;
+  optional WeeklyPattern  weeklyPattern = 6;
+  optional MonthlyPattern  monthlyPattern = 7;
+  optional YearlyPattern  yearlyPattern = 8;
+}
+
+message RecurrenceInfo {
+  optional RecurrenceData recurrenceData = 1;
+  optional RecurrenceIdInfo  recurrenceIdInfo = 2;
+  optional bool  recurrenceMaster = 3;
+  optional bool  recurrenceExceptional = 4;
+}
+
+message Assistance {
+
+}
+
+message ExternalApplicationLink{
+  optional int32  linkApplication = 1;
+  optional string  linkId = 2;
+}
+
+
+message DateTimeInfo {
+  optional ProtoDateTimeEntity  protoDateTimeEntity = 2;
+}
+
+message ReminderInfo {
+  optional AssignInfo  assignInfo = 1;  //0x1
+  optional SynthesizedVersionInfo  synthesizedVersionInfo = 13;  //0x2
+  optional TaskListInfo  taskListInfo = 2;  //0x4
+  optional string  title = 3;  //0x8
+  optional int64  createdTimeMillis = 18;  //0x10
+  optional int64  archivedTimeMs = 11;  //0x20
+  optional bool  archived = 8;  //0x40
+  optional bool  deleted = 10;  //0x80
+  optional bool  pinned = 21;  //0x100
+  optional bool  snoozed = 22;  //0x200
+  optional fixed64  snoozedTimeMillis = 23;  //0x400
+  optional ProtoDateTimeEntity  dueDate = 5;  //0x800
+  optional ProtoDateTimeEntity  eventDate = 7;  //0x1000
+  optional LocationAddress  locationAddress = 6;  //0x2000
+  optional LocationGroup  locationGroup = 12;  //0x4000
+  optional int64  locationSnoozedUntilMs = 14;  //0x8000
+  optional Extensions  extensions = 15;  //0x10000
+  optional RecurrenceInfo  recurrenceInfo = 16;  //0x20000
+  optional Assistance  assistance = 17;  //0x40000
+  optional ExternalApplicationLink  applicationLink = 25;  //0x80000
+  optional int64  firedTimeMillis = 26;  //0x100000
+  optional DateTimeInfo  dateTimeInfo = 20;  //0x200000
+}
+
+message TaskResponse {
+  repeated ReminderInfo reminderInfo = 1;
+  optional EmptyBody emptyBody = 4;
+  optional uint64 storageVersion = 3 ;
+}
+
+message CreateReminderOptions {
+  optional string  b = 1;  //0x1
+  optional string  c = 2;  //0x2
+}
+
+message CreateReminderOptionsInfo {
+  optional CreateReminderOptions options = 1;  //0x1
+}
+
+message CreateTaskRequest {
+  optional HttpHeaderInfo  httpHeaderInfo = 1;  //0x1
+  optional TaskListInfo  taskListInfo = 2;  //0x2
+  optional AssignInfo  assignInfo = 3;  //0x4
+  optional ReminderInfo  reminderInfo = 4;  //0x8
+  optional bool  f = 7;  //0x10
+  optional CreateReminderOptionsInfo optionInfo = 9;  //0x20
+}
+
+message CreateTaskResponse {
+  optional AssignInfo  assignInfo = 1;  //0x1
+  optional SynthesizedVersionInfo  synthesizedVersionInfo = 2;  //0x2
+}
+
+message BatchParam {
+  repeated int32 batchIntList = 1;  //0x1
+}
+
+message UpdateTaskRequest {
+  optional HttpHeaderInfo  httpHeaderInfo = 1;  //0x1
+  optional AssignInfo  assignInfo = 2;  //0x2
+  optional BatchParam  batchParam = 7;  //0x4
+  optional bool  e = 9;  //0x8
+  optional ReminderInfo  reminderInfo = 4;  //0x10
+}
+
+message CreateRecurrenceRequest {
+  optional HttpHeaderInfo httpHeaderInfo = 1;
+  optional TaskListInfo taskListInfo = 2;
+  optional RecurrenceIdInfo recurrenceIdInfo = 3;
+  optional ReminderInfo reminderInfo = 4;
+  optional RecurrenceData recurrenceData = 5;
+}
+
+message RecurrenceOptions {
+  optional int32  isDateFiltered = 1;
+  optional bool  isRecurrenceExceptional = 2;
+  optional int64  recurrenceEndMillis = 3;
+}
+
+message DeleteRecurrenceRequest {
+  optional HttpHeaderInfo httpHeaderInfo = 1;
+  optional RecurrenceIdInfo recurrenceIdInfo = 2;
+  optional RecurrenceOptions  recurrenceOptions = 4;
+}
+message ChangeRecurrenceRequest {
+  optional HttpHeaderInfo httpHeaderInfo = 1;
+  optional RecurrenceIdInfo  changeRecurrenceIdInfo = 2;
+  optional RecurrenceIdInfo  taskRecurrenceIdInfo = 6;
+  optional RecurrenceData  recurrenceData = 3;
+  optional ReminderInfo reminderInfo = 4;
+  optional RecurrenceOptions  recurrenceOptions = 7;
+
+}

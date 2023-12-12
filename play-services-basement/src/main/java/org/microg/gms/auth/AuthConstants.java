@@ -24,4 +24,7 @@ public class AuthConstants {
     public static final String PROVIDER_EXTRA_CLEAR_PASSWORD = "clear_password";
     public static final String PROVIDER_EXTRA_ACCOUNTS = "accounts";
     public static final String DEFAULT_ACCOUNT_TYPE = "com.google";
+    public static final String SCOPE_GET_SNOWBALL = "^^snowballing^^";
+    public static final String SCOPE_EM_OP_PRO = "oauth2:email openid profile";
+    public static final String DEFAULT_USER_ID = "<<default user id>>";
 }

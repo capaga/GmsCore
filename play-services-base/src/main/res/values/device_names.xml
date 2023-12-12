@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  TODO  -->
+    <string-array name="device_names" translatables="false">
+        <!-- Mate40 pro -->
+        <item>HWNOH</item>
+        <!-- P40 -->
+        <item>HWANA</item>
+        <!-- nova 7 -->
+        <item>HWJEF</item>
+        <item>HWELS</item>
+        <item>HWELS-P</item>
+        <item>HWJNY</item>
+        <item>HWCDY</item>
+        <item>HWWGR</item>
+        <item>HWDBY</item>
+        <item>HWAGS3K</item>
+        <!-- Mate30 -->
+        <item>HWTAS</item>
+        <!-- Mate30 Pro -->
+        <item>HWLIO</item>
+        <!-- Matepad Pro -->
+        <item>HWMRR-Q</item>
+        <!-- Matepad T   -->
+        <item>HWAGS3K</item>
+        <!-- Matepad -->
+        <item>HWBAH3</item>
+        <!-- MatePad   -->
+        <item>HWBAH3-H</item>
+        <!-- Matepad Pro -->
+        <item>HWMRX</item>
+        <!-- Matepad T   -->
+        <item>HWAGRK</item>
+        <!-- Matepad Pro -->
+        <item>HWKOB2</item>
+        <!-- nova 8   -->
+        <item>HWANG-DL</item>
+        <!-- Y7p   -->
+        <item>HWART-H</item>
+        <!-- Y5p -->
+        <item>HWDRA-MR</item>
+        <!-- Y6p  div -->
+        <item>HWMED-MR</item>
+    </string-array>
+</resources>

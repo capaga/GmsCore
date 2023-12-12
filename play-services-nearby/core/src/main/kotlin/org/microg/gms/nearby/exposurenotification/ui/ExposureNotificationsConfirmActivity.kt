@@ -5,8 +5,12 @@
 
 package org.microg.gms.nearby.exposurenotification.ui
 
-import android.Manifest.permission.*
-import android.annotation.SuppressLint
+import android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.BLUETOOTH_ADVERTISE
+import android.Manifest.permission.BLUETOOTH_CONNECT
+import android.Manifest.permission.BLUETOOTH_SCAN
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
@@ -14,6 +18,7 @@ import android.content.pm.PackageInfo.REQUESTED_PERMISSION_NEVER_FOR_LOCATION
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.location.LocationManager
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.ResultReceiver
@@ -22,11 +27,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.lifecycleScope
 import org.microg.gms.nearby.core.R
-import org.microg.gms.nearby.exposurenotification.*
+import org.microg.gms.nearby.exposurenotification.CONFIRM_ACTION_KEYS
+import org.microg.gms.nearby.exposurenotification.CONFIRM_ACTION_START
+import org.microg.gms.nearby.exposurenotification.CONFIRM_ACTION_STOP
+import org.microg.gms.nearby.exposurenotification.KEY_CONFIRM_ACTION
+import org.microg.gms.nearby.exposurenotification.KEY_CONFIRM_PACKAGE
+import org.microg.gms.nearby.exposurenotification.KEY_CONFIRM_RECEIVER
+import org.microg.gms.nearby.exposurenotification.enableAsync
 import org.microg.gms.ui.getApplicationInfoIfExists
 
 
@@ -91,7 +103,11 @@ class ExposureNotificationsConfirmActivity : AppCompatActivity() {
             requestBackgroundLocation()
         }
         findViewById<Button>(R.id.enable_bluetooth_button).setOnClickListener {
-            requestBluetooth()
+            if (SDK_INT >= Build.VERSION_CODES.S && ActivityCompat.checkSelfPermission(this, BLUETOOTH_CONNECT) != PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(BLUETOOTH_CONNECT), 0)
+            } else {
+                requestBluetooth()
+            }
         }
         findViewById<Button>(R.id.enable_location_button).setOnClickListener {
             requestLocation()
@@ -216,11 +232,12 @@ class ExposureNotificationsConfirmActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun requestBluetoothViaIntent() {
         val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
         try {
-            startActivityForResult(intent, ++bluetoothRequestCode)
+            if (checkSelfPermission(this, BLUETOOTH_CONNECT) == PERMISSION_GRANTED) {
+                startActivityForResult(intent, ++bluetoothRequestCode)
+            }
         } catch (e: Exception) {
             // Ignored
         }

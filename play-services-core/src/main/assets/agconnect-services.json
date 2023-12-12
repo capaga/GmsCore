@@ -1,0 +1,76 @@
+{
+	"agcgw_all":{
+		"CN":"connect-drcn.dbankcloud.cn",
+		"CN_back":"connect-drcn.hispace.hicloud.com",
+		"DE":"connect-dre.dbankcloud.cn",
+		"DE_back":"connect-dre.hispace.hicloud.com",
+		"RU":"connect-drru.hispace.dbankcloud.ru",
+		"RU_back":"connect-drru.hispace.dbankcloud.cn",
+		"SG":"connect-dra.dbankcloud.cn",
+		"SG_back":"connect-dra.hispace.hicloud.com"
+	},
+	"websocketgw_all":{
+		"CN":"connect-ws-drcn.hispace.dbankcloud.cn",
+		"CN_back":"connect-ws-drcn.hispace.dbankcloud.com",
+		"DE":"connect-ws-dre.hispace.dbankcloud.cn",
+		"DE_back":"connect-ws-dre.hispace.dbankcloud.com",
+		"RU":"connect-ws-drru.hispace.dbankcloud.ru",
+		"RU_back":"connect-ws-drru.hispace.dbankcloud.cn",
+		"SG":"connect-ws-dra.hispace.dbankcloud.cn",
+		"SG_back":"connect-ws-dra.hispace.dbankcloud.com"
+	},
+	"client":{
+		"cp_id":"10066000024397330",
+		"product_id":"99536292102307991",
+		"client_id":"898275155422235392",
+		"client_secret":"1E154DEE89CE320DB8A7C45D75A3E2A38410144E4EDE42D166BA583EF087EEA4",
+		"project_id":"99536292102307991",
+		"app_id":"106308861",
+		"api_key":"DAEDAHW0oSi+0f0nn3fsJktYdXs97GYR07qGZrywMKtiCdLrwTACsHT4pen3pOQlHzMc5NnGl0MKRw7iJEp9zCeFi6dVprHHZbfsjQ==",
+		"package_name":"com.google.android.gms"
+	},
+	"oauth_client":{
+		"client_id":"106308861",
+		"client_type":1
+	},
+	"app_info":{
+		"app_id":"106308861",
+		"package_name":"com.google.android.gms"
+	},
+	"configuration_version":"3.0",
+	"appInfos":[
+		{
+			"package_name":"com.google.android.gms",
+			"client":{
+				"app_id":"106308861"
+			},
+			"app_info":{
+				"package_name":"com.google.android.gms",
+				"app_id":"106308861"
+			},
+			"oauth_client":{
+				"client_type":1,
+				"client_id":"106308861"
+			}
+		}
+	],
+	"sha256_configs": [
+		{
+			"gms": {
+				"signature": "F0:FD:6C:5B:41:0F:25:CB:25:C3:B5:33:46:C8:97:2F:AE:30:F8:EE:74:11:DF:91:04:80:AD:6B:2D:60:DB:83"
+			}
+		},
+		{
+			"microg_test": "14:BE:9B:58:EE:F6:DD:FB:F0:6A:B7:1A:A6:E3:74:D3:10:1E:99:26:DD:3F:71:CE:03:C9:BF:16:37:D2:C2:08"
+		},
+		{
+			"li_test": "A4:E2:63:3B:3C:68:2B:F2:60:E2:1E:3B:20:5D:38:D5:3F:E1:64:11:EA:96:F5:68:D5:D8:EA:5C:1B:82:57:64"
+		},
+		{
+			"未知": {
+				"packageName": "",
+				"signature": "D4:4B:56:71:35:AF:E3:5A:D2:35:F5:02:AF:96:9C:99:B1:12:09:24:ED:C9:95:E9:0E:F4:45:C9:CA:50:CD:ED"
+			}
+		}
+	]
+}

@@ -18,28 +18,28 @@ import org.microg.safeparcel.AutoSafeParcelable;
 import java.util.Objects;
 
 /**
- * Immutable cap that can be applied at the start or end vertex of a {@link Polyline}.
+ * Immutable cap that can be applied at the start or end vertex of a {@link}.
  */
 public class Cap extends AutoSafeParcelable {
     @Field(2)
     public final int type;
     @Field(3)
     @Nullable
-    private final IBinder bitmap;
+    private IBinder bitmap;
     /**
      * Descriptor of the bitmap to be overlaid at the start or end vertex.
      */
     @Nullable
-    private final BitmapDescriptor bitmapDescriptor;
+    private BitmapDescriptor bitmapDescriptor;
     /**
      * Reference stroke width (in pixels) - the stroke width for which the cap bitmap at its native dimension is designed.
      * The default reference stroke width is 10 pixels.
      */
     @Field(4)
     @Nullable
-    private final Float refWidth;
+    private  Float refWidth;
 
-    private Cap() {
+    public Cap() {
         type = 0;
         bitmap = null;
         bitmapDescriptor = null;
@@ -51,6 +51,22 @@ public class Cap extends AutoSafeParcelable {
         this.bitmap = bitmapDescriptor == null ? null : bitmapDescriptor.getRemoteObject().asBinder();
         this.bitmapDescriptor = bitmapDescriptor;
         this.refWidth = refWidth;
+    }
+
+
+    public Cap(int type) {
+        this.type = type;
+    }
+    public int getType() {
+        return type;
+    }
+
+    public IBinder getBitmap() {
+        return bitmap;
+    }
+
+    public BitmapDescriptor getBitmapDescriptor() {
+        return bitmapDescriptor;
     }
 
     @NonNull

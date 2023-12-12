@@ -23,7 +23,6 @@ import android.util.Log;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.PackageUtils;
-import org.microg.gms.common.Utils;
 
 import java.io.IOException;
 

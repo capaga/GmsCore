@@ -24,6 +24,15 @@ public class Constants {
     public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
     public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
     public static final String GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1 = "bd32424203e0fb25f36b57e5aa356f9bdd1da998";
+
+    public static final String MAPS_PACKAGE_NAME = "com.google.android.apps.maps";
+
+    public static final String YOUTUBE_PACKAGE_NAME = "com.google.android.youtube";
     @Deprecated
     public static final int MAX_REFERENCE_VERSION = GMS_VERSION_CODE;
+
+    public static final String ACCOUNT_TYPE = "com.google";
+    public static final String AUDIENCE_TOKEN = "AudienceToken";
+    public static final String OAUTH2_TOKEN = "Oauth2Token";
+    public static final String EXP_TIME = "EXPTIME";
 }

@@ -1,0 +1,38 @@
+
+
+/*
+ * SPDX-FileCopyrightText: 2020, microG Project Team
+ * SPDX-License-Identifier: Apache-2.0
+ */
+apply plugin: 'com.android.library'
+
+dependencies {
+    implementation project(':play-services-potoken')
+    implementation project(':play-services-droidguard')
+
+    implementation project(':play-services-base-core')
+    implementation 'com.google.protobuf:protobuf-java:3.21.12'
+    implementation 'com.google.protobuf:protobuf-java-util:3.21.12'
+    implementation 'commons-io:commons-io:2.8.0'
+}
+
+android {
+    namespace 'org.microg.gms.potoken.impl'
+    compileSdkVersion androidCompileSdk
+    buildToolsVersion "$androidBuildVersionTools"
+
+    defaultConfig {
+        versionName version
+        minSdkVersion androidMinSdk
+        targetSdkVersion androidTargetSdk
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}

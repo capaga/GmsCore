@@ -1,30 +1,49 @@
-/*
- * SPDX-FileCopyrightText: 2023 microG Project Team
- * SPDX-License-Identifier: Apache-2.0
- */
-
 package com.google.android.gms.signin.internal;
 
 import android.content.Intent;
-import com.google.android.gms.common.ConnectionResult;
+
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.Status;
-import org.microg.gms.common.Hide;
+
 import org.microg.safeparcel.AutoSafeParcelable;
 
-@Hide
 public class AuthAccountResult extends AutoSafeParcelable implements Result {
-    @Field(1)
-    private int versionCode = 2;
+    private static final int VERSION_CODE = 2;
     @Field(2)
-    public int connectionResultCode;
+    private int mConnectionResultCode;
     @Field(3)
-    public Intent rawAuthResolutionIntent;
+    private Intent mRawAuthResultionIntent;
+    @Field(1)
+    private int mVersionCode;
 
-    @Override
-    public Status getStatus() {
-        return connectionResultCode == ConnectionResult.SUCCESS ? Status.SUCCESS : Status.CANCELED;
+    AuthAccountResult(int versionCode, int connectionResultCode, Intent rawAuthResultionIntent) {
+        this.mVersionCode = versionCode;
+        this.mConnectionResultCode = connectionResultCode;
+        this.mRawAuthResultionIntent = rawAuthResultionIntent;
     }
 
-    public static final Creator<AuthAccountResult> CREATOR = findCreator(AuthAccountResult.class);
+    public AuthAccountResult() {
+        this(0, null);
+    }
+
+    public AuthAccountResult(int connectionResultCode, Intent rawAuthResolutionIntent) {
+        this(VERSION_CODE, connectionResultCode, rawAuthResolutionIntent);
+    }
+
+    public int getConnectionResultCode() {
+        return this.mConnectionResultCode;
+    }
+
+    public Intent getRawAuthResolutionIntent() {
+        return this.mRawAuthResultionIntent;
+    }
+
+    public Status getStatus() {
+        if (this.mConnectionResultCode == 0) {
+            return Status.SUCCESS;
+        }
+        return Status.CANCELED;
+    }
+
+    public static final Creator<AuthAccountResult> CREATOR = new AutoCreator<>(AuthAccountResult.class);
 }

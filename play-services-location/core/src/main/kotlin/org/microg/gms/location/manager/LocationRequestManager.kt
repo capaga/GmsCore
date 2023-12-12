@@ -83,7 +83,11 @@ class LocationRequestManager(private val context: Context, private val lifecycle
 
     suspend fun update(oldBinder: IBinder, binder: IBinder, clientIdentity: ClientIdentity, callback: ILocationCallback, request: LocationRequest, lastLocationCapsule: LastLocationCapsule) {
         lock.withLock {
-            oldBinder.unlinkToDeath(this, 0)
+            try {
+                oldBinder.unlinkToDeath(this, 0)
+            } catch (e: Exception) {
+                Log.w(TAG, "update: ", e)
+            }
             val holder = binderRequests.remove(oldBinder)
             try {
                 val startedHolder = holder?.update(callback, request) ?: LocationRequestHolder(context, clientIdentity, request, callback, null).start().also {
@@ -364,7 +368,7 @@ class LocationRequestManager(private val context: Context, private val lifecycle
                     return request.priority
                 }
             val maxUpdateDelayMillis: Long
-                get() = max(max(request.maxUpdateDelayMillis, intervalMillis), 1000L)
+                get() = max(request.maxUpdateDelayMillis, intervalMillis)
             val intervalMillis: Long
                 get() = request.intervalMillis
             val updatesPending: Int
@@ -415,7 +419,6 @@ class LocationRequestManager(private val context: Context, private val lifecycle
 
             fun check() {
                 if (!context.checkAppOpForEffectiveGranularity(clientIdentity, effectiveGranularity)) throw RuntimeException("Lack of permission")
-                if (effectiveGranularity > permissionGranularity) throw RuntimeException("Lack of permission")
                 if (timePendingMillis < 0) throw RuntimeException("duration limit reached (active for ${(SystemClock.elapsedRealtime() - start).formatDuration()}, duration ${request.durationMillis.formatDuration()})")
                 if (updatesPending <= 0) throw RuntimeException("max updates reached")
                 if (callback?.asBinder()?.isBinderAlive == false) throw RuntimeException("Binder died")
@@ -427,7 +430,7 @@ class LocationRequestManager(private val context: Context, private val lifecycle
                 if (lastLocation != null && location.distanceTo(lastLocation!!) < request.minUpdateDistanceMeters) return false
                 if (lastLocation == location) return false
                 val returnedLocation = if (effectiveGranularity > permissionGranularity) {
-                    throw RuntimeException("Lack of permission")
+                    throw RuntimeException("lack of permission")
                 } else {
                     if (!context.noteAppOpForEffectiveGranularity(clientIdentity, effectiveGranularity)) {
                         throw RuntimeException("app op denied")

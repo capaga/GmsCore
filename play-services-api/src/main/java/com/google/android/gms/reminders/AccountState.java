@@ -19,5 +19,5 @@ package com.google.android.gms.reminders;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 public class AccountState extends AutoSafeParcelable {
-    public static Creator<AccountState> CREATOR = new AutoCreator<AccountState>(AccountState.class);
+    public static Creator<AccountState> CREATOR = new AutoCreator<>(AccountState.class);
 }

@@ -9,14 +9,16 @@ import android.content.Intent
 import android.location.Location
 import android.os.Binder
 import android.os.Process
+import android.util.Log
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.internal.ConnectionInfo
 import com.google.android.gms.common.internal.GetServiceRequest
 import com.google.android.gms.common.internal.IGmsCallbacks
+import org.microg.gms.location.LocationUtil
 import org.microg.gms.BaseService
+import org.microg.gms.location.FEATURES
 import org.microg.gms.common.GmsService
 import org.microg.gms.common.PackageUtils
-import org.microg.gms.location.EXTRA_LOCATION
 import org.microg.gms.utils.IntentCacheManager
 import java.io.FileDescriptor
 import java.io.PrintWriter
@@ -26,9 +28,10 @@ class LocationManagerService : BaseService(TAG, GmsService.LOCATION_MANAGER) {
     private val locationManager = LocationManager(this, lifecycle)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d(TAG, "LocationManagerService onStartCommand: ")
         locationManager.start()
-        if (Binder.getCallingUid() == Process.myUid() && intent?.action == ACTION_REPORT_LOCATION) {
-            val location = intent.getParcelableExtra<Location>(EXTRA_LOCATION)
+        if (Binder.getCallingUid() == Process.myUid() && intent?.action == LocationUtil.ACTION_REPORT_LOCATION) {
+            val location = intent.getParcelableExtra<Location>(LocationUtil.EXTRA_LOCATION)
             if (location != null) {
                 locationManager.updateNetworkLocation(location)
             }
@@ -47,6 +50,7 @@ class LocationManagerService : BaseService(TAG, GmsService.LOCATION_MANAGER) {
     override fun handleServiceRequest(callback: IGmsCallbacks, request: GetServiceRequest, service: GmsService?) {
         val packageName = PackageUtils.getAndCheckCallingPackage(this, request.packageName)
             ?: throw IllegalArgumentException("Missing package name")
+        Log.d(TAG, "handleServiceRequest: ")
         locationManager.start()
         callback.onPostInitCompleteWithConnectionInfo(
             CommonStatusCodes.SUCCESS,

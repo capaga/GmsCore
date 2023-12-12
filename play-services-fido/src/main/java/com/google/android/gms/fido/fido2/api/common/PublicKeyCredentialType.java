@@ -11,8 +11,6 @@ package com.google.android.gms.fido.fido2.api.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 
 /**
@@ -28,7 +26,6 @@ public enum PublicKeyCredentialType implements Parcelable {
     }
 
     @Override
-    @NonNull
     public String toString() {
         return value;
     }
@@ -43,7 +40,7 @@ public enum PublicKeyCredentialType implements Parcelable {
         dest.writeString(toString());
     }
 
-    @Hide
+    @PublicApi(exclude = true)
     public static PublicKeyCredentialType fromString(String type) throws UnsupportedPublicKeyCredTypeException {
         for (PublicKeyCredentialType value : values()) {
             if (value.value.equals(type)) return value;

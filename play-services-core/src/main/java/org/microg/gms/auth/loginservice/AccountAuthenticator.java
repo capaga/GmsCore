@@ -27,8 +27,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
-import com.google.android.gms.R;
-
 import org.microg.gms.auth.AskPermissionActivity;
 import org.microg.gms.auth.AuthConstants;
 import org.microg.gms.auth.AuthManager;
@@ -140,6 +138,7 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account, String[] features) throws NetworkErrorException {
+        Log.d(TAG, "hasFeatures: " + account + ", " + Arrays.toString(features));
         AccountManager accountManager = AccountManager.get(context);
         String services = accountManager.getUserData(account, "services");
         boolean res = true;

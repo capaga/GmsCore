@@ -22,7 +22,7 @@ public class ApiException extends Exception {
     protected final Status mStatus;
 
     /**
-     * Create an ApiException from a {@link com.google.android.gms.common.api.Status}.
+     * Create an ApiException from a {@link Status}.
      * @param status the Status instance containing a message and code.
      */
     @PublicApi
@@ -41,7 +41,7 @@ public class ApiException extends Exception {
     /**
      * Indicates the status of the operation.
      * @return Status code resulting from the operation.
-     * The value is one of the constants in {@link com.google.android.gms.common.api.CommonStatusCodes} or specific to the API in use.
+     * The value is one of the constants in {@link CommonStatusCodes} or specific to the API in use.
      */
     @PublicApi
     public int getStatusCode() {

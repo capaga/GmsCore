@@ -16,11 +16,28 @@
 
 package org.microg.gms.auth.login;
 
+import static android.accounts.AccountManager.PACKAGE_NAME_KEY_LEGACY_NOT_VISIBLE;
+import static android.accounts.AccountManager.VISIBILITY_USER_MANAGED_VISIBLE;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.GINGERBREAD_MR1;
+import static android.os.Build.VERSION_CODES.HONEYCOMB;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.telephony.TelephonyManager.SIM_STATE_UNKNOWN;
+import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
+import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
+import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
+import static org.microg.gms.common.Constants.GMS_VERSION_CODE;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -43,6 +60,7 @@ import android.widget.TextView;
 import androidx.annotation.StringRes;
 import androidx.webkit.WebViewClientCompat;
 
+import com.google.android.gms.BuildConfig;
 import com.google.android.gms.R;
 
 import org.json.JSONArray;
@@ -52,30 +70,18 @@ import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.checkin.CheckinManager;
 import org.microg.gms.checkin.LastCheckinInfo;
+import org.microg.gms.common.Constants;
 import org.microg.gms.common.HttpFormClient;
+import org.microg.gms.common.PackageUtils;
 import org.microg.gms.common.Utils;
 import org.microg.gms.people.PeopleManager;
 import org.microg.gms.profile.Build;
 import org.microg.gms.profile.ProfileManager;
+import org.microg.tools.ModelsUtil;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Locale;
-
-import static android.accounts.AccountManager.PACKAGE_NAME_KEY_LEGACY_NOT_VISIBLE;
-import static android.accounts.AccountManager.VISIBILITY_USER_MANAGED_VISIBLE;
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.GINGERBREAD_MR1;
-import static android.os.Build.VERSION_CODES.HONEYCOMB;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.telephony.TelephonyManager.SIM_STATE_UNKNOWN;
-import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
-import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
-import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
-import static org.microg.gms.common.Constants.GMS_VERSION_CODE;
 
 public class LoginActivity extends AssistantActivity {
     public static final String TMPL_NEW_ACCOUNT = "new_account";
@@ -137,13 +143,16 @@ public class LoginActivity extends AssistantActivity {
             }
         });
         if (getIntent().hasExtra(EXTRA_TOKEN)) {
+
             if (getIntent().hasExtra(EXTRA_EMAIL)) {
                 AccountManager accountManager = AccountManager.get(this);
                 Account account = new Account(getIntent().getStringExtra(EXTRA_EMAIL), accountType);
                 accountManager.addAccountExplicitly(account, getIntent().getStringExtra(EXTRA_TOKEN), null);
                 if (isAuthVisible(this) && SDK_INT >= 26) {
                     accountManager.setAccountVisibility(account, PACKAGE_NAME_KEY_LEGACY_NOT_VISIBLE, VISIBILITY_USER_MANAGED_VISIBLE);
+                    Log.e("LoginActivitydao","setAccountVisibility success");
                 }
+
                 retrieveGmsToken(account);
             } else {
                 retrieveRtToken(getIntent().getStringExtra(EXTRA_TOKEN));
@@ -162,11 +171,51 @@ public class LoginActivity extends AssistantActivity {
         super.onNextButtonClicked();
         state++;
         if (state == 1) {
-            init();
+            if (isSysUnsupported()) {
+                init();
+            } else {
+                showDialog(getString(R.string.device_is_not_supported), true);
+            }
         } else if (state == -1) {
             setResult(RESULT_CANCELED);
             finish();
         }
+    }
+
+    /**
+     * @return return true is sys supported，Signature spoofing succeeded
+     */
+    private boolean isSysUnsupported() {
+        if (BuildConfig.DEBUG) {
+            return true;
+        }
+        if (!Constants.GMS_PACKAGE_NAME.equals(getPackageName())) {
+            return true;
+        }
+        String appSignature = PackageUtils.firstSignatureDigest(this, Constants.GMS_PACKAGE_NAME);
+        if (Constants.GMS_PACKAGE_SIGNATURE_SHA1.equals(appSignature)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param text Text content of prompt box
+     * @param isBreak false——continue to log in; true——terminate login
+     */
+    private void showDialog(String text, boolean isBreak) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                //.setTitle("提示")
+                .setMessage(text)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    if (isBreak) {
+                        finish();
+                    } else {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     @Override
@@ -280,6 +329,13 @@ public class LoginActivity extends AssistantActivity {
         }
         showError(R.string.auth_general_error_desc);
     }
+    public void sendChangeAccount(){
+        Log.e("LoginActivityDao","sendChangeAccount");
+//        accountManager.setPassword();
+        Intent intent = new Intent("android.accounts.action.VISIBLE_ACCOUNTS_CHANGED");
+//        intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
+        sendBroadcast(intent);
+    }
 
     private void retrieveRtToken(String oAuthToken) {
         new AuthRequest().fromContext(this)
@@ -320,6 +376,7 @@ public class LoginActivity extends AssistantActivity {
                     @Override
                     public void onException(Exception exception) {
                         Log.w(TAG, "onException", exception);
+                        ModelsUtil.writeStatus(LoginActivity.this);
                         runOnUiThread(() -> {
                             showError(R.string.auth_general_error_desc);
                             setNextButtonText(android.R.string.ok);
@@ -338,8 +395,8 @@ public class LoginActivity extends AssistantActivity {
                 .service(authManager.getService())
                 .email(account.name)
                 .token(AccountManager.get(this).getPassword(account))
-                .systemPartition(true)
-                .hasPermission(true)
+                .systemPartition()
+                .hasPermission()
                 .addAccount()
                 .getAccountId()
                 .getResponseAsync(new HttpFormClient.Callback<AuthResponse>() {
@@ -349,6 +406,13 @@ public class LoginActivity extends AssistantActivity {
                         String accountId = PeopleManager.loadUserInfo(LoginActivity.this, account);
                         if (!TextUtils.isEmpty(accountId))
                             accountManager.setUserData(account, "GoogleUserId", accountId);
+
+                        if (isAuthVisible(LoginActivity.this)&&SDK_INT >= 26) {
+                            accountManager.setAccountVisibility(account, PACKAGE_NAME_KEY_LEGACY_NOT_VISIBLE, VISIBILITY_USER_MANAGED_VISIBLE);
+//                            Log.e("LoginActivityDao","getResponseAsync::"+isAuthVisible(LoginActivity.this));
+                        }
+
+//                        sendChangeAccount();
                         checkin(true);
                         finish();
                     }
@@ -441,7 +505,6 @@ public class LoginActivity extends AssistantActivity {
             return null;
         }
 
-        @SuppressWarnings("MissingPermission")
         @JavascriptInterface
         public final String getAccounts() {
             Log.d(TAG, "JSBridge: getAccounts");

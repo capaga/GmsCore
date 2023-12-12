@@ -19,5 +19,16 @@ package com.google.android.gms.reminders.model;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 public class TaskIdEntity extends AutoSafeParcelable {
-    public static Creator<TaskIdEntity> CREATOR = new AutoCreator<TaskIdEntity>(TaskIdEntity.class);
+    public static Creator<TaskIdEntity> CREATOR = new AutoCreator<>(TaskIdEntity.class);
+    @Field(3)
+    public String clientAssignedId;
+    @Field(4)
+    public String clientAssignedThreadId;
+
+    public TaskIdEntity(){}
+
+    public TaskIdEntity(String clientAssignedId, String clientAssignedThreadId) {
+        this.clientAssignedId = clientAssignedId;
+        this.clientAssignedThreadId = clientAssignedThreadId;
+    }
 }

@@ -106,7 +106,7 @@ interface IGoogleMapDelegate {
     void setOnMapLoadedCallback(IOnMapLoadedCallback callback) = 41;
 
     //IIndoorBuildingDelegate getFocusedBuilding() = 43;
-    //void setIndoorStateChangeListener(IOnIndoorStateChangeListener listener) = 44;
+    //void setOnIndoorStateChangeListener(IOnIndoorStateChangeListener listener) = 44;
 
     void setWatermarkEnabled(boolean watermark) = 50;
 
@@ -128,11 +128,11 @@ interface IGoogleMapDelegate {
     void onExitAmbient() = 81;
 
     void setOnGroundOverlayClickListener(IOnGroundOverlayClickListener listener) = 82;
-    void setOnInfoWindowLongClickListener(IOnInfoWindowLongClickListener listener) = 83;
+    void setInfoWindowLongClickListener(IOnInfoWindowLongClickListener listener) = 83;
     void setOnPolygonClickListener(IOnPolygonClickListener listener) = 84;
-    void setOnInfoWindowCloseListener(IOnInfoWindowCloseListener listener) = 85;
+    void setInfoWindowCloseListener(IOnInfoWindowCloseListener listener) = 85;
     void setOnPolylineClickListener(IOnPolylineClickListener listener) = 86;
-    void setOnCircleClickListener(IOnCircleClickListener listener) = 88;
+    void setCircleClickListener(IOnCircleClickListener listener) = 88;
 
     boolean setMapStyle(in MapStyleOptions options) = 90;
     void setMinZoomPreference(float minZoom) = 91;

@@ -25,24 +25,16 @@ import org.microg.safeparcel.SafeParceled;
 // TODO
 public class TokenRequest extends AutoSafeParcelable{
 
-    @Field(1)
-    private int versionCode = 8;
-    @Field(2)
-    private String service;
-    @Field(3)
+    @SafeParceled(1)
+    private int versionCode = 4;
+    @SafeParceled(3)
     public String accountName;
-    @Field(4)
+    @SafeParceled(4)
     public Bundle extras;
-    @Field(7)
-    public boolean signingIn;
-    @Field(9)
+    @SafeParceled(9)
     public String consent;
-    @Field(15)
+    @SafeParceled(15)
     public String accountType;
-    @Field(16)
-    public int delegationType;
-    @Field(17)
-    public String delegateeUserId;
 
     public Account getAccount() {
         return new Account(accountName, accountType);

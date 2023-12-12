@@ -19,6 +19,8 @@ dependencies {
     implementation "androidx.preference:preference-ktx:$preferenceVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    compileOnly project(':play-services-core-proto')
 }
 
 android {

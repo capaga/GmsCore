@@ -77,7 +77,6 @@ public abstract class AssistantActivity extends AppCompatActivity {
             ((Button) findViewById(R.id.next_button)).setText(text);
         }
     }
-
     public void setBackButtonText(@StringRes int res) {
         setBackButtonText(getText(res));
     }

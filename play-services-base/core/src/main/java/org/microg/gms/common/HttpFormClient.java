@@ -16,11 +16,11 @@
 
 package org.microg.gms.common;
 
-import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -28,6 +28,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -80,9 +81,10 @@ public class HttpFormClient {
             }
         }
 
-        Log.d(TAG, "-- Request --\n" + content);
+        Log.d(TAG, "-- Request --\n" + content + " length::" + content.toString().trim().length());
+        String replace = content.toString().trim().replace("\n", "");
         OutputStream os = connection.getOutputStream();
-        os.write(content.toString().getBytes());
+        os.write(replace.trim().getBytes());
         os.close();
 
         if (connection.getResponseCode() != 200) {
@@ -117,7 +119,21 @@ public class HttpFormClient {
     private static void appendParam(StringBuilder content, String key, String value) {
         if (content.length() > 0)
             content.append("&");
-        content.append(Uri.encode(key)).append("=").append(Uri.encode(String.valueOf(value)));
+        if (key.equals("token_request_options")) {
+            content.append(URLEncoder.encode(key)).append("=").append(value);
+        } else if (key.equals("service")) {
+            try {
+                content.append(URLEncoder.encode(key)).append("=").append(URLEncoder.encode(value, "utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                content.append(URLEncoder.encode(key)).append("=").append(URLEncoder.encode(String.valueOf(value), "utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static <T> T parseResponse(Class<T> tClass, HttpURLConnection connection, String result) throws IOException {

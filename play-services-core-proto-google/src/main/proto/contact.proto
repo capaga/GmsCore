@@ -1,0 +1,616 @@
+syntax = "proto2";
+option java_multiple_files = true;
+option java_package = "org.microg.gms.people";
+package google.internal.people.v2;
+
+service InternalPeopleService{
+  rpc SyncPeople(ceia) returns (cehh) {}
+  rpc BulkInsertContacts(cefl) returns (cefn) {}
+  rpc DeletePeople(cefx) returns (cefy) {}
+  rpc UpdatePerson(ceig) returns (ceih) {}
+  rpc CreateContactGroups(cefp) returns (cefq) {}
+}
+
+message cefq {
+  repeated cmdp a =1;
+}
+
+message cmdp {
+  optional cmdk  b = 4;
+  optional string  c = 2;
+  optional cmdj  d = 3;
+  optional string  e = 5;
+  optional int32  f = 6;
+}
+
+message cefp {
+  repeated cmdm a =1;
+  required cegt  b = 2;
+  required cehl  c = 3;
+}
+
+message cegt {
+  repeated int32 a = 1 [packed=true];
+}
+
+message cmdm {
+  optional cmdk  b = 1;
+  optional cmdj  c = 2;
+  optional string  d = 3;
+}
+
+message cmdk {
+  optional string  b = 1;
+}
+
+message cmdj {
+  optional cmdk  b = 1;
+  optional cmdl  c = 2;
+  optional cmdt  d = 3;
+  repeated cmdi e =4;
+  optional cmds  f = 5;
+}
+
+message cmds {
+  optional int32  b = 1;
+}
+
+message cmdl {
+  optional string  b = 1;
+  optional string  c = 2;
+}
+
+message cmdt {
+  optional int64  a = 2;
+}
+
+message cmdi {
+  optional int32  a = 1;
+}
+
+message ceig {
+  optional string a = 1;
+  optional bvaw  b = 2;
+  optional ckex  c = 3;
+  optional int32  d = 4;
+  optional bool  e = 8;
+  optional cegl  f = 13;
+  optional bool  g = 14;
+  repeated string  h = 11;
+}
+
+message ceih {
+  optional cehn a = 1;
+}
+
+message cefx {
+  repeated string a = 2;
+  optional cehl  b = 3;
+  optional cmcp  c = 4;
+}
+
+message cmcp {
+  optional cmcr b = 1;
+}
+
+message cmcr {
+  oneof c {
+    cmcl oneofField0 = 3;
+    cmcy oneofField1 = 4;
+  }
+  optional int32  d = 1;
+}
+
+message cmcl {
+  optional string  b = 1;
+}
+
+message cmcy {}
+
+message cefy {
+}
+
+message cefn {
+  repeated cefm a =1;
+}
+
+message cefm {
+  optional cehn a = 1;
+}
+
+message cehn {
+  optional bvaw a = 3;
+  optional clfl  b = 5;
+}
+
+message clfl {
+  optional int32 a = 1;
+  optional string  b = 2;
+  repeated ckdf c =3;
+}
+
+message ckdf {
+  optional string a = 1;
+  optional bytes  b = 2;
+}
+
+message cefl {
+  repeated cefk a =1;
+  optional ckex  b = 2;
+  optional cegl  c = 4;
+}
+
+message cegl {
+  repeated string a = 1;
+  optional cehs  b = 2;
+  optional cegg  c = 3;
+  optional cehl  d = 4;
+  optional int32  e = 6;
+  optional cehj f = 8;
+}
+
+message cehh {
+  repeated bvaw a =1;
+  optional string  b = 2;
+  optional string  c = 3;
+  optional int32  d = 6;
+  optional cefg  e = 7;
+}
+
+message cefg {
+  optional int32 a = 1;
+}
+
+message asly{
+  optional atcc  b = 1;
+  optional int64  c = 2;
+  optional int64  d = 3;
+}
+
+message atcc {
+  optional int32 b = 1;
+  optional atby  c = 2;
+  optional int32 d = 3;
+}
+
+message atby {
+  optional atcb  b = 2;
+  optional atbx  c = 3;
+}
+
+message atbx {
+  optional int64  b = 2;
+}
+
+message atcb {
+  optional int32  b = 1;
+  optional int32  c = 2;
+  optional int32  d = 3;
+  optional int32  e = 4;
+  optional int32  f = 5;
+}
+
+message cefk{
+  optional bvaw a = 1;
+  optional uint64  b = 2;
+}
+
+message bvbr {
+  optional string  a = 1;
+}
+
+message buzy {
+  optional int32  b = 2;
+  optional bvbr  c = 4;
+}
+
+message buzr {
+  optional int32 b = 1;
+  optional string  c = 2;
+}
+
+message bvba {
+  optional int32  b = 2;
+  optional int32  c = 15;
+  optional string  d = 9;
+  optional bool  e = 3;
+  repeated buzy f =13;
+  optional bool  g = 12;
+  repeated buzr h =20;
+}
+
+message bvab {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message buzn {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+}
+
+message bvbo {
+  optional int32  b = 6;
+  optional string  c = 2;
+  optional bool  d = 3;
+  optional int64  e = 4;
+  optional string  f = 5;
+}
+
+message bvah{
+  repeated bvbo a =3;
+}
+
+message buzu {
+  optional string  b = 1;
+  optional int64  c = 2;
+}
+
+message buzt {
+  repeated int32 a = 1;
+}
+
+message cmcu {
+  optional int32 b = 1;
+  optional string  c = 2;
+}
+
+message cmcm {
+  optional int32 b = 1;
+  repeated cmcu c =2;
+}
+
+message cmcx {
+  optional string  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+  optional string  f = 5;
+}
+
+message bvbi {
+  optional bool  b = 1;
+  optional bool  c = 2;
+  optional cmcx  d = 3;
+  optional string  e = 4;
+}
+
+message bvbj {
+  optional string  b = 3;
+  optional int64  c = 4;
+  optional string  d = 1;
+  optional string  e = 2;
+  optional int64  f = 5;
+  optional buzt g = 7;
+  optional int32  h = 8;
+  repeated cmcm i =11;
+  optional bvbi j = 12;
+}
+
+message ckil {
+  optional int64 a = 1;
+  optional int32  b = 2;
+}
+
+message buzv {
+  optional buzu  b = 1;
+  repeated bvbj c =2;
+  optional ckil  d = 6;
+}
+
+message bvbe {
+  optional int32 b = 25;
+  repeated int64  c = 6;
+  optional bvah  d = 22;
+  repeated buzv e =28;
+}
+
+message buzk {
+  optional int32 a = 2;
+}
+
+message buzo {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message bvam {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 16;
+  optional string  e = 4;
+  optional string  f = 5;
+  optional string  g = 6;
+  optional string  h = 7;
+  optional string  i = 8;
+  optional string  j = 14;
+  optional string  k = 9;
+  optional string  l = 10;
+  optional string  m = 15;
+  optional string  n = 3;
+}
+
+message bvbg {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional bool  d = 3;
+  optional string  e = 4;
+}
+
+message bvag {
+  optional bvba b = 1;
+  optional string c = 2;
+  optional string d = 3;
+}
+
+message buzz {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 6;
+}
+
+message bvbf {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 5;
+  optional string  f = 4;
+}
+
+message buzg {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message bvbq {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message cmmp{
+  optional int32 a = 1;
+  optional int32  b = 2;
+  optional int32  c = 3;
+}
+
+message buzl {
+  optional bvba  b = 1;
+  optional int64  c = 2;
+  optional cmmp  d = 5;
+  optional string  e = 4;
+}
+
+message bvap {
+  optional bvba b = 1;
+  optional string  c = 2;
+  optional int32 d = 3;
+}
+
+message bval {
+  oneof c {
+    string oneofField0 = 2;
+    string oneofField1 = 3;
+  }
+  optional bvba  d = 1;
+}
+
+message bvat {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+  optional string  f = 5;
+  optional string  g = 6;
+  optional string  h = 8;
+  optional int32 i = 10;
+}
+
+message bvaq {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message ccsf {
+  optional fixed32  b = 1;
+  optional fixed32  c = 2;
+}
+
+message ccsi {
+  optional ccsf  c = 1;
+  optional ccsf  d = 2;
+}
+
+message bvbh {
+  optional ccsf  c = 1;
+  optional ccsi  d = 3;
+}
+
+message buzh {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+  optional string  f = 5;
+  optional string  g = 12;
+  optional string  h = 6;
+  optional string  i = 7;
+  optional string  j = 8;
+  optional string  k = 9;
+  optional bvbh  m = 14;
+}
+
+message bvbm {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message bvai {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+}
+
+message bvaa {
+  optional bvba  b = 1;
+  optional int64  c = 2;
+  optional string  d = 3;
+}
+
+message bvbp {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message bvaf {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message bvbn {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message bvaj {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message bvbl {
+  optional string  a = 2;
+  repeated int32 b = 3;
+}
+
+message bvau {
+  optional bvba b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message buzm {
+  optional bvba  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+}
+
+message bvak {
+  optional bvba  b = 1;
+  optional string  c = 2;
+}
+
+message bvaw {
+  repeated bvab A =43;
+  optional string  b_small = 1;
+  repeated buzn B_big =44;
+  optional bvbe  c_small = 2;
+  repeated buzk C_big =50;
+  repeated buzo D_big =104;
+  repeated bvam d_small =3;
+  repeated bvbg e =4;
+  repeated bvag f =9;
+  repeated buzz g =10;
+  repeated bvbf h =12;
+  repeated buzg i =6;
+  repeated bvbq j =7;
+  repeated buzl k =8;
+  repeated bvap l =11;
+  repeated bvat m =13;
+  repeated bvaq n =27;
+  repeated buzh o =15;
+  repeated bvbm p =17;
+  repeated bvai q =18;
+  repeated bvaa r =19;
+  repeated bvbp s =20;
+  repeated bvaf t =35;
+  repeated bvbn u =37;
+  repeated bvaj v =39;
+  repeated bvbl w =48;
+  repeated bvau x =40;
+  repeated buzm y =41;
+  repeated bvak z =42;
+}
+
+message cehz {
+  optional string a = 1;
+  optional int32  b = 2;
+}
+
+message ckex {
+  repeated string a = 1;
+}
+
+message cehr {
+  optional int32 a = 2 [default = 0];
+}
+
+message cehs {
+  optional ckex a = 1;
+  repeated int32  b = 3 [packed=true];
+  optional cehr  c = 7;
+}
+
+message cefo {
+  optional string a = 1;
+  optional string  b = 2;
+}
+
+message cehk {
+  optional bool a = 1;
+  optional bool  c = 2;
+}
+
+message cmco {
+  optional int32  b = 1;
+}
+
+message cehl {
+  optional cefo a = 4;
+  optional cehk  b = 5;
+  optional cmco  c = 9;
+}
+
+message cefs {
+  repeated int32 a = 1 [packed=true];
+}
+
+message cehm {
+  optional int32 a = 1;
+}
+
+message cehj {
+  optional cefs a = 4;
+  optional cehm  b = 6;
+  repeated int32 c = 9 [packed=true];
+}
+
+message cegg {
+  repeated int32 a = 1 [packed=true];
+}
+
+message ceia {
+  optional int32 a = 1;
+  optional string  b = 2;
+  optional cehz  c = 3;
+  optional cehs  d = 4;
+  optional cehl  e = 5;
+  optional cehj  f = 6;
+  optional cegg  g = 8;
+  optional string  h = 9;
+}
+
+message atid {
+  optional string  b = 1;
+  optional string  c = 2;
+  optional string  d = 3;
+  optional string  e = 4;
+  optional int64  f = 6;
+}

@@ -16,16 +16,18 @@
 
 package org.microg.gms.common;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import android.content.Context;
+import android.os.Parcel;
 import android.util.Log;
-import android.widget.Toast;
+
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
-
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class Utils {
 
@@ -64,5 +66,25 @@ public class Utils {
             is.close();
         }
         return bos.toByteArray();
+    }
+
+    public static byte[] safeParcelableInstanceToBytesArray(AutoSafeParcelable safeParcelable) {
+        Parcel parcel = Parcel.obtain();
+        safeParcelable.writeToParcel(parcel, 0);
+        byte[] arr_b = parcel.marshall();
+        parcel.recycle();
+        return arr_b;
+    }
+
+    public static AutoSafeParcelable bytesArrayToSafeParcelableInstance(byte[] bytes, AutoSafeParcelable.Creator creator) {
+        if (creator == null) {
+            return null;
+        }
+        Parcel parcel = Parcel.obtain();
+        parcel.unmarshall(bytes, 0, bytes.length);
+        parcel.setDataPosition(0);
+        AutoSafeParcelable safeParcelable = (AutoSafeParcelable) creator.createFromParcel(parcel);
+        parcel.recycle();
+        return safeParcelable;
     }
 }

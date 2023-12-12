@@ -8,14 +8,8 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
-import android.os.Parcel;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.gms.common.internal.safeparcel.AbstractSafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
-import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,20 +20,12 @@ import java.util.List;
  * Represents up to three user verification methods used by the authenticator.
  */
 @PublicApi
-@SafeParcelable.Class
-public class UvmEntries extends AbstractSafeParcelable {
-    @Field(value = 1, getterName = "getUvmEntryList")
-    @Nullable
+public class UvmEntries extends AutoSafeParcelable {
+    @Field(1)
     private List<UvmEntry> uvmEntryList;
 
-    @Nullable
     public List<UvmEntry> getUvmEntryList() {
         return uvmEntryList;
-    }
-
-    @Constructor
-    UvmEntries(@Param(1) @Nullable List<UvmEntry> uvmEntryList) {
-        this.uvmEntryList = uvmEntryList;
     }
 
     @Override
@@ -71,29 +57,25 @@ public class UvmEntries extends AbstractSafeParcelable {
         public Builder() {
         }
 
-        public Builder addAll(@NonNull List<UvmEntry> uvmEntryList) {
+        public Builder addAll(List<UvmEntry> uvmEntryList) {
             if (this.uvmEntryList.size() + uvmEntryList.size() > 3) throw new IllegalStateException();
             this.uvmEntryList.addAll(uvmEntryList);
             return this;
         }
 
-        public Builder addUvmEntry(@Nullable UvmEntry uvmEntry) {
+        public Builder addUvmEntry(UvmEntry uvmEntry) {
             if (uvmEntryList.size() >= 3) throw new IllegalStateException();
             uvmEntryList.add(uvmEntry);
             return this;
         }
 
-        @NonNull
         public UvmEntries build() {
-            return new UvmEntries(new ArrayList<>(uvmEntryList));
+            UvmEntries uvmEntries = new UvmEntries();
+            uvmEntries.uvmEntryList = new ArrayList<>(uvmEntryList);
+            return uvmEntries;
         }
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        CREATOR.writeToParcel(this, dest, flags);
-    }
-
-    @Hide
-    public static SafeParcelableCreatorAndWriter<UvmEntries> CREATOR = findCreator(UvmEntries.class);
+    @PublicApi(exclude = true)
+    public static Creator<UvmEntries> CREATOR = new AutoCreator<>(UvmEntries.class);
 }

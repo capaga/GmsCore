@@ -19,5 +19,32 @@ package com.google.android.gms.reminders.model;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 public class CustomizedSnoozePresetEntity extends AutoSafeParcelable {
-    public static Creator<CustomizedSnoozePresetEntity> CREATOR = new AutoCreator<CustomizedSnoozePresetEntity>(CustomizedSnoozePresetEntity.class);
+    public static Creator<CustomizedSnoozePresetEntity> CREATOR = new AutoCreator<>(CustomizedSnoozePresetEntity.class);
+    @Field(2)
+    public TimeEntity morningCustomizedTime;
+    @Field(3)
+    public TimeEntity afternoonCustomizedTime;
+    @Field(4)
+    public TimeEntity eveningCustomizedTime;
+
+    public CustomizedSnoozePresetEntity(TimeEntity morningCustomizedTime, TimeEntity afternoonCustomizedTime, TimeEntity eveningCustomizedTime) {
+        this.morningCustomizedTime = morningCustomizedTime;
+        this.afternoonCustomizedTime = afternoonCustomizedTime;
+        this.eveningCustomizedTime = eveningCustomizedTime;
+    }
+
+    public CustomizedSnoozePresetEntity() {
+        this.morningCustomizedTime = null;
+        this.afternoonCustomizedTime = null;
+        this.eveningCustomizedTime = null;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomizedSnoozePresetEntity{" +
+                "morningCustomizedTime=" + morningCustomizedTime +
+                ", afternoonCustomizedTime=" + afternoonCustomizedTime +
+                ", eveningCustomizedTime=" + eveningCustomizedTime +
+                '}';
+    }
 }

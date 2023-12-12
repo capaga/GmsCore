@@ -16,6 +16,8 @@
 
 package org.microg.gms.reminders;
 
+import android.accounts.AccountManager;
+import android.os.Build;
 import android.os.RemoteException;
 
 import com.google.android.gms.common.internal.GetServiceRequest;
@@ -25,13 +27,26 @@ import org.microg.gms.BaseService;
 import org.microg.gms.common.GmsService;
 
 public class RemindersService extends BaseService {
+    private final AccountListener accountListener;
+    private static boolean listenerSet = false;
 
     public RemindersService() {
         super("GmsRemindSvc", GmsService.REMINDERS);
+        accountListener = new AccountListener(this);
     }
 
     @Override
     public void handleServiceRequest(IGmsCallbacks callback, GetServiceRequest request, GmsService service) throws RemoteException {
-        callback.onPostInitComplete(0, new RemindersServiceImpl(), null);
+        RemindersServiceImpl binder = new RemindersServiceImpl(this, request.account);
+        callback.onPostInitComplete(0, binder, null);
+        if (!listenerSet) {
+            listenerSet = true;
+            AccountManager manager = AccountManager.get(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                manager.addOnAccountsUpdatedListener(accountListener, null, true, new String[]{"com.google"});
+            } else {
+                manager.addOnAccountsUpdatedListener(accountListener, null, true);
+            }
+        }
     }
 }

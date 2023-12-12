@@ -5,26 +5,17 @@
 
 package com.google.android.gms.signin.internal;
 
-import androidx.annotation.NonNull;
 import com.google.android.gms.common.internal.ResolveAccountRequest;
 import org.microg.gms.common.Hide;
-import org.microg.gms.utils.ToStringHelper;
 import org.microg.safeparcel.AutoSafeParcelable;
 
 @Hide
 public class SignInRequest extends AutoSafeParcelable {
-    @Field(1)
-    private final int versionCode = 1;
+    private static final int VERSION_CODE = 1;
     @Field(2)
-    public ResolveAccountRequest request;
-
-    @NonNull
-    @Override
-    public String toString() {
-        return ToStringHelper.name("SignInRequest")
-                .field("request", request)
-                .end();
-    }
+    private ResolveAccountRequest mResolveAccountRequest;
+    @Field(1)
+    private int mVersionCode = VERSION_CODE;
 
     public static final Creator<SignInRequest> CREATOR = new AutoCreator<>(SignInRequest.class);
 }

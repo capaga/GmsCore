@@ -31,7 +31,8 @@ public enum Transport implements Parcelable {
     NFC("nfc"),
     USB("usb"),
     INTERNAL("internal"),
-    HYBRID("cable");
+    @PublicApi(exclude = true)
+    CABLE("cable");
 
     private final String value;
 
@@ -58,9 +59,6 @@ public enum Transport implements Parcelable {
     public static Transport fromString(String transport) throws UnsupportedTransportException {
         for (Transport value : values()) {
             if (value.value.equals(transport)) return value;
-        }
-        if (transport.equals("hybrid")) {
-            return HYBRID;
         }
         throw new UnsupportedTransportException("Transport " + transport + " not supported");
     }

@@ -11,7 +11,6 @@ package com.google.android.gms.fido.fido2.api.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
 
@@ -26,7 +25,6 @@ public class COSEAlgorithmIdentifier implements Parcelable {
         this.algorithm = algorithm;
     }
 
-    @NonNull
     public static COSEAlgorithmIdentifier fromCoseValue(int value) throws UnsupportedAlgorithmIdentifierException {
         if (value == RSAAlgorithm.LEGACY_RS1.getAlgoValue()) return new COSEAlgorithmIdentifier(RSAAlgorithm.RS1);
         for (RSAAlgorithm algorithm : RSAAlgorithm.values()) {
@@ -43,7 +41,6 @@ public class COSEAlgorithmIdentifier implements Parcelable {
     }
 
     @Override
-    @NonNull
     public String toString() {
         return ToStringHelper.name("COSEAlgorithmIdentifier")
                 .value(algorithm)

@@ -63,14 +63,16 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
 
     private boolean closed = false;
     private Map<String, Integer> columnIndices;
-    private int[] windowStartPositions;
-    private int count;
 
     protected static final int FIELD_TYPE_NULL = 0;
     protected static final int FIELD_TYPE_INTEGER = 1;
     protected static final int FIELD_TYPE_FLOAT = 2;
     protected static final int FIELD_TYPE_STRING = 3;
     protected static final int FIELD_TYPE_BLOB = 4;
+
+    public DataHolder(Cursor cursor) {
+        this(cursor, 0, null);
+    }
 
     private DataHolder() {
         columns = null;
@@ -118,21 +120,21 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
     }
 
     /**
-     * Get a {@link DataHolder.Builder} to create a new {@link DataHolder} manually.
+     * Get a {@link Builder} to create a new {@link DataHolder} manually.
      *
      * @param columns      The array of column names that the object supports.
      * @param uniqueColumn The non-null column name that must contain unique values. New rows added to the builder with the same value in this column will replace any older rows.
-     * @return {@link DataHolder.Builder} object to work with.
+     * @return {@link Builder} object to work with.
      */
     public static Builder builder(String[] columns, String uniqueColumn) {
         return new Builder(columns, uniqueColumn);
     }
 
     /**
-     * Get a {@link DataHolder.Builder} to create a new {@link DataHolder} manually.
+     * Get a {@link Builder} to create a new {@link DataHolder} manually.
      *
      * @param columns The array of column names that the object supports.
-     * @return {@link DataHolder.Builder} object to work with.
+     * @return {@link Builder} object to work with.
      */
     public static Builder builder(String[] columns) {
         return builder(columns, null);
@@ -337,15 +339,13 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
      * @return the number of rows in the data holder.
      */
     public int getCount() {
-        return count;
-    }
-
-    public double getDouble(String column, int row, int windowIndex) {
-        return windows[windowIndex].getDouble(row, columnIndices.get(column));
-    }
-
-    public float getFloat(String column, int row, int windowIndex) {
-        return windows[windowIndex].getFloat(row, columnIndices.get(column));
+        int c = 0;
+        if (windows != null) {
+            for (CursorWindow window : windows) {
+                c += window.getNumRows();
+            }
+        }
+        return c;
     }
 
     /**
@@ -394,10 +394,6 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
         return windows[windowIndex].getString(row, columnIndices.get(column));
     }
 
-    public boolean hasColumn(String column) {
-        return columnIndices.values().contains(column);
-    }
-
     /**
      * Returns whether the given column at the provided position contains null.
      * This will throw an {@link IllegalArgumentException} if the column does not exist, the
@@ -408,7 +404,7 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
      * @param windowIndex Index of the cursor window to extract the data from.
      * @return Whether the column value is null at this position.
      */
-    public boolean hasNull(String column, int row, int windowIndex) {
+    public boolean isNull(String column, int row, int windowIndex) {
         return windows[windowIndex].isNull(row, columnIndices.get(column));
     }
 
@@ -449,21 +445,6 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
         for (int i = 0; i < columns.length; i++) {
             columnIndices.put(columns[i], i);
         }
-        windowStartPositions = new int[windows.length];
-        this.count = 0;
-        for (int windowIndex = 0; windowIndex < windows.length; windowIndex++) {
-            this.windowStartPositions[windowIndex] = this.count;
-            this.count += this.windows[windowIndex].getNumRows() - (this.count - windows[windowIndex].getStartPosition());
-        }
-    }
-
-    public int getWindowIndex(int row) {
-        if (row < 0 || row >= count) throw new IllegalArgumentException();
-        int windowIndex = 0;
-        for (; windowIndex < windowStartPositions.length; windowIndex++) {
-            if (row < windowStartPositions[windowIndex]) break;
-        }
-        return windowIndex-1;
     }
 
     /**
@@ -485,7 +466,7 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
         }
 
         /**
-         * Instantiate an {@link DataHolder} from this {@link DataHolder.Builder} with the given status code and metadata.
+         * Instantiate an {@link DataHolder} from this {@link Builder} with the given status code and metadata.
          *
          * @param statusCode The status code of this {@link DataHolder}.
          * @param metadata   The metadata associated with this {@link DataHolder} (may be null).
@@ -496,7 +477,7 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
         }
 
         /**
-         * Instantiate an {@link DataHolder} from this {@link DataHolder.Builder} with the given status code and null metadata.
+         * Instantiate an {@link DataHolder} from this {@link Builder} with the given status code and null metadata.
          *
          * @param statusCode The status code of this {@link DataHolder}.
          * @return {@link DataHolder} representation of this object.
@@ -518,19 +499,19 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
          * Note that any data which is added after this call will not be sorted.
          *
          * @param sortColumn The column to sort the rows in this builder by.
-         * @return {@link DataHolder.Builder} to continue construction.
+         * @return {@link Builder} to continue construction.
          */
         public Builder sort(String sortColumn) {
             throw new RuntimeException("Not yet implemented");
         }
 
         /**
-         * Add a new row of data to the {@link DataHolder} this {@link DataHolder.Builder} will create. Note that the data must contain an entry for all columns
+         * Add a new row of data to the {@link DataHolder} this {@link Builder} will create. Note that the data must contain an entry for all columns
          * <p/>
          * Currently the only supported value types that are supported are String, Long, and Boolean (Integer is also accepted and will be stored as a Long).
          *
          * @param values {@link ContentValues} containing row data.
-         * @return {@link DataHolder.Builder} to continue construction.
+         * @return {@link Builder} to continue construction.
          */
         public Builder withRow(ContentValues values) {
             HashMap<String, Object> row = new HashMap<String, Object>();
@@ -541,12 +522,12 @@ public class DataHolder extends AutoSafeParcelable implements Closeable {
         }
 
         /**
-         * Add a new row of data to the {@link DataHolder} this {@link DataHolder.Builder} will create. Note that the data must contain an entry for all columns
+         * Add a new row of data to the {@link DataHolder} this {@link Builder} will create. Note that the data must contain an entry for all columns
          * <p/>
          * Currently the only supported value types that are supported are String, Long, and Boolean (Integer is also accepted and will be stored as a Long).
          *
          * @param row Map containing row data.
-         * @return {@link DataHolder.Builder} to continue construction.
+         * @return {@link Builder} to continue construction.
          */
         public Builder withRow(HashMap<String, Object> row) {
             if (uniqueColumn != null) {

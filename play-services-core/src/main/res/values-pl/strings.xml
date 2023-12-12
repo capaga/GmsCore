@@ -49,6 +49,11 @@ To zajmie kilka minut.</string>
     <string name="service_name_mcs">Cloud Messaging</string>
     <string name="service_name_snet">Google SafetyNet</string>
 
+    <string name="service_status_disabled">Nieaktywny</string>
+    <string name="service_status_enabled">Aktywny</string>
+    <string name="service_status_automatic">Automatyczny</string>
+    <string name="service_status_manual">Ręczny</string>
+
     <string name="games_title">Gry Google Play</string>
     <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> chce wykorzystać Gry Google Play</string>
     <string name="games_info_content">Aby korzystać z gier Google Play wymagana jest instalacja aplikacji Gry Google Play . Aplikacja może dalej działać bez Gry Google Play, ale możliwe, że nie będzie działać prawidłowo.</string>
@@ -145,4 +150,14 @@ To zajmie kilka minut.</string>
 
     <string name="pref_safetynet_test_title">Wypróbuj działanie SafetyNet</string>
     <string name="pref_droidguard_operation_mode">Tryb działania</string>
+
+    <string name="platform_placeholder">$$</string>
+    <string name="privacy_policy">Polityka prywatności</string>
+    <string name="services_info">warunki usługi</string>
+    <string name="continue_use">nadal używaj \"$$\"</string>
+    <string name="protobuf">Aby kontynuować, Google przekaże Twoje imię i nazwisko, adres e-mail oraz zdjęcie profilowe użytkownikowi \"$$\". Przed użyciem tej aplikacji zapoznaj się z polityką prywatności i warunkami usługi</string>
+    <string name="protobuf2">Aby kontynuować, Google przekaże Twoje imię i nazwisko, adres e-mail oraz zdjęcie profilowe do \"$$\".</string>
+    <string name="select_account_title">Wybierz konto</string>
+    <string name="add_more_account">Dodaj kolejne konto</string>
+    <string name="device_is_not_supported">To urządzenie nie jest obsługiwane i nie można używać microG.</string>
 </resources>
