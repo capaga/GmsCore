@@ -1,0 +1,133 @@
+syntax = "proto2";
+
+option java_multiple_files = true;
+option java_outer_classname = "BackupProto";
+option java_package = "com.google.android.gms.backup";
+
+message BackupRequest {
+  optional int64 androidId = 1;
+  optional int64 androidId_2 = 50;
+  optional string randomUUID = 25;
+  optional string authToken = 14;
+  optional int32  f = 15;
+  optional int32  storageType = 19;
+  optional string  h = 31;
+  optional string  i = 44;
+  optional bool j = 36;
+  repeated group BackupData = 2 {
+    optional string packageName = 3;
+    optional group C = 4 {
+      optional string b = 5;
+    }
+    repeated group D = 7 {
+      optional string  b = 8;
+      optional string  c = 9;
+    }
+    repeated group E = 10 {
+      optional string b = 12;
+    }
+    repeated KVBackupData kvBackupData = 6;
+    optional uint64  g = 4105;
+    optional string  h = 33;
+    optional bool i = 35;
+  }
+  optional group L = 13 {
+    optional int32 b = 24;
+    optional bool  c = 46;
+    optional qeu d = 59;
+    optional int64  f = 4103;
+  }
+  optional group ClearBackupData = 17 {
+    optional bool isClear = 18;
+  }
+  optional BackupStateRequestConfig backupStateRequestConfig = 26;
+  optional qex o = 42;
+  optional qet p = 53;
+}
+
+message qeu {
+  optional int32 b = 1;
+  optional int32 c = 2;
+}
+
+message BackupStateRequestConfig {
+  repeated string  b = 1;
+  optional bool getKVBackupInfo = 2;
+  optional bool getFullBackupInfo = 3;
+  optional bool getPhotosBackupInfo = 4;
+}
+
+message qex {
+  optional string  b = 37;
+  repeated qew c = 40;
+  optional bool d = 41;
+}
+
+message qew {
+  optional string  b = 38;
+  optional qeh c = 39;
+}
+
+message qeh {
+  optional bytes  b = 1;
+  optional ctgo c = 2;
+}
+
+message ctgo {
+  optional bool b = 1;
+}
+
+message qet {
+  repeated string a = 1;
+}
+
+message KVBackupData {
+  optional string key = 1;
+  optional bytes data = 2;
+}
+
+message BackupResponse {
+  optional int32 code = 11;
+  optional string  c = 29;
+  optional string  d = 35;
+  repeated group KeyValueBackupInfo = 2 {
+    optional string  packageName = 3;
+    optional uint64  c = 12;
+    repeated qfi d = 4;
+    optional string  e = 18;
+    optional int32 hasError = 5;
+    repeated string  g = 6;
+    optional int32  j = 42;
+    optional qeh h = 30;
+    optional int32  i = 4108;
+  }
+  repeated group F = 7 {
+    optional int64  b = 8;
+    optional uint64  c = 9;
+    optional string  d = 13;
+    optional uint64  e = 15;
+    optional int32  f = 33;
+    optional uint64  h = 10;
+  }
+  repeated AppBackupDetail appBackupDetail = 21;
+  repeated qfa h = 39;
+}
+
+message qfa {
+  optional string  a = 1;
+  repeated string  b = 2;
+  repeated string  c = 3;
+}
+
+message qfi {
+  optional string  b = 1;
+  optional bytes  c = 2;
+}
+
+message AppBackupDetail {
+  optional string  packageName = 1;
+  optional uint32  kvBackupSize = 2;
+  optional uint32  fullBackupSize = 3;
+  optional uint64  lastBackupTimestamp = 4;
+  optional uint64  unknownLong = 5;
+}

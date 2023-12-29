@@ -5,11 +5,12 @@
 
 package com.google.android.gms.auth;
 
-import android.accounts.Account;
 import android.content.Intent;
 
+import org.microg.gms.common.Hide;
 import org.microg.safeparcel.AutoSafeParcelable;
 
+@Hide
 public class GetHubTokenInternalResponse extends AutoSafeParcelable {
     @Field(1)
     public TokenData tokenData;

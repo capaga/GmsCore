@@ -40,10 +40,12 @@ import com.huawei.hms.maps.CameraUpdate
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.MapView
 import com.huawei.hms.maps.MapsInitializer
+import com.huawei.hms.maps.common.util.DistanceCalculator
 import com.huawei.hms.maps.internal.IOnIndoorStateChangeListener
 import com.huawei.hms.maps.internal.IOnInfoWindowCloseListener
 import com.huawei.hms.maps.internal.IOnInfoWindowLongClickListener
 import com.huawei.hms.maps.internal.IOnPoiClickListener
+import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.Marker
 import org.microg.gms.maps.hms.model.*
 import org.microg.gms.maps.hms.utils.*
@@ -563,7 +565,8 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
                 }
             }
             mapView.getMapAsync(this::initMap)
-
+            //用来HMS Map Kit升级检测
+            DistanceCalculator.computeDistanceBetween(LatLng(0.0,0.0), LatLng(0.0,0.0))
             created = true
         }
     }
@@ -763,12 +766,6 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
     override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean =
             if (super.onTransact(code, data, reply, flags)) {
                 Log.d(TAG, "onTransact: $code, $data, $flags")
-                if (code == 26 && "com.ubercab" == context.packageName) {
-                    if (mapView?.parent?.parent != null && mapView?.parent?.parent!!.javaClass.name == "com.google.android.gms.maps.MapView") {
-                        //Trigger onDescendantInvalidated method
-                        (mapView?.parent?.parent as ViewGroup).invalidate()
-                    }
-                }
                 true
             } else {
                 Log.w(TAG, "onTransact [unknown]: $code, $data, $flags"); false

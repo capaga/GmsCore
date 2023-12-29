@@ -201,4 +201,50 @@ microG GmsCore 内置一套自由的 SafetyNet 实现，但是官方服务器要
     <string name="restore_contacts_summary2">尚未将任何联系人备份到此账号</string>
     <string name="hlep_and_feedback">帮助和反馈</string>
     <string name="restore_contacts">恢复通讯录</string>
+    <string name="hint">提示</string>
+    <string name="download_microG_companion">为了更好的体验，需要你安装mircoG Companion</string>
+
+    <string name="signin_confirm_title">允许您登录 “<xliff:g example="F-Droid">%1$s</xliff:g>”</string>
+    <string name="signin_confirm_button_text">允许和共享</string>
+    <string name="signin_picker_title">选择帐户</string>
+    <string name="signin_picker_subtitle">继续使用 “<xliff:g example="F-Droid">%1$s</xliff:g>”</string>
+    <string name="signin_picker_add_account_label">添加其他帐户</string>
+    <string name="signin_subtext_sharing">为了继续进行，Google会将您的姓名、电子邮件地址和个人资料照片提供给 “<xliff:g example="F-Droid">%1$s</xliff:g>”。</string>
+
+    <string name="backup_settings_title">备份</string>
+    <string name="backup_settings_account_and_storage">账号存储空间</string>
+    <string name="backup_settings_account_name">example@gmail.com</string>
+    <string name="backup_settings_storage_info">总容量: %s 已使用: %s 占 ( %s%% )</string>
+    <string name="backup_settings_backup_by_google_one">Google One 备份</string>
+    <string name="backup_settings_last_backup_time">%s · 最后备份: %s</string>
+    <string name="backup_settings_backup_now">立即备份</string>
+    <string name="backup_settings_tips">设备处于闲置和充电状态 2 小时后，就会通过WLAN自动备份</string>
+    <string name="backup_settings_backup_details">备份详情</string>
+    <string name="backup_settings_apps">应用</string>
+    <string name="backup_settings_photos_and_videos">照片和视频</string>
+    <string name="backup_settings_sms_messages">短信</string>
+    <string name="backup_settings_call_history">通话记录</string>
+    <string name="backup_settings_device_settings">设备设置</string>
+    <string name="backup_settings_google_account_data">Google 帐号数据</string>
+    <string name="backup_settings_apps_backup_detail">%s · %s个应用</string>
+    <string name="backup_settings_photos_and_videos_backup_detail">备份至帐号: %s</string>
+    <string name="backup_settings_sms_messages_backup_detail">没有备份任何数据</string>
+    <string name="backup_settings_call_history_backup_detail">没有备份任何数据</string>
+    <string name="backup_settings_device_settings_backup_detail">正在等待备份</string>
+    <string name="backup_settings_google_account_data_detail">点击查看帐号数据同步设置</string>
+    <string name="backup_settings_advanced_settings_title">高级设置</string>
+    <string name="backup_settings_backup_using_mobile_or_metered_wifi_data">使用移动网络或按流量计费的WLAN网络进行备份</string>
+    <string name="backup_settings_manage_backup_storage">管理存储空间</string>
+    <string name="backup_settings_use_mobile_data_tips">您可能需要支付费用</string>
+    <string name="backup_settings_network_tips_use_mobile_data">设备处于闲置和充电状态 2 小时后,就会自动备份</string>
+    <string name="backup_settings_network_tips_use_wifi_data">设备处于闲置和充电状态 2 小时后，就会通过WLAN自动备份</string>
+    <string name="backup_settings_check_status">正在检查状态 ···</string>
+    <string name="backup_settings_no_data_backed">没有备份任何数据</string>
+    <string name="backup_settings_photos_auto_backup_disabled">已关闭</string>
+    <string name="backup_settings_photos_no_apk">未安装Google相册</string>
+    <string name="backup_settings_photos_has_error">出现异常</string>
+    <string name="backup_settings_photos_need_update">更新Google相册才能备份</string>
+    <string name="backup_settings_backing_up">正在备份</string>
+    <string name="backup_settings_choose_backup_account">选择账号</string>
+    <string name="backup_settings_add_account">增加账号</string>
 </resources>

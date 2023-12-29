@@ -151,4 +151,6 @@
     <string name="select_account_title">選擇賬號</string>
     <string name="add_more_account">再添加一個賬號</string>
     <string name="device_is_not_supported">該設備不受支持，無法使用 microG。</string>
+    <string name="hint">提示</string>
+    <string name="download_microG_companion">為了更好的體驗，需要你安裝mircoG Companion</string>
 </resources>

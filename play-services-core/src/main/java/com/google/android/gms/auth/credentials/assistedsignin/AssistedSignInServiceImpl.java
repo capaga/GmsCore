@@ -14,6 +14,8 @@ import com.google.android.gms.auth.api.identity.internal.IBeginSignInCallback;
 import com.google.android.gms.auth.api.identity.internal.IGetPhoneNumberHintIntentCallback;
 import com.google.android.gms.auth.api.identity.internal.IGetSignInIntentCallback;
 import com.google.android.gms.auth.api.identity.internal.ISignInService;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.internal.SignInConfiguration;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.api.internal.IStatusCallback;
 
@@ -22,7 +24,7 @@ import org.microg.gms.common.Utils;
 
 public class AssistedSignInServiceImpl extends ISignInService.Stub {
     private static final String TAG = "AssistedSignInSvcImpl";
-    private static final String ACTION_SIGN_IN = "com.google.android.gms.auth.api.credentials.GOOGLE_SIGN_IN";
+    private static final String ACTION_SIGN_IN = "com.google.android.gms.auth.GOOGLE_SIGN_IN";
     public static final String GET_SIGN_IN_INTENT_REQUEST = "get_sign_in_intent_request";
     public static final String CLIENT_PACKAGE_NAME = "client_package_name";
     private final Context mContext;
@@ -47,12 +49,13 @@ public class AssistedSignInServiceImpl extends ISignInService.Stub {
 
     @Override
     public void getSignInIntent(IGetSignInIntentCallback callback, GetSignInIntentRequest request) throws RemoteException {
+        SignInConfiguration signInConfiguration = new SignInConfiguration();
+        GoogleSignInOptions.Builder googleSignInOptions = new GoogleSignInOptions.Builder();
+        signInConfiguration.packageName = clientPackageName;
+        signInConfiguration.options = googleSignInOptions.requestIdToken(request.clientId).requestEmail().requestProfile().requestId().build();
         Intent intent = new Intent(ACTION_SIGN_IN);
         intent.setPackage(Constants.GMS_PACKAGE_NAME);
-        Bundle bundle = new Bundle();
-        bundle.putString(CLIENT_PACKAGE_NAME, this.clientPackageName);
-        bundle.putByteArray(GET_SIGN_IN_INTENT_REQUEST, Utils.safeParcelableInstanceToBytesArray(request));
-        intent.putExtras(bundle);
+        intent.putExtra("config", signInConfiguration);
         int flags = PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT;
         PendingIntent activity = PendingIntent.getActivity(this.mContext, 0, intent, flags);
         callback.onResult(Status.SUCCESS, activity);

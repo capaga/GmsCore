@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/backup_settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/backup_settings_title"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_5_per"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_5_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <LinearLayout
+        android:id="@+id/backup_settings_storage_info_linear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_95_percent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_title">
+
+        <TextView
+            android:id="@+id/backup_settings_storage_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/backup_settings_account_and_storage" />
+
+        <TextView
+            android:id="@+id/backup_settings_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_account_name" />
+
+        <ProgressBar
+            android:id="@+id/backup_settings_storage_used_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/backup_settings_storage_used_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_storage_info"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/backup_settings_manage_backups_storage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/backup_settings_manage_backup_storage"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_storage_info_linear" />
+
+    <Switch
+        android:id="@+id/backup_settings_google_one_backup_switch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/backup_settings_backup_by_google_one"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_95_percent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_manage_backups_storage" />
+
+    <TextView
+        android:id="@+id/backup_settings_last_backup_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_settings_last_backup_time"
+        app:layout_constraintStart_toStartOf="@+id/backup_settings_google_one_backup_switch"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_google_one_backup_switch" />
+
+    <TextView
+        android:id="@+id/backup_settings_tips"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/backup_settings_tips"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_83_percent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_backup_now" />
+
+    <Button
+        android:id="@+id/backup_settings_backup_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/backup_settings_backup_now"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_last_backup_time" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_5_per"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_10_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_83_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_95_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <TextView
+        android:id="@+id/backup_settings_backup_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/backup_settings_backup_details"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_5_per"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_tips" />
+
+
+    <LinearLayout
+        android:id="@+id/backup_settings_apps_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_backup_details">
+
+        <TextView
+            android:id="@+id/backup_settings_apps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_apps" />
+
+        <TextView
+            android:id="@+id/backup_settings_apps_backup_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_apps_backup_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_settings_photos_and_videos_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_apps_linear">
+
+        <TextView
+            android:id="@+id/backup_settings_photos_and_videos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_photos_and_videos" />
+
+        <TextView
+            android:id="@+id/backup_settings_photos_and_videos_backup_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_photos_and_videos_backup_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_settings_call_history_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_photos_and_videos_linear">
+
+        <TextView
+            android:id="@+id/backup_settings_call_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_call_history" />
+
+        <TextView
+            android:id="@+id/backup_settings_call_history_backup_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_call_history_backup_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_settings_sms_messages_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_call_history_linear"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/backup_settings_sms_messages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_sms_messages" />
+
+        <TextView
+            android:id="@+id/backup_settings_sms_messages_backup_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_sms_messages_backup_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_settings_device_settings_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_sms_messages_linear">
+
+        <TextView
+            android:id="@+id/backup_settings_device_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_device_settings" />
+
+        <TextView
+            android:id="@+id/backup_settings_device_settings_backup_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_device_settings_backup_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backup_settings_google_account_sync_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_device_settings_linear">
+
+        <TextView
+            android:id="@+id/backup_settings_google_account_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_google_account_data" />
+
+        <TextView
+            android:id="@+id/backup_settings_google_account_data_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_settings_google_account_data_detail"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+            app:layout_constraintTop_toBottomOf="@+id/backup_settings_google_account_data" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/backup_settings_advanced_settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/backup_settings_advanced_settings_title"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_5_per"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_google_account_sync_linear" />
+
+    <Switch
+        android:id="@+id/backup_settings_backup_using_mobile_or_metered_wifi_data_switch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:singleLine="false"
+        android:text="@string/backup_settings_backup_using_mobile_or_metered_wifi_data"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_95_percent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_advanced_settings_title" />
+
+    <TextView
+        android:id="@+id/backup_settings_use_mobile_data_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_settings_use_mobile_data_tips"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_83_percent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_vertical_10_percent"
+        app:layout_constraintTop_toBottomOf="@+id/backup_settings_backup_using_mobile_or_metered_wifi_data_switch" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

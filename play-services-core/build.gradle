@@ -51,8 +51,10 @@ dependencies {
     implementation project(':play-services-tapandpay-core')
     implementation project(':play-services-vision-core')
     implementation project(':play-services-wearable-core')
+    implementation project(':play-services-base-core-package')
 
     implementation project(':play-services-core-proto')
+    implementation project(':play-services-core-google-proto')
 
     implementation project(':play-services-core:microg-ui-tools') // deprecated
     implementation project(':play-services-api')
@@ -68,6 +70,8 @@ dependencies {
     implementation project(':play-services-recaptcha')
     implementation project(':play-services-safetynet')
     implementation project(':play-services-tasks-ktx')
+    implementation project(':play-services-fitness')
+//    implementation project(':hw-signature-diff')
 
     withMapboxImplementation project(':play-services-maps-core-mapbox')
     withVtmImplementation project(':play-services-maps-core-vtm')
@@ -131,6 +135,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        aidl = true
     }
 
     sourceSets {
@@ -147,6 +152,12 @@ android {
 
     lintOptions {
         disable 'MissingTranslation', 'InvalidPackage', 'BatteryLife', 'ImpliedQuantity', 'MissingQuantity', 'InvalidWakeLockTag', 'UniquePermission'
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "microG_Service_${variant.versionName}_${variant.versionCode}_${variant.buildType.name}.apk"
+        }
     }
 
     buildTypes {

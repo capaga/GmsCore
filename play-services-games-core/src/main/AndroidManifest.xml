@@ -11,10 +11,6 @@
         android:maxSdkVersion="22" />
 
     <application>
-        <activity
-            android:name="org.microg.gms.games.signin.ConsentSignInActivity"
-            android:process=":ui"
-            android:exported="false" />
         <!-- Games -->
         <service android:name="com.google.android.gms.games.GamesAndroidStubService">
             <intent-filter>

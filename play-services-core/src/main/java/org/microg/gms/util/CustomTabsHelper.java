@@ -40,8 +40,8 @@ public class CustomTabsHelper {
     private static AuthResponse getAuthResponse(Activity context, String accountName, String callingPackage, String url) {
         try {
             String service = "weblogin:continue=" + URLEncoder.encode(CustomTabsHelper.addLanguageParam(url), "utf-8");
-            AuthManager authManager = new AuthManager(context, accountName, callingPackage, service);
-            AuthResponse authResponse = authManager.requestAuth(true);
+            AuthManager authManager = new AuthManager(context, accountName, callingPackage, service, null);
+            AuthResponse authResponse = authManager.requestAuth(true, true, true);
             return authResponse;
         } catch (Exception e) {
             Log.d(TAG, "fail to get weblogin info.");

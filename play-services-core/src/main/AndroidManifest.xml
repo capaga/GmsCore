@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2013-2019 microG Project Team
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -119,7 +120,10 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
     <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
-
+    <!-- Backup 服务必备权限 -->
+    <uses-permission android:name="android.permission.BACKUP" />
+    <!-- Harmony OS下 跳转至 com.android.settings app 下相关 Activity 所需的权限-->
+    <uses-permission android:name="huawei.android.permission.HW_SIGNATURE_OR_SYSTEM" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -1287,220 +1291,328 @@
         <meta-data
             android:name="NAVI100"
             android:value="4763384BBF445EDB8D3112C15413D96FB1415218F6403DB026699968EDA84491-7712B5F255F2C85B8B164519116AC4381BB9A3582DCDD2B73AC06EE7464913AE" />
+        <!-- Ragnarok Origin Global (com.gravity.roo.sea) -->
         <meta-data android:name="NAVI101" android:value="35610DA2C1ED3EE0634596D33D2BD4DA51F8D3BD8F3F93D65D5F952393140D75-9DDAAA9487B1B1BA283B8B32C680902B1DCD1FC6F0D013522D5D6B3AA63CA7FC"/>
 
+        <!-- PUBG MOBILE (com.tencent.ig) -->
         <meta-data android:name="NAVI102" android:value="5991953C7592914487A9BDA172E8155F915E2FF2D5288CF86B0F35AC48E7BA23-E075E99E8540BEE44A6BB3FC97D8B0B0FE16F863599490E708B7729A21FA70FA"/>
 
+        <!-- RöX (com.play.rosea) -->
         <meta-data android:name="NAVI103" android:value="61384E49584160497A656DA83D0C3619028146D325402E40625FF4A642E24C51-08E631ADFB03E599D41CE35191DAE1D3205A4D82D2BDB1844BEEBF28AB954648"/>
 
+        <!-- 魔灵召唤 (com.com2us.smon.normal.freefull.google.kr.android.common) -->
         <meta-data android:name="NAVI104" android:value="2B0D3BC339C54421981D1FAA3F01426F918E7A621B4FDDA904DC2B887A052CFD-C27733120A9E2E3691056C35FAEB8473D1ACB068A64A95EB3416121715040EB5"/>
 
+        <!-- MIR M (com.wemade.mirmglobal) -->
         <meta-data android:name="NAVI105" android:value="59BA08B684F5098C63954E799A5AFF7538AB50BB7C7341B99DEBF169665BD9ED-C7BC05144ECFF1207B4AD04FD1F9A9722DA4E8607DD2E68077B2E602637CBA27"/>
 
+        <!-- 三国志·战略版 (com.qookkagame.sgzzlb.gp.sea) -->
         <meta-data android:name="NAVI106" android:value="5CFB628F942487912F272736C7A186FDAB0C0C14D29668656A14B4939C861144-070FC7CBE4FD8AFB3C324E6733BE527383DE74432D418F1EC4E442DC682FD629"/>
 
+        <!-- 新三國志手機版 (com.bbgame.sgzapk.hk) -->
         <meta-data android:name="NAVI107" android:value="0258B70078D8379E0A785EAB3E86C69A3ACF358D2EAA74B3FCB1DFDAB9A88492-529D8AAF5042EEFF45C474FF4C85FD0A0ACC9B800A9C419687FD104FA6ED9BE8"/>
 
+        <!-- 三國殺名將傳 (com.eskyfun.sgsmjzgp) -->
         <meta-data android:name="NAVI108" android:value="679DC54F62EB6775CB0B36133CC616491B30E1EE0939750DF891BA3898489029-3E2D3DFB544A148291279A2AA98BE64EF88EAA2DED9B286C532B59CFB871AC5B"/>
 
+        <!-- 新劍俠世界3 (com.mover.twjxsj) -->
         <meta-data android:name="NAVI109" android:value="8D14102D39B8693D9364B74EDD1FD9735648650FBEAE445CC11354004D973A88-7F0F2A713E80F30EBBF8964934508004D6D2163942FEB1BC4ACB1D3B50661E46"/>
 
+        <!-- 传奇4 (com.wemade.mir4global) -->
         <meta-data android:name="NAVI110" android:value="B4FC7EA5DBCD2E53AB2A3B06452FEE6294F2905FB0871D92B558B863495B0638-E2B9B70A7785BF9C24204F378D93EAEF330C4BFA859B213B404FA52EA273FCC2"/>
 
+        <!-- 神蹟：血舞者 (com.dragon.twigp) -->
         <meta-data android:name="NAVI111" android:value="84D69E85B214A0AB01215083ABF082B109E85FC38DE8C22CFE95E5D737EA9A00-EDBB5B0ED17024369EEA2C00CB7A3E901091A7C321ED63E6A2F814FB28F1BD0F"/>
 
+        <!-- 歡樂大東家 (com.lets.psan.hwft) -->
         <meta-data android:name="NAVI112" android:value="6A0909D5E17757789CEAAC027C07D9AA2ED8B2B25F0E3B6750F9574ED20801B3-95DBEB61D1AB3E49C122C9387E122A539D6FEEBCF1B424D800AA81BF75BC53E7"/>
 
+        <!-- Mobile Legends: Bang Bang (com.mobile.legends) -->
         <meta-data android:name="NAVI113" android:value="3BAD51F996C3ACBC62DEECB533E38A7F815B6232835368090E7FEC2325D9D644-771FE14999703F04479CD607F64F8460F60DF2095E60AD388E76B9584A2BB44C"/>
 
+        <!-- 完美世界 (com.efun.wmsj) -->
         <meta-data android:name="NAVI114" android:value="865BD0074C8EBA547D113E12AB95B4338B044F5BEFE0A978017C87B64C7C2F52-DECC395F2AE7DB64F381C965E4791E2DD930077B0BDF30AAC4A2B630BC502E67"/>
 
+        <!-- 剑侠世界3 (com.efun.sxsj.gp.sm) -->
         <meta-data android:name="NAVI115" android:value="41724DC291443371B3C8992044E01D36FC5414DAD0C08AC3BC9F115EC6605B42-A22D8E85EE680E0FBDE633A876C1B7F1F832A9D20C904F50481769C10C7C8CDC"/>
 
+        <!-- 謀攻：天下為局 (com.gacraze.dmsg) -->
         <meta-data android:name="NAVI116" android:value="8CAA5636AB6B23CCA9653EDAA730888133341FF942AFACBB9A77605056E9F2F4-6FEDF694B11AC264DA5FF5AD670989154AD73C51D956A662871503FF3564E522"/>
 
+        <!-- MapleStory R: Evolution (com.rastargames.mapler.sea) -->
         <meta-data android:name="NAVI117" android:value="00581372F0E85D7D8E9BFC80EF49FA2670E8F4CA1BEA24D0969FFF7F0240CC2D-99609D05CF7138E50BBAEA18621AF671CE30156E76FD5F94B972BB609E7C5164"/>
 
+        <!-- 王国纪元 (com.igg.android.lordsmobile) -->
         <meta-data android:name="NAVI118" android:value="9D817998C5AC14A1C706018F6C40B8FB39529C502A8D13831C95181F9D4BAAC0-BE950E0AC08893E4D22479C23F0D2E924F6E1DB160BACBACD757842AC9853827"/>
 
+        <!-- 天龙八部2 (com.pwrd.tlbb.xinma) -->
         <meta-data android:name="NAVI119" android:value="B7794A28243CCA9018FE83C334C6C6BEEAF5FF01029C80A1D6D186F560570AF4-7B7C1FB5BB656D10792EECECFDD4AA28E348E5F246B261E83B9D2595FCD8CD5D"/>
 
+        <!-- 新射雕群侠传之铁血丹心 (com.cmge.sdxm.gp) -->
         <meta-data android:name="NAVI120" android:value="7CAC8A2673B5F373AE5A7180422AFC825F18A25D217FAE082BDB6FD953E876AD-666A71B2A15B2F441EDF1EA8DB38100C38EFF65D7F3B9BE5D743CF4BBB52EB0A"/>
 
+        <!-- TWD:Survivors (com.elex.twdsaw.gp) -->
         <meta-data android:name="NAVI121" android:value="9F576EF50670E512D2328F6E8C855A3E7155BDB6535F9A018AED598C671BC5FA-03C99FC1A861D9E20F08F94E77151DEDA6FA77A691A99FA2B0D7745FA630A46D"/>
 
+        <!-- 文明霸业 (com.topgamesinc.evony) -->
         <meta-data android:name="NAVI122" android:value="0B6F4A275ADE42C2B2B93C4BCB08023B7F3B1D58F94FEA8A2899D4A7D3DAC760-CC396295EB012C6F7AE5D5AA6C9D5C7AF797B04E930ADA74ACA304F379157274"/>
 
+        <!-- CaptainTsubasa (com.klab.captain283.global) -->
         <meta-data android:name="NAVI123" android:value="F0F56E31717DAF6307A175116C89E6F37C1D7BE7826A9C7E809033DC357465F1-525BC7C8DACA6982C32729B3132E1186733FF900E9CCB37A033B49A34F1363C9"/>
 
+        <!-- 克罗尼柯战记 (com.com2us.chronicles.android.google.us.normal) -->
         <meta-data android:name="NAVI124" android:value="9E8D7308DF1FC085BF8D8F683A6677D1B647ECCBE1B2676A2A3A456ED9E4F300-C27733120A9E2E3691056C35FAEB8473D1ACB068A64A95EB3416121715040EB5"/>
 
+        <!-- 梦幻花园 (com.playrix.gardenscapes) -->
         <meta-data android:name="NAVI125" android:value="15C809DAC03CED6C5C86E859A60E930CE57618686B3ADC7B67891ADBFF1DE68F-A81BC2054DE58748A3EDFAF588696C4AE6C634D8657292A3636BF59F4D640708"/>
 
+        <!-- State of Survival (com.kingsgroup.sos) -->
         <meta-data android:name="NAVI126" android:value="C1F101A397752BCACB2D2557C3AEA6A05481BE236DB6897F9F3CDD7CA7AAC4A0-7D8BCDBB4530B6B452A1BF2C276E08EE05A09DDF80590B3F9A2A3421F27E6AF0"/>
 
+        <!-- Infinity Kingdom (com.gtarcade.ioe.global) -->
         <meta-data android:name="NAVI127" android:value="7CB33D0BFDDC65CC16D4875373AE21BFF9CFA42DB344E3CC54E46CF1697F3089-DC1ED030EB303ACCA66D650FB469A2B6E109B7B56A5196D56FE3730E46BA23F2"/>
 
+        <!-- 斗罗大陆：武魂觉醒 (com.dldlxm.gp) -->
         <meta-data android:name="NAVI128" android:value="F390A577CC088420FF04EE1B9D8E208E89BAE5769D9DE490AF41E6024C895C38-1614466EACF1217E058BE3A9E3CCC873E3C738BA1783A3C9E8E51A9B7601BC68"/>
 
+        <!-- 万国觉醒 (com.lilithgame.roc.gp) -->
         <meta-data android:name="NAVI129" android:value="3B79CC12103FEDE0CB38BEE5096F8F7B4C6B0DE70B3DD01085FC966CAD36BEB9-7C17CC7CB8B83B6E4DCD7C3889C609C308CF2152278993A9621DCC14FFA91B5A"/>
 
+        <!-- 三國志 霸道 (jp.co.koeitecmo.Mighttc) -->
         <meta-data android:name="NAVI130" android:value="AADC29816366E1779CC5F2E5FF10CFFD578DCE059A25E712BC011767544B2B18-63C9230F944ED9AF7516A17DC03F49EDC55DFCBBB9B5644BA548E86787945383"/>
 
+        <!-- Puzzles & Survival (com.global.ztmslg) -->
         <meta-data android:name="NAVI131" android:value="FDC4B70FD29DD28A4003829D997C701B900CCF713FB85C28A8CBB047B4CD2489-7E0C3B2C0C0C30F24101C5B77CA435E6901EAB11FA5D63874C43C0CA104767AF"/>
 
+        <!-- 真・三國無雙 霸 (com.supernova.zhensan.hktw.google) -->
         <meta-data android:name="NAVI132" android:value="006E6C8B1F27C6A6402AB0D73B8DCE75270A4A6B41AC57709BAAEC1128EBF70D-ECDDD072817013DDEA8E2BC95F3C0B7EF38C38D72CDB1D31C1E45DA880DC0C48"/>
 
+        <!-- 官人一个妻 (com.heyyogame.gd) -->
         <meta-data android:name="NAVI133" android:value="9B5A18C9CE441DA4C519BD684E13F77394BDCD7E4C62D7BF48C544084884B54F-3148BE4A065899665E2D3B30B687997690331C3655DC108175A6A78FAEFDCCFB"/>
 
+        <!-- 輪迴雙生 (com.tohu.twigp) -->
         <meta-data android:name="NAVI134" android:value="1C5A5F3281D977967D826D8BA0B7D88807F56230A8613A312893142A0A369D9E-01ED0AFC429F7D689CFC7B5DFDE62212ED0CE47EB13B103A5308268F40DB65CF"/>
 
+        <!-- 诛仙 (com.pwrd.zxhxb.sm) -->
         <meta-data android:name="NAVI135" android:value="17C630732B0D15F571CF7AD9AF027351C2FB6DFC765FF7A89D5648F8AFD1938D-7B7C1FB5BB656D10792EECECFDD4AA28E348E5F246B261E83B9D2595FCD8CD5D"/>
 
+        <!-- MONOPOLY GO (com.scopely.monopolygo) -->
         <meta-data android:name="NAVI136" android:value="0F99FD7C11C3C6FEC93F012AFCF6E28DD25956FE99C229BA09DB741203F0236C-F02EE6D7E2D8459E6EA7BB84030E181BB295A9FC249704D32C1FB2AFF03B2221"/>
 
+        <!-- One Punch Man：英雄之路 (com.yqcrtw.android) -->
         <meta-data android:name="NAVI137" android:value="267AA4CF0477D7B06E5B8CDE82D7D3BE5521C066ADBEA39AF51CAB30ADA7CBC7-7699A6C2E0895D48EFB540F7AB2306B65E737C6033B43359E9A101A5CF07672B"/>
 
+        <!-- Jackpot World (com.grandegames.slots.dafu.casino) -->
         <meta-data android:name="NAVI138" android:value="42B3EE12973F700B8ED2958C229C4EBAEA52D9D149AD85F2360C94A33357F703-37BE65B61B4BF5B9B78627DB7B65E34A527BDF35EE44F53EB454873196ADBE03"/>
 
+        <!-- 口袋奇兵 (com.topwar.gp) -->
         <meta-data android:name="NAVI139" android:value="1E4BCEE908B94E8D7EB16D408241D0E0DD7D95294688C0198D7578FDDC10CABA-D15925262C43CDEFF89582517E14FB8A0884A135AC6517C9BCD121E7B41CB291"/>
 
+        <!-- 月光魔盜團 (com.dvsyopin.twgp) -->
         <meta-data android:name="NAVI140" android:value="05D351068F107A40D3F904B3849E934A1C692AABD0C65AFDB7C29CD02102A65F-AE5EB80C2DEFB7EB0A891475C5222DE799AC960FC8D03C26B7994C5918F64E6A"/>
 
+        <!-- SNK：格鬥世代 (com.cmge.snkfz.gp) -->
         <meta-data android:name="NAVI141" android:value="6921E0CD00E4DBAF7ADD867D365F17043C4D15A50570483C8D682C8C20AE94D6-BA1818FB1F857B25B8061659ED3E932255476E6ECBAD73128ADBAFBA825A9313"/>
 
+        <!-- 夢幻家園 (com.playrix.homescapes) -->
         <meta-data android:name="NAVI142" android:value="768BEBAC8D5FBB5432E7685F6216F1A73686BA6D44D16B470846186FE4C27F73-A81BC2054DE58748A3EDFAF588696C4AE6C634D8657292A3636BF59F4D640708"/>
 
-        <meta-data android:name="NAVI143" android:value="452F8BC3446E1A89BFF1F3AF6F074D74D45C112611AC0682407D3EFC6DB1D769-AD820DB4F0993EAE2E109BAE6965B3B41DBAF8C4EA6E794848E6719B36956C6D"/>
+        <!-- Free Fire (com.dts.freefireth) -->
+<!--        <meta-data android:name="NAVI143" android:value="452F8BC3446E1A89BFF1F3AF6F074D74D45C112611AC0682407D3EFC6DB1D769-AD820DB4F0993EAE2E109BAE6965B3B41DBAF8C4EA6E794848E6719B36956C6D"/>-->
 
+        <!-- 蟻族奇兵 (com.tw2022.antgp) -->
         <meta-data android:name="NAVI144" android:value="6739682F9E1F98AE3CA17D2DA22AD9007565425B236B2A4EA6C0850FA116CC04-7DFA5B5BFCB15F8D73F08411FA9224A257355427AADFF42DEF4C8AA72BBAF377"/>
 
+        <!-- Kings (com.and.riseofthekings) -->
         <meta-data android:name="NAVI145" android:value="45A82B97B790AFF53509A39EAF1FCF7D3995430517C41194C8CB00B3428433F4-379C3B2ED0AA9AAE69242C1F619FE5E79273426B5FDE12E012031CC89FD22D96"/>
 
+        <!-- 放置英雄Eureka (com.woobest.crown.agat) -->
         <meta-data android:name="NAVI146" android:value="7BAEA197ED99705C6A17786C51DE022F420DA50101AA6460425B4255F1323742-9A89896446B52258983D88B5401775B14663BFD0882219FB0333A6B08387188B"/>
 
+        <!-- Guns of Glory: Lost Island (com.diandian.gog) -->
         <meta-data android:name="NAVI147" android:value="4AC93B547F221655D34EB14FA2F4F260DBEFD16902A9E9D2477267D2D220417F-83EB37CC72EE0CF019BD5CA67EA68CAD897CA05D6FBDA3781EF74129C6559F90"/>
 
+        <!-- Dragon Nest 2: Evolution (com.proximabeta.dn2.global) -->
         <meta-data android:name="NAVI148" android:value="9ED7860C6072734F2E8B701E496DC1E26650A1EE2D225C1C415F540DFF8F60D7-1752A4A113670BD6A08620E15F9A5DB08E1EB32F65F547A8183653D33042BABE"/>
 
+        <!-- 新仙俠：起源 (com.tw2021.qyjgp) -->
         <meta-data android:name="NAVI149" android:value="31B2894A832ADC4DA6166C7EC0D4D3B90D6C0E6C32439704360E46C6364DEB3F-5FA377633C274DBBCFD8796336DA36ED427452DB04C1213F18EC0F1AC92DC04F"/>
 
+        <!-- 雲扉：輪迴 (com.gp.yflh.tw) -->
         <meta-data android:name="NAVI150" android:value="012068C494F62E1BE8050EA34D42BDF332962BD7DF1C4B0112D27E15CEE396F4-D4748858DAA4F881CE469543879758728CA6F95F71294B714A4344C6D5C51186"/>
 
+        <!-- 時之約 (com.meta.twigp) -->
         <meta-data android:name="NAVI151" android:value="635C858DB377C94114C2594F5733462E5CF5687DA6483EDA019D12C0C4A54D7D-727E28593BC8E736E388CA42F7F63B63ECD70582D443F89EBA9C7BCFCFE98AD9"/>
 
+        <!-- 拳皇98 終極之戰OL (com.playhit.our.kof) -->
         <meta-data android:name="NAVI152" android:value="ECE8D9B28BF6A90A5025309C4A839A6497C6CD40BB2F733D131EA1D16C1EBD82-9EAE3E8CF256FAE3BA8D42A275425A614CFDC389FB8F2BCDD3ACA959B1A7F0A1"/>
 
+        <!-- 空之島：失落王國 (com.mover.twrxlr) -->
         <meta-data android:name="NAVI153" android:value="8536B1E9386D8B66213B11AA3F2C5764E741391ADBEBF6977195F6D24379E20D-7F0F2A713E80F30EBBF8964934508004D6D2163942FEB1BC4ACB1D3B50661E46"/>
 
+        <!-- 弹弹世界 (com.gamehunt.ddt) -->
         <meta-data android:name="NAVI154" android:value="D201A8C673AEF595E01C88E7ED5D171EFE8E3FCB14A162897280FA5C1DF42496-BB51F2843D79540C5A0A1A4801BD337ADEA2EE492D44B3C63589011CF10F0FB3"/>
 
+        <!-- 笑傲江湖 (com.efun.xiaoao.sm) -->
         <meta-data android:name="NAVI155" android:value="C7A69467797F6174FB4DD52DB507827E8E26959EFB2FC489DF8BAE2C4604A042-537106059615B055A1BBD96C351CB7D31902F42E9BCC0AA27A2FA86CF2B7EE58"/>
 
+        <!-- MU ORIGIN 3 (com.fingerfun.mu3.gp.sea) -->
         <meta-data android:name="NAVI156" android:value="9C19EA9DC6D69F181A970209804C9F39EC9A1E8C721EFE7DE0BEF96DC294EEA8-04D2757B1DA1A380D9D2BBE11FF8808B71AA75F29683CCA989BF2BEFB59DCAC0"/>
 
+        <!-- 热血龙城 (com.idle.immortal.fun.legendary.rpg.destiny.king.games) -->
         <meta-data android:name="NAVI157" android:value="896F9CEE5AF737BB54881033997BF587DBA4BE3C9811DC8D1AF7C5499D065C93-8D48BF975388100588A5E71AD5B322C10BB553E871AE820D117B9F460F04A312"/>
 
+        <!-- Dynasty Heroes (com.dynasty.hero.an) -->
         <meta-data android:name="NAVI158" android:value="E27EA64BB47811D6699D5F435AC9EC803252BE37C1E3BF8D04831473F838C3BA-24B5898C5DEA6D1E7E8BBB7C4697F02D8BF7727F65BBA5688AA9C707D218E462"/>
 
+        <!-- 封神異世錄 (com.indie.jz3d.google.sea) -->
         <meta-data android:name="NAVI159" android:value="BF6C56543DFE836FF2FE14DE2A46E03041C9FF6357E23FEA06E4A150D0DB50FB-8DD995CCA1134925589FE3BE0D222D0760E661DF30D561441FF1F3AE0CB8C7D4"/>
 
+        <!-- 现代战舰 (com.Shooter.ModernWarships) -->
         <meta-data android:name="NAVI160" android:value="5CEB414DE4DD223E2C4DC8E5790A44B0933D7CCE35EDA9B700934F9F421D29F0-A047B67A8ECD0E6047F96A88B9E8F25EB1781FF54ECEA9A76D1FC8707EC9192B"/>
 
+        <!-- 道士出觀 (com.taoist.gp) -->
         <meta-data android:name="NAVI161" android:value="3B6D0C9DC129C0EFF48BCB59FD2B006F50C2C1AF00E9B43B538799FBD7697E4F-C481C96733A18723E54433D40A5A0633B3989B434BD96F358C26A72A6B31E95A"/>
 
+        <!-- Township (com.playrix.township) -->
         <meta-data android:name="NAVI162" android:value="7FEC3B8423B3838B8DB21107C9F4D79B7A09C73C7848FBEF74DA57310B2A09CA-A81BC2054DE58748A3EDFAF588696C4AE6C634D8657292A3636BF59F4D640708"/>
 
+        <!-- The Ants (com.star.union.planetant) -->
         <meta-data android:name="NAVI163" android:value="496EC32F8C946D4F5DC2D9533A6DB4A7BE05F8CC623995F36285D920754A0467-4E5E6BFD67A9AB5A402355EED6F5C93B3AE3AA65E75E440B5574C1E0D3C0C2B6"/>
 
+        <!-- Doomsday (com.igg.android.doomsdaylastsurvivors) -->
         <meta-data android:name="NAVI164" android:value="99BED61D38E3298FD473F10ED2DB26A0A4AFB25B9A6CF602EC1B9089B052257E-F08FED49F1376C5388C9C0B00F245C2A964A5BE4108767F1B075DFED21CE1A1F"/>
 
+        <!-- 梦幻水族箱 (com.playrix.fishdomdd.gplay) -->
         <meta-data android:name="NAVI165" android:value="477788A9DFDA875E3275635915D3AC2E84033F135AA0D612D327C35982254AFF-A81BC2054DE58748A3EDFAF588696C4AE6C634D8657292A3636BF59F4D640708"/>
 
+        <!-- Call Me Emperor (com.wsy.google.wansuiye.en) -->
         <meta-data android:name="NAVI166" android:value="EF7ABBA6D71D6A5AFC3E7B5B1D4D239ACF40632F45A271DCA8E679B81C55A0EA-D178DCA5D85EBDA6BCCCE893FB830D3AB820AE58AFF2AC5ED9458619CF762B2D"/>
 
+        <!-- Royal Match (com.dreamgames.royalmatch) -->
         <meta-data android:name="NAVI167" android:value="7B08196E458A43392E332F027F832BBAB8A0720B5105AE9F83F6C21FD3820783-02CDBFC5FAD42A13F40EB3AEC3CF0E51F3BADF6CE3747486766FDD3A246B1DCF"/>
 
+        <!-- Dragon Hunters (com.slsm.an.en) -->
         <meta-data android:name="NAVI168" android:value="7B487CE41F550C6E4A5688E52CE594B447918786E7023445E5CACD0F17E12894-4BD6646409CB171F0B196E1489EA4D3AF6CF3FC25872B51FCCE7DCFBD8C280AB"/>
 
+        <!-- 最強武士道 (com.rastargames.topbushihk) -->
         <meta-data android:name="NAVI169" android:value="C29BDEDC3B27075A6DE3270E30B0003B992AC8729E737A3A644D75A52595BDCF-557A93728E6088F564B6ADA29AC064B8D256AB4200BB6B87AF60D8E7D74F6B43"/>
 
+        <!-- 神來也麻將 (com.godgame.mj.android) -->
         <meta-data android:name="NAVI170" android:value="82421F1BDD73650530EC40CCDEE3C44D7FBC6A2F6A50560E6D6F331146C707D2-7C388448823920908608E34E87E871B4E06DEB6E6FEA4EB745FBED808C6491FD"/>
 
+        <!-- 云城之光 (com.indie.ys.google.dny) -->
         <meta-data android:name="NAVI171" android:value="37D16BE3B448EBDD93E60595462C30EE9D5B9B53A45DF42069ADDD3FA2637BF4-019EF6F3BC7B4B52CA661CC56C82C83F38D03229F1017ACF0C9967C19635F620"/>
 
+        <!-- Luna Mobile: The Moon Country (com.lunamobile.tha) -->
         <meta-data android:name="NAVI172" android:value="B68E8342839AB425BCB6668043FE3E7D7EAEB6B7BF37EE159BD3EBD8B102B496-F54C7F7FE2DB0A291CCB1B0C070754E832A9A59106B20A0B30D919ACFA45D429"/>
 
+        <!-- Ultimate Football Club (com.hoolai.ufc.ggsea) -->
         <meta-data android:name="NAVI173" android:value="676C97D3EB3CC520B7B4B538D5291AC7871C40263260746FAFC3636C68DFA805-6193DAA6397A45482037167428049500798F9A1FD67169EE6EC5AA565A9103A6"/>
 
+        <!-- 戀戀清庭 (com.ludoogames.jxqy) -->
         <meta-data android:name="NAVI174" android:value="5FE65D87BD9651F849F67AD4B2F091E5E5EE3748D28217B0A43F722C267675C7-77C42E06A4781A9792F807E30523DB32E24B6C49D5FF14EE918C4D10EA209C12"/>
 
+        <!-- Lotsa Slots (com.diamondlife.slots.vegas.free) -->
         <meta-data android:name="NAVI175" android:value="9FC729B964A271C9D12FC5598595DF0DB789993F4A2B47C08064C4B7F0811C9C-6385D804CFB4BC7D4B3E727759C6E87E60E91E13865FB9334EABC886A97F4164"/>
 
+        <!-- Rush Royale (com.my.defense) -->
         <meta-data android:name="NAVI176" android:value="06E7A904E280421F9CB7869C3710EAB38015D35F12ED8DF84D3BC831910DFFE5-6E4A0F889331A8340E1BACCDE95AC388C054A018E5CECB2905A7758CE30E2D0C"/>
 
+        <!-- 新信長之野望 (com.bbgame.nobunaga.gp.tw) -->
         <meta-data android:name="NAVI177" android:value="5399CD973D3287E00632E2426110174167C09FFB90963EA6E315A03A53981BF9-529D8AAF5042EEFF45C474FF4C85FD0A0ACC9B800A9C419687FD104FA6ED9BE8"/>
 
+        <!-- Stellar Fantasy：Neverland (com.eyougame.starfall) -->
         <meta-data android:name="NAVI178" android:value="27631556254F8794D864771EBDBCF2226E4891B9ADFA8C46B89856F0D5289775-CD2D5E144D44F6ABA0EFA0997E016896AE284F503DA5CA38D3E3361CB409CE1A"/>
 
+        <!-- BLEACH: Eternal Soul (com.efun.sishen.ae) -->
         <meta-data android:name="NAVI179" android:value="1EA2FD0DBE0AC4A6265B08BA31BBEECE89628EE7CFFC21D72957728141FCA0CD-C31DE71DE15FC9ABC4652538C71CC2B796E4CBDE164ED7B80964BF7C0711850B"/>
 
+        <!-- 德州扑克 (com.kamagames.pokerist) -->
         <meta-data android:name="NAVI180" android:value="F88BC1BC6B328F45A1343B91B0773C90055A6FF790319DD7E8888214862DBDAA-B70377927B9906D01DA02FBFAB903D59DA51050971D3D78E32C4C60EA972C3A1"/>
 
+        <!-- 王国卫队 (com.tap4fun.odin.kingdomguard) -->
         <meta-data android:name="NAVI181" android:value="62E7212BDC001FD0E1B51E5E9ED50E6C1E1CA11A10B198172FAB3EC08D0B6494-A1013B1B742D0DDCF991343367F4CE021D343E7C0C24C21DCBA0D4A35C9A09A8"/>
 
+        <!-- Saint Seiya : Awakening (com.tencent.tmgp.ssksea) -->
         <meta-data android:name="NAVI182" android:value="BFE317B28F2A2EFC9CA0AD03A796888958B911DAF12917CA4BBCC679E21FC05D-EC375A16A241315B1FF1437AB3BCB703FC21ED2484B6C520B509501301403BED"/>
 
+        <!-- 王者遠征 (com.expedition.twgp) -->
         <meta-data android:name="NAVI183" android:value="CAC4B0E863CCF5DDB988055DA98B6595DBFEEFEA8273504EEF72810844ACE62C-AE7027E914297A4596C396D2F7D17F8A415DF673DCCC24CBF4E59B881E9559D3"/>
 
+        <!-- 航海霸業 (com.wifi.oceantradeking) -->
         <meta-data android:name="NAVI184" android:value="8D9E7E49651EB2D763BA5F69FDA7D0D819F998676C62E2AE509DA67CC9537F2F-E7A313FF38A2BB9531E52B5225C42D0E7F6545D058BCCA917D24FF1C1FAB08C3"/>
 
+        <!-- 怦然星动 (com.more2.superstar.gp) -->
         <meta-data android:name="NAVI185" android:value="131EA7E9ECD48DB6033FEFA6022002346DF999F29D10C7E85A1A56508B050119-76A0C2C07015D716E14A1E6408B8D63035A704D9CE5000F77E279E95D1AB06F1"/>
 
+        <!-- 叫我大掌櫃 (com.gm99.dzg) -->
         <meta-data android:name="NAVI186" android:value="20167CA2DF7AD7440F2226F4FCB36A7E9F57C05797371DF887DB0AD187D90C0C-D898D35EB94842042980D21A03FE8655026D6D351E1F70E1B9A4F59E96ED7C67"/>
 
+        <!-- Empire (and.onemt.boe.tr) -->
         <meta-data android:name="NAVI187" android:value="9A6FB45B428B264D91108C2075D7FE530554213D6080502D9970C82BBB157FDD-5AB2203E94EC7F5921E73AAB49374E87FB0989F3B6D5F3C4CCCAF5F9D752BB07"/>
 
+        <!-- 竞技联盟德州扑克 (com.sohooltd.sohoopoker) -->
         <meta-data android:name="NAVI188" android:value="75544A33911747DBD8DE0E186A207159E73A054C57A9B92D95C8CE9CD434EBAA-13D4688AAA676FAA1F2037143766FD53576B87EEA3C86A36EF93E89342DFC3AF"/>
 
+        <!-- 宫锁心计 (com.duige.hzw.multilingual) -->
         <meta-data android:name="NAVI189" android:value="065E1494EA6C8F10A3187E8A578856083B78FE98815FBE5AFCB69C2D9002AEC9-F49E5B7BF2E029CFDB8553C18FDAD90CB69B6CB4BE07C93E8A81EDB75936E3C9"/>
 
+        <!-- Dragonheir (com.sgra.dragon) -->
         <meta-data android:name="NAVI190" android:value="06C4A23907EBC87A548437649BECD48CF9AED635A0B7F1E821493B2780A1194B-01A46128A188D87374D3D7537AD6FF40559555033B79D80A3ED9EA66881CB808"/>
 
+        <!-- ONE PUNCH MAN OBT (com.onepunchman.ggplay.sea) -->
         <meta-data android:name="NAVI191" android:value="97EBD529DE1FCF37DDA9952D81CFB5D7CE657DBCB0DE731E9EA5CC044835A8BC-A4237CF0BC63E02E1D965A76AAFCB46E2EAD4BFAF21AF85363EEF16D348DFB2A"/>
 
+        <!-- WuXia Online:Idle (com.forshow.wulin.google) -->
         <meta-data android:name="NAVI192" android:value="1711FBF77BFF69C458BDAB44167AED5CF3E5E90239C20A3B8B1325B9FF5B8A43-6B82B2976810D5E343E8D2E2EAB96F8FD2886A0D4CA3BF3BCA141973B389D6C3"/>
 
+        <!-- 金猴爷老虎机 (com.igs.fafafa) -->
         <meta-data android:name="NAVI193" android:value="1D2BC1CC0A0451F69F5D42F7FD11596F6FD015B3CE63BDA08FEC24CD5CAE9507-6EF8BD6C189C4A50412E91F5527E832EA1C8D0BF501714A4936A9ED2AEB3DBFE"/>
 
+        <!-- 博雅德州撲克 (com.boyaa.androidmarket) -->
         <meta-data android:name="NAVI194" android:value="C0AA7B1CBE21E32E09CCBEFCD4A9239D3C1158B871DCF9E99EBBE75BA02B09F3-BB7AEE0388E6169E3CD63D0E08EAF9A2F1CE06DFD78DB64478A6E98BA66660EB"/>
 
+        <!-- WePlay (com.wejoy.weplay) -->
         <meta-data android:name="NAVI195" android:value="F00808DCB1717BBAFC70ECEC98175C4AA73A23382F6601B20F6BA55436A119AD-20CE69F5AE66ED0E05EBC0DB697E248866F20C4FA4E62DB42CD36D1411A318D5"/>
 
+        <!-- Viu (com.vuclip.viu) -->
         <meta-data android:name="NAVI196" android:value="03C0ED224C50FC330686BD8E52E1E0D1AE948E9D9ADEC7460BF402EF4DC99281-C7F7CB0A27F20821183AFF2B2F2A4A5F17BD04B804AF873F1814F48E7453693C"/>
 
+        <!-- Chamet (com.hkfuliao.chamet) -->
         <meta-data android:name="NAVI197" android:value="012B9140564FCB60F957B541438C69AFD913D5CEA83D065201968DAF1E01A10A-67138B365694F4A562DB342E0415753FAFEB2CE2F51CF73E2B03F97E9F0E9313"/>
 
+        <!-- Honkai Impact 3rd (com.miHoYo.bh3global) -->
         <meta-data android:name="NAVI198" android:value="1301F2266B8F51944B49CA766323314F753E2CE6BB651BEBA34FFBA32CA5CBFF-49BE32439979339D102EF44F7907C6AA380C09A59922139BC33598566E91AE91"/>
 
+        <!-- Dragonheir (com.sgra.dragon) -->
         <meta-data android:name="NAVI199" android:value="06C4A23907EBC87A548437649BECD48CF9AED635A0B7F1E821493B2780A1194B-01A46128A188D87374D3D7537AD6FF40559555033B79D80A3ED9EA66881CB808"/>
 
+        <!-- Up直播 (com.asiainno.uplive) -->
         <meta-data android:name="NAVI200" android:value="21F2CAE9DCBFDDA13CA07B81966269C0FA51A111E7676341476CCC88DB60CFE6-C189D74B0FF137526A7A43B0C5D75072335ACAD7653376EBB84AF7B2636FAC1E"/>
 
+        <!-- Era of Conquest: Kingdom (com.eoc.google.watt) -->
         <meta-data android:name="NAVI201" android:value="2CF4B97F139C620B7BA9A575F70042FB7B69E61469401127BBF7166698E0F2A1-E66779A53F7DCB2763182801747638FCCFAD8172D89FCDD46F9E664FA14416C4"/>
 
+        <!-- Arena Breakout (com.proximabeta.mf.uamo) -->
         <meta-data android:name="NAVI202" android:value="63E64727DA8A3B086EA6824765F71DEAEDF57D89DE428BFA38261394ED1EA91C-D9CB3957CEA44F11C141CB188D1DDDAFF0079A1F96BD12654C613BCEE815C458"/>
 
+        <!-- 全民Party (com.haochang.party) -->
         <meta-data android:name="NAVI203" android:value="2A47634B7A4AB0D802B9A9E85F60A718EBCA271E8082AF2AFE2B12140A18C318-E17409DEAA0A1C61F217E619283407ABE06A53B931F7C9ADC3B7F46FCEB63051"/>
 
+        <!-- BIGO LIVE (sg.bigo.live) -->
         <meta-data android:name="NAVI204" android:value="9E3855FE74FBCF3CD3553C71129A5A31ABD388DBB30B6C0B5F060D1F15F2173D-5C333105423F4D1B074A8DEB7E5A2C6E9B485CF47FD6FD5309778E8DC3629401"/>
 
+        <!-- Omi (sg.omi) -->
         <meta-data android:name="NAVI205" android:value="66E4700B7A1FD42CBDFF791198EBD3308DD9DC40E0957CE1A22284C3E93D78AA-034775B6D1DA32ABE9DC0E30DB1233EB6BF9DDE9068FAF619BC7B4DAF4D5F4A0"/>
 
+        <!-- 小象直播 (com.yiwuzhibo) -->
         <meta-data android:name="NAVI206" android:value="E4EF807768A7CFB32DAD855C32F4383A8DD17BAB150EA847B0192E9239DE87DF-9A5A53A55EFC3976C68C701FD1EA1790CD163E185856329ECA9A13852C5B6433"/>
 
+        <!-- 探探 (com.p1.mobile.putong) -->
         <meta-data android:name="NAVI207" android:value="CBA19001BE33A6E9F2453B6C800BFEFE691EBC7BC2C3B610F87708581CBB91EA-034775B6D1DA32ABE9DC0E30DB1233EB6BF9DDE9068FAF619BC7B4DAF4D5F4A0"/>
 
+        <!-- AOA神之怒：雅典娜 (com.mover.twd3) -->
         <meta-data android:name="NAVI208" android:value="3DBFA3B5B7C13B11E765034BC8BA60DE8734F3372659B708903D67B727445683-7F0F2A713E80F30EBBF8964934508004D6D2163942FEB1BC4ACB1D3B50661E46"/>
 
         <!-- Provision -->
@@ -1513,8 +1625,9 @@
         <!-- Location -->
 
         <activity
-            android:theme="@style/Theme.Fido.Translucent"
-            android:name="org.microg.common.activitys.SignInActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert.NoActionBar"
+            android:name="org.microg.gms.auth.signin.AuthSignInActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
             android:exported="true"
             android:process=":ui"
@@ -1530,16 +1643,12 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-<!--        <activity-->
-<!--            android:name="org.microg.gms.auth.signin.AuthSignInActivity"-->
-<!--            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert.NoActionBar"-->
-<!--            android:process=":ui"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.android.gms.auth.GOOGLE_SIGN_IN" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+
+        <activity
+            android:name="org.microg.gms.auth.signin.ConsentSignInActivity"
+            android:process=":ui"
+            android:exported="false" />
+
         <service
             android:name="org.microg.gms.auth.signin.SignInConfigurationService"
             android:exported="false" />
@@ -1860,15 +1969,11 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name="com.google.android.gms.auth.credentials.assistedsignin.GoogleSignInActivity"
-            android:process=":ui"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog">
+        <service android:name="com.google.android.gms.audit.service.AuditApiService">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.credentials.GOOGLE_SIGN_IN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.google.android.gms.audit.service.START" />
             </intent-filter>
-        </activity>
+        </service>
 
         <!-- Games -->
 
@@ -2208,7 +2313,6 @@
                 <action android:name="com.google.android.gms.appusage.service.START" />
                 <action android:name="com.google.android.gms.asterism.service.START" />
                 <action android:name="com.google.android.gms.audiomodem.service.AudioModemService.START" />
-                <action android:name="com.google.android.gms.audit.service.START" />
                 <action android:name="com.google.android.gms.auth.account.authapi.START" />
                 <action android:name="com.google.android.gms.auth.account.authenticator.auto.service.START" />
                 <action android:name="com.google.android.gms.auth.account.authenticator.chromeos.START" />
@@ -2224,8 +2328,6 @@
                 <action android:name="com.google.android.gms.auth.proximity.securechannelservice.START" />
                 <action android:name="com.google.android.gms.auth.proximity.START" />
                 <action android:name="com.google.android.gms.auth.service.START" />
-                <action android:name="com.google.android.gms.backup.G1_BACKUP" />
-                <action android:name="com.google.android.gms.backup.G1_RESTORE" />
                 <action android:name="com.google.android.gms.backup.GMS_MODULE_RESTORE" />
                 <action android:name="com.google.android.gms.beacon.internal.IBleService.START" />
                 <action android:name="com.google.android.gms.carrierauth.service.START" />
@@ -2253,7 +2355,6 @@
                 <action android:name="com.google.android.gms.fitness.ConfigApi" />
                 <action android:name="com.google.android.gms.fitness.GoalsApi" />
                 <action android:name="com.google.android.gms.fitness.GoogleFitnessService.START" />
-                <action android:name="com.google.android.gms.fitness.HistoryApi" />
                 <action android:name="com.google.android.gms.fitness.InternalApi" />
                 <action android:name="com.google.android.gms.fitness.RecordingApi" />
                 <action android:name="com.google.android.gms.fitness.SensorsApi" />
@@ -2353,15 +2454,112 @@
             </intent-filter>
         </service>
 
-        <activity android:name="org.microg.tools.AccountSelectionActivity"
-            android:theme="@style/account_picker"/>
-
         <service android:enabled="true" android:exported="true"  android:name="org.microg.gms.reminders.sync.RemindersSyncService">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
             <meta-data android:name="android.content.SyncAdapter" android:resource="@xml/reminders_syncadapter"/>
         </service>
+
+
+        <!-- Backup -->
+        <!-- 需在 /system/etc/sysconfig/framework-sysconfig.xml 中添加 '<backup-transport-whitelisted-service
+        service="com.google.android.gms/.backup.BackupTransportService" />' 后方可 -->
+        <service
+            android:name=".backup.BackupTransportService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.CONFIRM_FULL_BACKUP"
+            android:process="com.google.android.gms">
+            <intent-filter>
+                <action android:name="android.backup.TRANSPORT_HOST" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".backup.component.BackupSettingsActivity"
+            android:exported="true"
+            android:process=":ui">
+            <intent-filter android:priority="0">
+                <action android:name="com.google.android.gms.backup.ACTION_BACKUP_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="true"
+                android:priority="0">
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="one.google.com"
+                    android:pathPrefix="/backupsettings"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="org.microg.gms.backup.BackupAccountsReceiver">
+            <intent-filter>
+                <action android:name="android.accounts.LOGIN_ACCOUNTS_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="org.microg.gms.backup.G1Backup.G1BackupService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.backup.G1_BACKUP" />
+            </intent-filter>
+        </service>
+        <service android:name="org.microg.gms.backup.G1Backup.G1RestoreService" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.backup.G1_RESTORE" />
+            </intent-filter>
+        </service>
+        <service android:name="org.microg.gms.backup.G1Backup.BackUpNowService" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.backup.ACTION_BACKUP_NOW" />
+            </intent-filter>
+        </service>
+        <service android:name="org.microg.gms.backup.BackupStatsService" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.backup.BackupStatsService" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <service android:name="org.microg.gms.backup.BackupAccountManagerService" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.backup.BackupAccountManagerService" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <service android:name="org.microg.gms.mdisync.MdiSyncService" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.mdisync.service.START" />
+            </intent-filter>
+        </service>
     </application>
+
+    <key-sets>
+        <!-- 当前老签名 -->
+        <key-set android:name="sign1">
+            <public-key
+                android:name="sign1Key"
+                android:value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApEfbf+xGax1JcbkCyUcYqWrNwU8nF0zVaJFecOLnxrw1ggy4UZ1cjJD6jLuhiuF40IEhwCX8UoLnNVRBMablX0plqYCjLq1633lUUNLjFR5EaKYR7VXMfL2yv3nouU7Vx0QISwgguoxEn7gY+DaxbPWMRFYL/4WhNM20M2K1NUFtoe/LiBq7GoSG72xZULYRKpz6aIMdm0/b/3g6p/mJPDZOAArdU9KqH/4L3qeXTB85H6hrSMIEIve2Q9bvp5OVNn5g1G4+yFo7+Fdc6MWGAnLypoDkmnKLDf+1coaW2aWc+Ifzq0ShBhDOOTQlrmgJHdNzktKCoJQp1ECPChmtRwIDAQAB"/>
+        </key-set>
+
+        <!-- 新签名 -->
+        <key-set android:name="sign2">
+            <public-key
+                android:name="sign2Key"
+                android:value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmo0qUzaw6qrYnORHgox3U7FXRZt54yFdyWLKSPWMLNdlDfZ9Lde9oIgMaCeR8ys1xQTkPne0PD5OVB+G41qCk6VPtG5rFq9U06TtpFjxp8i8G3R5hhynBDM3GA5AB52c3Mt+BRram2yIyexjVUHi6/CEJSHDAkyCb2/W22/RF8dOhZ1a9NsERIllq1RptxznGZOaBu8wWA9Q/r+WxHSn0mW7Y/hqgi/3tkPea3bpZqGFU8KFhBbPMwndJCeDdL3YK0QE729/Eizsk4WTUfxuXqlH48651nN0/pcOWT5c0FyQXh0k9aVIT0qt73ZuSYrfZPfPBL3dYCroE3tu6kByLQIDAQAB" />
+        </key-set>
+
+        <upgrade-key-set
+            android:name="sign1" />
+
+        <upgrade-key-set
+            android:name="sign2" />
+    </key-sets>
 
 </manifest>

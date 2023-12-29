@@ -446,7 +446,7 @@ public class GamesAndroidStubService extends BaseService {
                             SignInAccount signInAccount = resultData.getParcelable(GamesSignInManager.KEY_RESULT_DATA);
                             if (resultCode == 1 && signInAccount != null) {
                                 try {
-                                    callbacks.onServerAuthCodeUpdated(Status.SUCCESS, signInAccount.getGoogleSignInAccount().getServerAuthCode());
+                                    callbacks.onServerAuthCodeUpdated(Status.SUCCESS, signInAccount.googleSignInAccount.getServerAuthCode());
                                 } catch (RemoteException e) {
                                     Log.e(TAG, "reqServerSideAccess", e);
                                 }
@@ -457,7 +457,7 @@ public class GamesAndroidStubService extends BaseService {
                                         SignInAccount signInAccount = resultData.getParcelable(GamesSignInActivity.KEY_RESULT_DATA);
                                         if (resultCode == 1 && signInAccount != null) {
                                             try {
-                                                callbacks.onServerAuthCodeUpdated(Status.SUCCESS, signInAccount.getGoogleSignInAccount().getServerAuthCode());
+                                                callbacks.onServerAuthCodeUpdated(Status.SUCCESS, signInAccount.googleSignInAccount.getServerAuthCode());
                                             } catch (RemoteException e) {
                                                 Log.e(TAG, "reqServerSideAccess1", e);
                                             }

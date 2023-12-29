@@ -249,4 +249,43 @@ This can take a couple of minutes."</string>
     <string name="signin_picker_subtitle">to continue to <xliff:g example="F-Droid">%1$s</xliff:g></string>
     <string name="signin_picker_add_account_label">Add another account</string>
     <string name="signin_subtext_sharing">To continue, microG will share name, email address and profile picture of your Google Account with <xliff:g example="F-Droid">%1$s</xliff:g>.</string>
+    <string name="hint">Hint</string>
+    <string name="download_microG_companion">For a better experience, you need to install mircoG Companion</string>
+
+    <string name="backup_settings_account_and_storage" >Account storage</string>
+    <string name="backup_settings_title">Backup</string>
+    <string name="backup_settings_account_name">example@gmail.com</string>
+    <string name="backup_settings_storage_info">%s of %s (%s) used</string>
+    <string name="backup_settings_backup_by_google_one">Backup by Google One</string>
+    <string name="backup_settings_last_backup_time">%s · Last Backup: %s</string>
+    <string name="backup_settings_backup_now">Back up now</string>
+    <string name="backup_settings_tips">Your device backs up automatically over Wi-Fi after it\'s been idle and charging for 2 hours</string>
+    <string name="backup_settings_backup_details">Backup details</string>
+    <string name="backup_settings_apps">Apps</string>
+    <string name="backup_settings_photos_and_videos">Photos and Vedios</string>
+    <string name="backup_settings_sms_messages">SMS messages</string>
+    <string name="backup_settings_call_history">Call history</string>
+    <string name="backup_settings_device_settings">Device settings</string>
+    <string name="backup_settings_google_account_data">Google Account data</string>
+    <string name="backup_settings_apps_backup_detail">%s · %s Apps</string>
+    <string name="backup_settings_photos_and_videos_backup_detail">Back up To Account: %s</string>
+    <string name="backup_settings_sms_messages_backup_detail">No data backed up</string>
+    <string name="backup_settings_call_history_backup_detail">No data backed up</string>
+    <string name="backup_settings_device_settings_backup_detail">No data backed up</string>
+    <string name="backup_settings_google_account_data_detail">Click to view account data synchronization Settings</string>
+    <string name="backup_settings_advanced_settings_title">Advanced settings</string>
+    <string name="backup_settings_backup_using_mobile_or_metered_wifi_data">Back up using mobile or metered Wi-Fi data</string>
+    <string name="backup_settings_manage_backup_storage">Manage Backup Storage</string>
+    <string name="backup_settings_use_mobile_data_tips">Charges may apply</string>
+    <string name="backup_settings_network_tips_use_mobile_data">Your device backs up automatically after it\'s been idle and charging for 2 hours</string>
+    <string name="backup_settings_network_tips_use_wifi_data">Your device backs up automatically over Wi-Fi after it\'s been idle and charging for 2 hours</string>
+    <string name="backup_settings_check_status">Checking status ...</string>
+    <string name="backup_settings_no_data_backed">No data backed up</string>
+    <string name="backup_settings_photos_auto_backup_disabled">Off</string>
+    <string name="backup_settings_photos_no_apk">Photos Not installed</string>
+    <string name="backup_settings_photos_has_error">Has Error</string>
+    <string name="backup_settings_photos_need_update">Update Google Photos to back up</string>
+    <string name="backup_settings_backing_up">Backing up</string>
+    <string name="backup_settings_choose_backup_account">Choose Account</string>
+    <string name="backup_settings_add_account">Add Account</string>
 </resources>

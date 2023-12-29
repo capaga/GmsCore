@@ -137,7 +137,7 @@ public class AskPermissionActivity extends AccountAuthenticatorActivity {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(data.packageName.hashCode());
 
-        authManager = new AuthManager(this, data.accountName, data.packageName, data.service);
+        authManager = new AuthManager(this, data.accountName, data.packageName, data.service, null);
 
         Bitmap profileIcon = PeopleManager.getOwnerAvatarBitmap(this, data.accountName, false);
 
@@ -170,7 +170,7 @@ public class AskPermissionActivity extends AccountAuthenticatorActivity {
         findViewById(R.id.no_progress_bar).setVisibility(GONE);
         new Thread(() -> {
             try {
-                AuthResponse response = authManager.requestAuth(data.fromAccountManager);
+                AuthResponse response = authManager.requestAuth(data.fromAccountManager, true, true);
                 Bundle result = new Bundle();
                 result.putString(KEY_AUTHTOKEN, response.auth);
                 result.putString(KEY_ACCOUNT_NAME, data.accountName);

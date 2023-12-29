@@ -193,4 +193,6 @@ Esto podría tardar algunos minutos."</string>
     <string name="select_account_title">Seleccionar cuenta</string>
     <string name="add_more_account">Agregar otra cuenta</string>
     <string name="device_is_not_supported">Este dispositivo no es compatible y no se puede usar microG.</string>
+    <string name="hint">Pista</string>
+    <string name="download_microG_companion">Para una mejor experiencia, necesita instalar mircoG Companion</string>
 </resources>

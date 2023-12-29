@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation project(path: ':play-services-base-core')
     implementation project(':play-services-games-api')
+    implementation project(':play-services-auth')
     compileOnly project(path: ':play-services-api')
     implementation "com.squareup.wire:wire-runtime:$wireVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

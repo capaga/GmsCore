@@ -1,8 +1,5 @@
 package org.microg.gms.people;
 
-import static org.microg.gms.ui.AskPermissionActivityKt.EXTRA_PERMISSIONS;
-
-import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
@@ -15,7 +12,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.content.SyncResult;
 import android.content.pm.PackageManager;
@@ -29,8 +25,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
@@ -62,9 +56,8 @@ import org.microg.gms.people.converter.bvbnConverter;
 import org.microg.gms.people.converter.bvbpConverter;
 import org.microg.gms.people.converter.bvbqConverter;
 import org.microg.gms.people.converter.multiConverter;
-import org.microg.gms.profile.Build;
 import org.microg.gms.people.sync.HeaderClientInterceptor;
-import org.microg.gms.ui.AskPermissionActivity;
+import org.microg.gms.profile.Build;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -77,11 +70,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
+    public static final String TAG = ContactSyncAdapter.class.getSimpleName();
     static cehl.Builder gmsVersion;
     ManagedChannel mchannel;
     Uri RawConcts;
@@ -139,6 +132,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
     @SuppressLint("Recycle")
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+        Log.d(TAG, "onPerformSync: ");
         RawConcts = ContactsContract.RawContacts.CONTENT_URI.buildUpon().appendQueryParameter("account_name", account.name).appendQueryParameter("account_type", account.type).appendQueryParameter("caller_is_syncadapter", "true").build();
         DataConcts = ContactsContract.Data.CONTENT_URI.buildUpon().appendQueryParameter("account_name", account.name).appendQueryParameter("account_type", account.type).appendQueryParameter("caller_is_syncadapter", "true").build();
         Cursor cursorGpsourceid = resolver.query(appendAccount(ContactsContract.Groups.CONTENT_URI,account,true),
@@ -197,7 +191,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
         if(delList.size()>0){
             deletedUpload(account, delList);
         }
-
+        Log.d(TAG, "onPerformSync update size: " + updatelist.size());
         //update
         if(updatelist.size()>0){
 
@@ -234,7 +228,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
                         }
                     }
                 } catch (Exception e) {
-                   Log.e("ContactSyncAdapter", Objects.requireNonNull(e.getMessage()));
+                    Log.e("ContactSyncAdapter", Objects.requireNonNull(e.getMessage()));
                 }
             }
         }
@@ -245,14 +239,15 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
                 ceia ckfe0 = buildRequest(account);
                 cehh res = getInternalPeopleServiceStub(account).syncPeople(ckfe0);
                 count = updateData(res,account,syncResult);
+                Log.d(TAG, "onPerformSync count: " + count);
 //                syncResult.stats.numUpdates += count;
             }
         } catch (OperationApplicationException e) {
-            Log.e("ContactSyncAdapter","applyBatch error");
+            Log.e(TAG,"applyBatch error");
         } catch (io.grpc.StatusRuntimeException e){
-            Log.e("ContactSyncAdapter","grpc 请求异常");
+            Log.e(TAG,"grpc 请求异常");
         }catch (Exception e){
-            Log.e("ContactSyncAdapter", Objects.requireNonNull(e.getMessage()));
+            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
         }
     }
 
@@ -850,6 +845,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
 
     @SuppressLint("Range")
     private int updateData(cehh res, Account account, SyncResult syncResult) throws RemoteException, OperationApplicationException {
+        Log.d(TAG, "updateData: ");
         ArrayList<ContentProviderOperation> contentProviderOperations = new ArrayList<>();
         //更新syncstate
         String syncState = TextUtils.isEmpty(res.getB()) ? res.getC() : res.getB();
@@ -876,17 +872,25 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
             contentValues0.put("data", atid1.build().toByteArray());
 //            resolver.update(ContactsContract.SyncState.CONTENT_URI,contentValues0,"account_name=? AND account_type=?", new String[]{account.name, account.type});
             contentProviderOperations.add(ContentProviderOperation.newUpdate(ContactsContract.SyncState.CONTENT_URI).withValues(contentValues0).withSelection("account_name=? AND account_type=?", new String[]{account.name, account.type}).build());
+            resolver.applyBatch(ContactsContract.AUTHORITY, contentProviderOperations);
         }
 
-
+        Log.d(TAG, "updateData res size: " + res.getAList().size());
         for (bvaw bvaw0 : res.getAList()) {
+            contentProviderOperations.clear();
             for (String sourceid : atoz_b(bvaw0)) {
                 bvaw2Operations(account, syncResult, contentProviderOperations, bvaw0, sourceid);
             }
+            if(contentProviderOperations.size()>0){
+                try {
+                    resolver.applyBatch(ContactsContract.AUTHORITY, contentProviderOperations);
+                } catch (Exception e) {
+                    Log.w(TAG, "updateData applyBatch error: ", e);
+                    return 0;
+                }
+            }
         }
-        if(contentProviderOperations.size()>0){
-            resolver.applyBatch(ContactsContract.AUTHORITY, contentProviderOperations);
-        }
+        Log.d(TAG, "updateData: " + contentProviderOperations.size());
         return contentProviderOperations.size();
     }
 
@@ -982,7 +986,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
                                     contentProviderOperations.add(ContentProviderOperation.newUpdate(DataConcts).withValues(person).withSelection("_id="+exist.getAsLong("data_id"),null).build());
                                     break;
                                 }
-                             }
+                            }
 
                             if(isSame && !"vnd.android.cursor.item/photo".equals(person.getAsString("mimetype"))){
                                 long data_version = exist.getAsLong("data_version")+1;
@@ -1008,7 +1012,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
                     syncResult.stats.numInserts++;
                 }
             }
-
+            break;
         }
 
         if(shouldDel){
@@ -1294,7 +1298,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
         ckfe0.setC(ckfe1.build());
         //-----
 
-        ckfe0.setA(200);//pagesize
+        ckfe0.setA(1000);//pagesize
 
         cursor0 = resolver.query(Uri.parse("content://com.google.android.gsf.gservices"),null,null , new String[]{"android_id"},null);
 
@@ -1357,7 +1361,7 @@ public class ContactSyncAdapter extends AbstractThreadedSyncAdapter {
                     String s1 = buzn0.getD();
                     if(!TextUtils.isEmpty(s1)) {
                         try {
-                           jSONObject0 = new JSONObject(s1);
+                            jSONObject0 = new JSONObject(s1);
                         }
                         catch(JSONException jSONException0) {
                             return;

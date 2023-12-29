@@ -18,9 +18,6 @@ package org.microg.gms.auth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
-import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -40,7 +37,7 @@ import com.google.android.gms.auth.AccountChangeEventsRequest;
 import com.google.android.gms.auth.AccountChangeEventsResponse;
 import com.google.android.gms.auth.GetHubTokenInternalResponse;
 import com.google.android.gms.auth.GetHubTokenRequest;
-import com.google.android.gms.auth.HasCababilitiesRequest;
+import com.google.android.gms.auth.HasCapabilitiesRequest;
 import com.google.android.gms.auth.TokenData;
 import com.google.android.gms.common.api.Scope;
 
@@ -55,6 +52,8 @@ import java.util.concurrent.TimeUnit;
 import static android.accounts.AccountManager.*;
 import static android.os.Build.VERSION.SDK_INT;
 import static org.microg.gms.auth.AskPermissionActivity.EXTRA_CONSENT_DATA;
+
+import kotlin.Unit;
 
 public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     private static final String TAG = "GmsAuthManagerSvc";
@@ -71,6 +70,7 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     public static final String KEY_SUPPRESS_PROGRESS_SCREEN = "suppressProgressScreen";
     public static final String KEY_SYNC_EXTRAS = "sync_extras";
     public static final String KEY_DELEGATION_TYPE = "delegation_type";
+    public static final String KEY_DELEGATEE_USER_ID = "delegatee_user_id";
     public static final String KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE = "keyTokenRequestOptionsAuthExtrasBundle";
     public static final String KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE = "keyTokenRequestOptionsWrapperBundle";
 
@@ -127,33 +127,29 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
          */
         scope = scope.replace("https://www.googleapis.com/auth/identity.plus.page.impersonation ", "");
 
-        AuthManager authManager = new AuthManager(context, account.name, packageName, scope);
-
+        AuthRequest authRequest = new AuthRequest();
         if (extras.containsKey(KEY_DELEGATION_TYPE) && extras.getInt(KEY_DELEGATION_TYPE) != 0 ) {
-            authManager.setDelegation(extras.getInt(KEY_DELEGATION_TYPE), extras.getString("delegatee_user_id"));
+            authRequest.setDelegationType(String.valueOf(extras.getInt(KEY_DELEGATION_TYPE)));
+            authRequest.setDelegationUserId(extras.getString(KEY_DELEGATEE_USER_ID));
         }
-
-        if (extras.getBoolean(KEY_HANDLE_NOTIFICATION)) {
-            authManager.setOauth2Foreground("0");
-        } else {
-            authManager.setOauth2Foreground("1");
-        }
+        authRequest.setOauth2Foreground(extras.getBoolean(KEY_HANDLE_NOTIFICATION) ? "0" : "1");
 
         if (extras.containsKey(KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE)) {
             Bundle bundle = extras.getBundle(KEY_TOKEN_REQUEST_OPTIONS_AUTH_EXTERAS_BUNDLE);
-            if (bundle.containsKey(KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE)) {
+            if (bundle != null && bundle.containsKey(KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE)) {
                 RequestOptions options = null;
                 try {
                     options = RequestOptions.ADAPTER.decode(bundle.getByteArray(KEY_TOKEN_REQUEST_OPTIONS_WRAPPER_BUNDLE));
                 } catch (Exception e) {
                     Log.w(TAG, e);
                 }
-
                 if(options != null && options.tokenBinding != null && options.tokenBinding.token_request_options != null) {
-                    authManager.setTokenRequestOptions(options.tokenBinding.token_request_options);
+                    authRequest.setTokenRequestOptions(options.tokenBinding.token_request_options);
                 }
             }
         }
+
+        AuthManager authManager = new AuthManager(context, account.name, packageName, scope, authRequest);
 
         Bundle result = new Bundle();
         result.putString(KEY_ACCOUNT_NAME, account.name);
@@ -163,12 +159,12 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
             return result;
         }
         try {
-            AuthResponse res = authManager.requestAuth(false);
+            AuthResponse res = authManager.requestAuth(false, false, true);
             if (res.auth != null) {
                 Log.d(TAG, "getToken: " + res);
                 result.putString(KEY_AUTHTOKEN, res.auth);
                 Bundle details = new Bundle();
-                details.putParcelable("TokenData", new TokenData(res.auth, res.expiry, scope.startsWith("oauth2:"), getScopes(scope)));
+                details.putParcelable("TokenData", new TokenData(res.auth, res.expiry, scope.startsWith("oauth2:"), getScopes(res.getGrantedScopes() != null ? res.getGrantedScopes() : scope)));
                 result.putBundle("tokenDetails", details);
                 result.putString(KEY_ERROR, "OK");
             } else {
@@ -250,7 +246,7 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     }
 
     @Override
-    public int hasCapabilities(HasCababilitiesRequest request) throws RemoteException {
+    public int hasCapabilities(HasCapabilitiesRequest request) throws RemoteException {
         Log.w(TAG, "Not implemented: hasCapabilities(" + request.account + ", " + Arrays.toString(request.capabilities) + ")");
         return 1;
     }

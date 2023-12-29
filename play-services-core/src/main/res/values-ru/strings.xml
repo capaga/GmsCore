@@ -215,4 +215,6 @@
     <string name="select_account_title">Выберите аккаунт</string>
     <string name="add_more_account">Добавить еще одну учетную запись</string>
     <string name="device_is_not_supported">Это устройство не поддерживается, и microG нельзя использовать.</string>
+    <string name="hint">Намекать</string>
+    <string name="download_microG_companion">Для лучшего опыта вам необходимо установить mircoG Companion.</string>
 </resources>

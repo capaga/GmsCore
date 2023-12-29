@@ -8,6 +8,7 @@ import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.SignInAccount;
 import com.google.android.gms.auth.api.signin.internal.SignInConfiguration;
 import com.google.android.gms.common.Scopes;
@@ -19,14 +20,13 @@ import com.google.android.gms.games.player.GamesPlayerManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.microg.common.beans.TokenRequestOptions;
 import org.microg.gms.auth.AuthConstants;
 import org.microg.gms.auth.AuthResponse;
+import org.microg.gms.auth.AuthServiceManager;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.AccountManagerUtils;
 import org.microg.gms.common.Constants;
 import org.microg.gms.common.Utils;
-import org.microg.gms.games.signin.utils.BytesUtils;
 import org.microg.gms.games.signin.utils.MD5;
 
 import java.io.ByteArrayOutputStream;
@@ -48,7 +48,8 @@ public class GamesSignInManager {
     private AuthToken firstPartToken;
     private AuthToken oauth2Token;
     private Account account;
-    private SignInConfiguration signInConfiguration;
+    private String packageName;
+    private GoogleSignInOptions googleSignInOptions;
 
     private class AuthToken {
         public String token;
@@ -66,18 +67,16 @@ public class GamesSignInManager {
         RESULT_NEED_CREATE_PROFILE
     }
 
-    public GamesSignInManager(Context context, Account account, SignInConfiguration signInConfiguration) {
+    public GamesSignInManager(Context context, Account account, String packageName, GoogleSignInOptions googleSignInOptions) {
         this.context = context;
         this.account = account;
-        this.signInConfiguration = signInConfiguration;
+        this.packageName = packageName;
+        this.googleSignInOptions = googleSignInOptions;
     }
 
     public boolean isGamesSignIn() {
-        if (signInConfiguration != null && signInConfiguration.getOptions().getScopes()
-                .contains(new Scope(Scopes.GAMES_LITE))) {
-            return true;
-        }
-        return false;
+        return googleSignInOptions != null && googleSignInOptions.getScopes()
+                .contains(new Scope(Scopes.GAMES_LITE));
     }
 
     private void startPlay() {
@@ -182,34 +181,18 @@ public class GamesSignInManager {
 
     private GetOAuth2Result getOauth2Token() {
         String service = "oauth2:https://www.googleapis.com/auth/games_lite";
-        AuthSdkManager authSdkManager = new AuthSdkManager(context);
-        Map<String, Object> extras = new HashMap();
-        extras.put("it_caveat_types", 2);
-        TokenRequestOptions requestOptions = new TokenRequestOptions.Builder().field_1(false).field_4(1)
-                .field_5(2).field_7(1).version(3).sessionId(BytesUtils.generateSessionId().trim()).build();
-        String tokenRequestOptions = BytesUtils.bytesToBase64(requestOptions.encode());
-        extras.put("token_request_options", tokenRequestOptions);
-        extras.put("check_email", true);
-        extras.put("request_visible_actions", "");
         try {
-            AuthResponse response = authSdkManager.requestAuthWithExtras(service, account, signInConfiguration.getPackageName(), true, extras);
-            if (response == null) {
-                Log.w(TAG, "getOauth2Token response==null");
-                return GetOAuth2Result.RESULT_FAILED;
-            }
-            if (response != null) {
-                if (response.auth != null) {
-                    Log.d(TAG, "getOauth2Token success result=" + response.auth);
-                    oauth2Token = new AuthToken(response.auth, response.expiry);
-                    return GetOAuth2Result.RESULT_SUCCESS;
-                } else if (response.resolutionDataBase64 != null) {
-                    Log.w(TAG, "getOauth2Token first signIn need create profile");
-                    return GetOAuth2Result.RESULT_NEED_CREATE_PROFILE;
-                } else {
-                    Log.w(TAG, "getOauth2Token unknown Error: " + response);
-                }
+            AuthResponse response = AuthServiceManager.Companion.getInstance()
+                    .getGameOauth2Token(context, service, account, packageName, true);
+            if (response.auth != null) {
+                Log.d(TAG, "getOauth2Token success result=" + response.auth);
+                oauth2Token = new AuthToken(response.auth, response.expiry);
+                return GetOAuth2Result.RESULT_SUCCESS;
+            } else if (response.resolutionDataBase64 != null) {
+                Log.w(TAG, "getOauth2Token first signIn need create profile");
+                return GetOAuth2Result.RESULT_NEED_CREATE_PROFILE;
             } else {
-                Log.w(TAG, "getOauth2Token error authResponse==null");
+                Log.w(TAG, "getOauth2Token unknown Error: " + response);
             }
         } catch (Exception e) {
             Log.w(TAG, "getOauth2Token", e);
@@ -219,27 +202,14 @@ public class GamesSignInManager {
 
     private boolean getFirstPartyToken() {
         String service = "oauth2:https://www.googleapis.com/auth/games.firstparty";
-        try {
-            AuthSdkManager authSdkManager = new AuthSdkManager(context);
-            TokenRequestOptions requestOptions = new TokenRequestOptions.Builder().field_1(false)
-                    .field_7(1).version(3).sessionId(BytesUtils.generateSessionId().trim()).build();
-            String tokenRequestOptions = BytesUtils.bytesToBase64(requestOptions.encode());
-
-            Map<String, Object> extras = new HashMap();
-            extras.put("token_request_options", tokenRequestOptions);
-            extras.put("check_email", true);
-            extras.put("oauth2_foreground", true);
-            extras.put("request_visible_actions", "");
-            AuthResponse response = authSdkManager.requestAuthWithExtras(service, account, Constants.GMS_PACKAGE_NAME, true, extras);
-            if (response.auth == null) {
-                Log.w(TAG, "getFirstPartyToken failed");
-            } else {
-                Log.d(TAG, "getFirstPartyToken success result=" + response.auth);
-                firstPartToken = new AuthToken(response.auth, response.expiry);
-                return true;
-            }
-        } catch (IOException e) {
-            Log.w(TAG, "getFirstPartyToken", e);
+        AuthResponse response = AuthServiceManager.Companion.getInstance()
+                .getGameFirstPartyToken(context, service, account, Constants.GMS_PACKAGE_NAME, true);
+        if (response.auth == null) {
+            Log.w(TAG, "getFirstPartyToken failed");
+        } else {
+            Log.d(TAG, "getFirstPartyToken success result=" + response.auth);
+            firstPartToken = new AuthToken(response.auth, response.expiry);
+            return true;
         }
         return false;
     }
@@ -325,25 +295,10 @@ public class GamesSignInManager {
     }
 
     private AuthToken requestServerAuthCode() {
-        String service = String.format("oauth2:server:client_id:%s:api_scope:https://www.googleapis.com/auth/games_lite", signInConfiguration.getOptions().getServerClientId());
-        AuthSdkManager authSdkManager = new AuthSdkManager(context);
-        Map<String, Object> extras = new HashMap();
-        TokenRequestOptions requestOptions = new TokenRequestOptions.Builder().field_1(false).field_7(1)
-                .version(3).sessionId(BytesUtils.generateSessionId().trim()).build();
-        String tokenRequestOptions = BytesUtils.bytesToBase64(requestOptions.encode());
-        extras.put("it_caveat_types", 2);
-        extras.put("token_request_options", tokenRequestOptions);
-        extras.put("oauth2_include_profile", false);
-        extras.put("check_email", true);
-        extras.put("oauth2_prompt", "auto");
-        extras.put("request_visible_actions", "");
-        extras.put("oauth2_include_email", false);
+        String service = String.format("oauth2:server:client_id:%s:api_scope:https://www.googleapis.com/auth/games_lite", googleSignInOptions.getServerClientId());
         try {
-            AuthResponse response = authSdkManager.requestAuthWithExtras(service, account, signInConfiguration.getPackageName(), true, extras);
-            if (response == null) {
-                Log.w(TAG, "requestServerAuthCode response==null");
-                return null;
-            }
+            AuthResponse response = AuthServiceManager.Companion.getInstance()
+                    .getGameServerAuthToken(context, service, account, packageName, true);
             return new AuthToken(response.auth, response.expiry);
         } catch (Exception e) {
             Log.e(TAG, "requestServerAuthCode", e);
@@ -352,9 +307,10 @@ public class GamesSignInManager {
     }
 
     public void gamesSignIn(AuthSdkCallBack callBack) {
-        Log.d(TAG, String.format("gamesSignIn(account=%s, signInConfiguration=%s)", account, signInConfiguration));
+        Log.d(TAG, String.format("gamesSignIn(account=%s, googleSignInOptions=%s)", account, googleSignInOptions));
         if (!isGamesSignIn()) {
             Log.e(TAG, "Not Game SignIn");
+            callBack.onError("Not Game SignIn");
             return;
         }
         Map<String, String> tokens = new HashMap<>(2);
@@ -364,15 +320,18 @@ public class GamesSignInManager {
 
             if (!createProfile()) {
                 Log.e(TAG, "createProfile failed");
+                callBack.onError("createProfile failed");
                 return;
             }
             result = getOauth2Token();
             if (result != GetOAuth2Result.RESULT_SUCCESS) {
                 Log.e(TAG, "second get oauth2 token failed");
+                callBack.onError("second get oauth2 token failed");
                 return;
             }
         } else if (result == GetOAuth2Result.RESULT_FAILED) {
             Log.e(TAG, "first get oauth2 token failed");
+            callBack.onError("first get oauth2 token failed");
             return;
         }
         if (GamesPlayerManager.getInstance(context).getPlayer(account) == null) { // 还没获取过玩家信息
@@ -380,6 +339,7 @@ public class GamesSignInManager {
             FirstPartPlayer firstPartPlayer = getFirstPartPlayer();
             if (firstPartPlayer == null) {
                 Log.e(TAG, "getFirstPartPlayer failed");
+                callBack.onError("getFirstPartPlayer failed");
                 return;
             }
             GamesPlayerManager.getInstance(context).putPlayer(account, firstPartPlayer);
@@ -390,11 +350,11 @@ public class GamesSignInManager {
             GamesPlayerManager.getInstance(context).updatePlayer(account, gamesPlayer);
         }
         startPlay();
-        if (signInConfiguration.getOptions().isIdTokenRequested()) {
+        if (googleSignInOptions.isIdTokenRequested()) {
             tokens.put(Constants.AUDIENCE_TOKEN, oauth2Token.token);
             tokens.put(Constants.EXP_TIME, String.valueOf(oauth2Token.expiry));
         }
-        if (signInConfiguration.getOptions().isServerAuthCodeRequested()) {
+        if (googleSignInOptions.isServerAuthCodeRequested()) {
             AuthToken serverAuthCode = requestServerAuthCode();
             if (serverAuthCode != null) {
                 tokens.put(Constants.OAUTH2_TOKEN, serverAuthCode.token);
@@ -405,6 +365,7 @@ public class GamesSignInManager {
             callBack.success(1, tokens);
         } catch (Exception e) {
             Log.e(TAG, "gamesSignIn", e);
+            callBack.onError(e.toString());
         }
     }
 
@@ -418,7 +379,7 @@ public class GamesSignInManager {
     }
 
     static public void silentSignIn(Context context, Account account, SignInConfiguration signInConfiguration, ResultReceiver resultReceiver) {
-        account = checkAccount(context, signInConfiguration.getPackageName(), account);
+        account = checkAccount(context, signInConfiguration.packageName, account);
         if (account == null) {
             Log.e(TAG, "silentSignIn account is null");
             resultReceiver.send(0, Bundle.EMPTY);
@@ -426,7 +387,7 @@ public class GamesSignInManager {
         }
         final Account newAccount = account;
         new Thread(() -> {
-            GamesSignInManager gamesSignInManager = new GamesSignInManager(context, newAccount, signInConfiguration);
+            GamesSignInManager gamesSignInManager = new GamesSignInManager(context, newAccount, signInConfiguration.packageName, signInConfiguration.options);
             gamesSignInManager.gamesSignIn(new AuthSdkCallBack() {
                 @Override
                 public void success(int type, Map<String, String> tokens) {
@@ -435,12 +396,12 @@ public class GamesSignInManager {
                     String GoogleUserId = AccountManagerUtils.getInstance(context).getUserData(newAccount, AccountManagerUtils.GOOGLE_USER_ID);
                     String name = lastName + firstName;
                     String email = newAccount.name;
-                    String encodeId = MD5.dest(GoogleUserId, signInConfiguration.getPackageName());
+                    String encodeId = MD5.dest(GoogleUserId, signInConfiguration.packageName);
                     String AudienceToken = tokens.get(Constants.AUDIENCE_TOKEN);
                     String oauth2token = tokens.get(Constants.OAUTH2_TOKEN);
                     String expTime = tokens.get(Constants.EXP_TIME);
                     GoogleSignInAccount googleSignInAccount = new GoogleSignInAccount(GoogleUserId, AudienceToken, email, name,
-                            null, oauth2token, Long.parseLong(expTime), encodeId, new ArrayList(signInConfiguration.getOptions().getScopes()), firstName, lastName);
+                            null, oauth2token, Long.parseLong(expTime), encodeId, new ArrayList(signInConfiguration.options.getScopes()), firstName, lastName);
                     SignInAccount signInAccount = new SignInAccount(AuthConstants.DEFAULT_ACCOUNT, googleSignInAccount, AuthConstants.DEFAULT_USER_ID);
                     Bundle result = new Bundle();
                     result.putParcelable(KEY_RESULT_DATA, signInAccount);

@@ -49,7 +49,7 @@ public class PeopleManager {
         Cursor cursor = databaseHelper.getOwner(accountName);
         String url = null;
         if (cursor.moveToNext()) {
-            int idx = cursor.getColumnIndex("avatar");
+            int idx = cursor.getColumnIndex("cover_photo_url");
             if (idx >= 0 && !cursor.isNull(idx)) url = cursor.getString(idx);
         }
         cursor.close();
@@ -111,12 +111,12 @@ public class PeopleManager {
     }
 
     public static String getUserInfoAuthKey(Context context, Account account) {
-        AuthManager authManager = new AuthManager(context, account.name, Constants.GMS_PACKAGE_NAME, USERINFO_SCOPE);
+        AuthManager authManager = new AuthManager(context, account.name, Constants.GMS_PACKAGE_NAME, USERINFO_SCOPE, null);
         authManager.setPermitted(true);
         String result = authManager.getAuthToken();
         if (result == null) {
             try {
-                AuthResponse response = authManager.requestAuth(false);
+                AuthResponse response = authManager.requestAuth(false, false, true);
                 result = response.auth;
             } catch (IOException e) {
                 Log.w(TAG, e);

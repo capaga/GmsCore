@@ -16,13 +16,29 @@
         android:layout_marginHorizontal="24dp"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_generic_man"
-            android:id="@+id/account_photo"
-            android:layout_marginVertical="12dp"
+        <FrameLayout
             android:layout_width="32dp"
-            android:layout_height="32dp" />
+            android:layout_marginVertical="12dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="32dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                tools:src="@drawable/ic_generic_man"
+                android:id="@+id/account_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <org.microg.tools.ui.CircleTextView
+                android:id="@+id/account_icon"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                app:xRound="16dp" />
+        </FrameLayout>
+
 
         <LinearLayout
             android:layout_marginVertical="12dp"
@@ -50,7 +66,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_marginHorizontal="24dp"
-        android:background="?attr/dividerHorizontal" />
+        android:background="#e0e0e0"/>
 </LinearLayout>

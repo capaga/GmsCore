@@ -1,0 +1,30 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "com.google.android.gms.backup";
+
+package google.internal.apps.backup.androidplatformbackuprestore.v1;
+
+service AndroidPlatformBackupRestoreService {
+  rpc GetStorageQuotaInfo (GetStorageQuotaInfoRequest) returns (GetStorageQuotaInfoResponse) {}
+}
+
+message GetStorageQuotaInfoRequest {
+}
+
+
+message GetStorageQuotaInfoResponse {
+  optional int64 totalSize = 1;
+  optional int64 totalUsedSize = 2;
+  repeated UsedInfo usedInfoList = 3;
+  optional StorageQuotaInfo storageQuotaInfo = 4;
+}
+
+message UsedInfo {
+  optional int64 data = 1;
+  optional int64 usedSize = 2;
+}
+
+message StorageQuotaInfo {
+  optional int64 type = 1;
+  optional int64 size = 2;
+}

@@ -11,10 +11,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.microg.gms.auth.AuthConstants;
 import org.microg.gms.auth.AuthResponse;
+import org.microg.gms.auth.AuthServiceManager;
 import org.microg.gms.common.AccountManagerUtils;
 import org.microg.gms.common.Constants;
-import org.microg.gms.games.signin.AuthSdkManager;
 import org.microg.gms.games.signin.utils.PeopleUtils;
 
 import java.io.File;
@@ -99,17 +100,8 @@ public class SharedDataContentProvider extends ContentProvider {
 
         @Override
         public void run() {
-            Map<String, Object> map = new HashMap<>(10);
-            map.put(AuthSdkManager.OAUTH2_FG, true);
-            AuthSdkManager authSdkManager = new AuthSdkManager(context);
-            try {
-                AuthResponse authResponse = authSdkManager.requestAuth2(service, service, account, context.getPackageName(),
-                        true, -1, false, false, true, null, true, map);
-                PeopleUtils.startPeopleConfigGrpc(context, "Bearer " + authResponse.auth);
-            } catch (IOException e) {
-                Log.d(TAG, "run: " + e);
-            }
-
+            AuthResponse authResponse = AuthServiceManager.Companion.getInstance().requestSharedDataAuth(context, context.getPackageName(), account, service);
+            PeopleUtils.startPeopleConfigGrpc(context, "Bearer " + authResponse.auth);
         }
     }
 

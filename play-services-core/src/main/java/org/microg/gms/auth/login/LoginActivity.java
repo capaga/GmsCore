@@ -83,6 +83,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Locale;
 
+import kotlin.Unit;
+
 public class LoginActivity extends AssistantActivity {
     public static final String TMPL_NEW_ACCOUNT = "new_account";
     public static final String EXTRA_TMPL = "tmpl";
@@ -342,7 +344,7 @@ public class LoginActivity extends AssistantActivity {
                 .appIsGms()
                 .callerIsGms()
                 .service("ac2dm")
-                .token(oAuthToken).isAccessToken()
+                .token(oAuthToken).accessToken()
                 .addAccount()
                 .getAccountId()
                 .droidguardResults(null /*TODO*/)
@@ -387,7 +389,7 @@ public class LoginActivity extends AssistantActivity {
     }
 
     private void retrieveGmsToken(final Account account) {
-        final AuthManager authManager = new AuthManager(this, account.name, GMS_PACKAGE_NAME, "ac2dm");
+        final AuthManager authManager = new AuthManager(this, account.name, GMS_PACKAGE_NAME, "ac2dm", null);
         authManager.setPermitted(true);
         new AuthRequest().fromContext(this)
                 .appIsGms()

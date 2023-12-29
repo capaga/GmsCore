@@ -7,6 +7,7 @@ package org.microg.gms.location.ui
 
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,7 @@ import org.microg.gms.location.manager.LocationAppsDatabase
 import org.microg.gms.ui.AppIconPreference
 import org.microg.gms.ui.getApplicationInfoIfExists
 import org.microg.gms.ui.navigate
+import android.location.LocationManager
 
 class LocationPreferencesFragment : PreferenceFragmentCompat() {
     private lateinit var locationApps: PreferenceCategory
@@ -99,8 +101,10 @@ class LocationPreferencesFragment : PreferenceFragmentCompat() {
                 true
             }
 
-            wifiLearning.isVisible = SDK_INT >= 17
-            cellLearning.isVisible = SDK_INT >= 17
+            wifiLearning.isVisible =
+                SDK_INT >= 17 && requireContext().getSystemService<LocationManager>()?.allProviders.orEmpty().contains(LocationManager.GPS_PROVIDER)
+            cellLearning.isVisible =
+                SDK_INT >= 17 && requireContext().getSystemService<LocationManager>()?.allProviders.orEmpty().contains(LocationManager.GPS_PROVIDER)
         }
 
 

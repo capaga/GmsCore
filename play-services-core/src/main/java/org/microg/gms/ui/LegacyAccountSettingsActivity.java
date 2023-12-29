@@ -27,6 +27,7 @@ import androidx.preference.Preference;
 import com.google.android.gms.R;
 
 import org.microg.gms.auth.AuthConstants;
+import org.microg.gms.settings.SettingsContract;
 import org.microg.tools.ui.AbstractSettingsActivity;
 import org.microg.tools.ui.ResourceSettingsFragment;
 
@@ -34,7 +35,6 @@ import static android.accounts.AccountManager.PACKAGE_NAME_KEY_LEGACY_NOT_VISIBL
 import static android.accounts.AccountManager.VISIBILITY_NOT_VISIBLE;
 import static android.accounts.AccountManager.VISIBILITY_VISIBLE;
 import static android.os.Build.VERSION.SDK_INT;
-import static org.microg.gms.auth.AuthManager.PREF_AUTH_VISIBLE;
 
 public class LegacyAccountSettingsActivity extends AbstractSettingsActivity {
 
@@ -51,7 +51,7 @@ public class LegacyAccountSettingsActivity extends AbstractSettingsActivity {
         @Override
         public void onCreatePreferences(@Nullable Bundle savedInstanceState, String rootKey) {
             super.onCreatePreferences(savedInstanceState, rootKey);
-            Preference pref = findPreference(PREF_AUTH_VISIBLE);
+            Preference pref = findPreference(SettingsContract.Auth.VISIBLE);
             if (pref != null) {
                 if (SDK_INT < 26) {
                     pref.setVisible(false);

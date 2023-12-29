@@ -90,9 +90,10 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
         Log.d(TAG, "getAuthToken: " + account + ", " + authTokenType + ", " + options);
         String app = options.getString(KEY_ANDROID_PACKAGE_NAME);
         app = PackageUtils.getAndCheckPackage(context, app, options.getInt(KEY_CALLER_UID), options.getInt(KEY_CALLER_PID));
-        AuthManager authManager = new AuthManager(context, account.name, app, authTokenType);
+
+        AuthManager authManager = new AuthManager(context, account.name, app, authTokenType, null);
         try {
-            AuthResponse res = authManager.requestAuth(true);
+            AuthResponse res = authManager.requestAuth(true, true, true);
             if (res.auth != null) {
                 Log.d(TAG, "getAuthToken: " + res.auth);
                 Bundle result = new Bundle();
