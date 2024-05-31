@@ -31,6 +31,9 @@ public class GoogleSignInOptionsExtensionParcelable extends AutoSafeParcelable {
     public GoogleSignInOptionsExtensionParcelable(int type, Bundle bundle) {
         this(1, type, bundle);
     }
+    public GoogleSignInOptionsExtensionParcelable() {
+        this(1, 0, new Bundle());
+    }
 
     @Constructor
     public GoogleSignInOptionsExtensionParcelable(@Param(1) int versionCode, @Param(2) int type, @Param(3) Bundle bundle) {

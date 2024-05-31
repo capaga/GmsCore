@@ -9,4 +9,12 @@ public class BeginSignInResult extends AutoSafeParcelable {
     public PendingIntent pendingIntent;
 
     public static final Creator<BeginSignInResult> CREATOR = new AutoCreator<>(BeginSignInResult.class);
+
+    public BeginSignInResult(PendingIntent activity) {
+        super();
+        this.pendingIntent = activity;
+    }
+    public BeginSignInResult() {
+        super();
+    }
 }

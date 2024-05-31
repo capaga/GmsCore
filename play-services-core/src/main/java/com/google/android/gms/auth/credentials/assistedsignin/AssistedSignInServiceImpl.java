@@ -8,8 +8,10 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest;
 import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
+import com.google.android.gms.auth.api.identity.GoogleIdTokenRequestOptions;
 import com.google.android.gms.auth.api.identity.internal.IBeginSignInCallback;
 import com.google.android.gms.auth.api.identity.internal.IGetPhoneNumberHintIntentCallback;
 import com.google.android.gms.auth.api.identity.internal.IGetSignInIntentCallback;
@@ -37,8 +39,20 @@ public class AssistedSignInServiceImpl extends ISignInService.Stub {
 
     @Override
     public void beginSignIn(IBeginSignInCallback callback, BeginSignInRequest request) throws RemoteException {
-        Log.w(TAG, "method 'beginSignIn' not fully implemented, return status is CANCELED");
-        callback.onResult(Status.CANCELED, null);
+        Log.d(TAG, "method beginSignIn called, request=" + request);
+        SignInConfiguration signInConfiguration = new SignInConfiguration();
+        GoogleSignInOptions.Builder googleSignInOptions = new GoogleSignInOptions.Builder();
+        signInConfiguration.packageName = clientPackageName;
+        signInConfiguration.options = googleSignInOptions.requestIdToken(request.googleIdTokenRequestOptions.clientId).requestEmail().requestProfile().requestId().build();
+        Intent intent = new Intent(ACTION_SIGN_IN);
+        intent.setPackage(Constants.GMS_PACKAGE_NAME);
+        intent.putExtra("config", signInConfiguration);
+        int flags = PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT;
+        PendingIntent activity = PendingIntent.getActivity(this.mContext, 0, intent, flags);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(GET_SIGN_IN_INTENT_REQUEST, activity);
+        callback.onResult(Status.SUCCESS, new BeginSignInResult(activity));
+
     }
 
     @Override

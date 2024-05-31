@@ -8,7 +8,7 @@ public class BeginSignInRequest extends AutoSafeParcelable {
     @Field(2)
     public GoogleIdTokenRequestOptions googleIdTokenRequestOptions;
     @Field(3)
-    public String c;
+    public String clientPackageName;
     @Field(4)
     public boolean d;
     @Field(5)
