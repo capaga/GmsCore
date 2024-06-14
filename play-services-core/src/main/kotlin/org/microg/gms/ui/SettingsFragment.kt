@@ -5,17 +5,18 @@
 
 package org.microg.gms.ui
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.google.android.gms.R
 import org.microg.gms.checkin.CheckinPreferences
 import org.microg.gms.gcm.GcmDatabase
 import org.microg.gms.gcm.GcmPrefs
-import org.microg.gms.gcm.getGcmServiceInfo
+import org.microg.gms.gcm.McsService
+import org.microg.gms.gcm.TriggerReceiver
 import org.microg.gms.safetynet.SafetyNetPreferences
+import org.microg.gms.vending.VendingPreferences
 import org.microg.tools.ui.ResourceSettingsFragment
 
 class SettingsFragment : ResourceSettingsFragment() {
@@ -42,11 +43,18 @@ class SettingsFragment : ResourceSettingsFragment() {
             findNavController().navigate(requireContext(), NearbyPreferencesIntegration.exposureNotificationNavigationId)
             true
         }
-        findPreference<Preference>(PREF_ABOUT)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            findNavController().navigate(requireContext(), R.id.openAbout)
+        findPreference<Preference>(PREF_VENDING)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            findNavController().navigate(requireContext(), R.id.openVendingSettings)
             true
         }
-        findPreference<Preference>(PREF_ABOUT)!!.summary = getString(org.microg.tools.ui.R.string.about_version_str, AboutFragment.getSelfVersion(context))
+
+        findPreference<Preference>(PREF_ABOUT)!!.apply {
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                findNavController().navigate(requireContext(), R.id.openAbout)
+                true
+            }
+            summary = getString(org.microg.tools.ui.R.string.about_version_str, AboutFragment.getSelfVersion(context))
+        }
 
         findPreference<Preference>(PREF_EXPOSURE)?.isVisible = NearbyPreferencesIntegration.isAvailable
         findPreference<Preference>(PREF_EXPOSURE)?.icon = NearbyPreferencesIntegration.getIcon(requireContext())
@@ -61,12 +69,17 @@ class SettingsFragment : ResourceSettingsFragment() {
             val regCount = database.registrationList.size
             database.close()
             findPreference<Preference>(PREF_GCM)!!.summary = context.getString(R.string.service_status_enabled_short) + " - " + context.resources.getQuantityString(R.plurals.gcm_registered_apps_counter, regCount, regCount)
+            if (regCount > 0 && !McsService.isConnected(context)) {
+                val i = Intent(TriggerReceiver.FORCE_TRY_RECONNECT, null, context, TriggerReceiver::class.java)
+                context.sendBroadcast(i)
+            }
         } else {
             findPreference<Preference>(PREF_GCM)!!.setSummary(R.string.service_status_disabled_short)
         }
 
         findPreference<Preference>(PREF_CHECKIN)!!.setSummary(if (CheckinPreferences.isEnabled(requireContext())) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
         findPreference<Preference>(PREF_SNET)!!.setSummary(if (SafetyNetPreferences.isEnabled(requireContext())) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
+        findPreference<Preference>(PREF_VENDING)!!.setSummary(if (VendingPreferences.isLicensingEnabled(requireContext())) R.string.pref_vending_summary_licensing_on else R.string.pref_vending_summary_licensing_off)
     }
 
     companion object {
@@ -76,6 +89,7 @@ class SettingsFragment : ResourceSettingsFragment() {
         const val PREF_LOCATION = "pref_location"
         const val PREF_CHECKIN = "pref_checkin"
         const val PREF_EXPOSURE = "pref_exposure"
+        const val PREF_VENDING = "pref_vending"
     }
 
     init {

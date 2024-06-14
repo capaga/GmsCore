@@ -13,11 +13,18 @@
         android:name="android.permission.GET_ACCOUNTS"
         android:maxSdkVersion="22" />
 
+    <permission android:name="${applicationId}.permission.READ_SETTINGS"
+        android:protectionLevel="signature" />
+    <permission android:name="${applicationId}.permission.WRITE_SETTINGS"
+        android:protectionLevel="signature" />
+
     <application>
         <provider
             android:name="org.microg.gms.settings.SettingsProvider"
             android:authorities="${applicationId}.microg.settings"
-            android:exported="false" />
+            android:exported="true"
+            android:readPermission="${applicationId}.permission.READ_SETTINGS"
+            android:writePermission="${applicationId}.permission.WRITE_SETTINGS" />
 
         <activity
             android:name="org.microg.gms.ui.AskPermissionActivity"

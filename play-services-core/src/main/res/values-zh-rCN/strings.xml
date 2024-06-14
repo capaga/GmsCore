@@ -185,6 +185,12 @@ microG GmsCore 内置一套自由的 SafetyNet 实现，但是官方服务器要
     <string name="pref_safetynet_test_integrity_failed">未通过完整性测试</string>
     <string name="pref_safetynet_recent_uses">最近使用</string>
 
+    <string name="pref_vending_summary_licensing_off">关</string>
+    <string name="pref_vending_summary_licensing_on">开</string>
+    <string name="pref_vending_licensing_enable_switch">允许许可证验证请求</string>
+    <string name="pref_vending_license_enable_summary">某些应用需要验证您是否是在 Google Play 上购买的。 当应用程序请求时，microG 可以从 Google 下载购买凭证。 如果禁用，或者未添加 Google 帐户，则会忽略许可证验证请求。</string>
+    <string name="service_name_vending">Play Store Services</string>
+
     <string name="platform_placeholder">$$</string>
     <string name="privacy_policy">隐私权政策</string>
     <string name="services_info">服务条款</string>
