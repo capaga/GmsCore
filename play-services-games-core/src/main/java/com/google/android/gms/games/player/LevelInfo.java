@@ -1,20 +1,34 @@
 package com.google.android.gms.games.player;
 
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
 import com.google.android.gms.games.beans.ExperienceInfo;
-import com.google.android.gms.games.beans.FirstPartPlayer;
-import com.google.android.gms.games.beans.GamesPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.microg.gms.common.Hide;
+import org.microg.safeparcel.AutoSafeParcelable;
 
-public class LevelInfo {
+public class LevelInfo extends AutoSafeParcelable {
+    public static final SafeParcelableCreatorAndWriter<LevelInfo> CREATOR = findCreator(LevelInfo.class);
+    @Field(1)
     private long currentXpTotal;
+    @Field(2)
     private long lastLevelUpTimestamp;
+    @Field(3)
     private Level currentLevel;
+    @Field(4)
     private Level nextLevel;
 
     public LevelInfo() {}
+
+    @Hide
+    public LevelInfo(long currentXpTotal, long lastLevelUpTimestamp, Level currentLevel, Level nextLevel) {
+        this.currentXpTotal = currentXpTotal;
+        this.lastLevelUpTimestamp = lastLevelUpTimestamp;
+        this.currentLevel = currentLevel;
+        this.nextLevel = nextLevel;
+    }
 
     public LevelInfo(ExperienceInfo experienceInfo) {
         this.currentXpTotal = Long.parseLong(experienceInfo.currentExperiencePoints);
@@ -87,68 +101,5 @@ public class LevelInfo {
 
 
 
-    public static class Level {
-        private int levelNumber;
-        private long minXp;
-        private long maxXp;
 
-        public Level() {}
-
-        public Level(int levelNumber, long minXp, long maxXp) {
-            this.levelNumber = levelNumber;
-            this.minXp = minXp;
-            this.maxXp = maxXp;
-        }
-
-        public int getLevelNumber() {
-            return levelNumber;
-        }
-
-        public void setLevelNumber(int levelNumber) {
-            this.levelNumber = levelNumber;
-        }
-
-        public long getMinXp() {
-            return minXp;
-        }
-
-        public void setMinXp(long minXp) {
-            this.minXp = minXp;
-        }
-
-        public long getMaxXp() {
-            return maxXp;
-        }
-
-        public void setMaxXp(long maxXp) {
-            this.maxXp = maxXp;
-        }
-
-        public static String toJson(Level level) {
-            JSONObject jsonObject = new JSONObject();
-            if (level == null) return jsonObject.toString();
-            try {
-                jsonObject.put("levelNumber", level.getLevelNumber());
-                jsonObject.put("minXp", level.getMinXp());
-                jsonObject.put("maxXp", level.getMaxXp());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return jsonObject.toString();
-        }
-
-        public static Level fromJson(String json) {
-            Level level = new Level();
-            try {
-                JSONObject jsonObject = new JSONObject(json);
-                level.setLevelNumber(jsonObject.getInt("levelNumber"));
-                level.setMinXp(jsonObject.getLong("minXp"));
-                level.setMaxXp(jsonObject.getLong("maxXp"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return level;
-        }
-
-    }
 }

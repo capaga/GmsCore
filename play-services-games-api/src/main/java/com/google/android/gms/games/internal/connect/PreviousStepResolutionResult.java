@@ -6,7 +6,7 @@ import org.microg.safeparcel.AutoSafeParcelable;
 
 public class PreviousStepResolutionResult extends AutoSafeParcelable {
     @Field(1)
-    private Intent resultData;
+    public Intent resultData;
 
     public static final Creator<PreviousStepResolutionResult> CREATOR = new AutoCreator<>(PreviousStepResolutionResult.class);
 }

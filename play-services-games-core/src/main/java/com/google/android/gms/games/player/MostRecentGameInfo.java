@@ -2,18 +2,28 @@ package com.google.android.gms.games.player;
 
 import android.net.Uri;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
 import com.google.android.gms.games.beans.FirstPartPlayer;
+import com.google.android.gms.games.internal.player.MostRecentGameInfoEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.microg.safeparcel.AutoSafeParcelable;
 
 
-public class MostRecentGameInfo {
+public class MostRecentGameInfo extends AutoSafeParcelable {
+    public static final SafeParcelableCreatorAndWriter<MostRecentGameInfo> CREATOR = findCreator(MostRecentGameInfo.class);
+    @Field(1)
     public String gameId;
+    @Field(2)
     public String gameName;
+    @Field(3)
     public long activityTimestampMillis;
+    @Field(4)
     public Uri gameIconUri;
+    @Field(5)
     public Uri gameHiResUri;
+    @Field(6)
     public Uri gameFeatureUri;
 
     public MostRecentGameInfo() {}
@@ -58,6 +68,15 @@ public class MostRecentGameInfo {
         return gameInfo;
     }
 
-    
-    
+    public Uri getGameIconImageUri() {
+        return gameIconUri;
+    }
+
+    public Uri getGameHiResImageUri() {
+        return gameHiResUri;
+    }
+
+    public Uri getGameFeaturedImageUri() {
+        return gameFeatureUri;
+    }
 }

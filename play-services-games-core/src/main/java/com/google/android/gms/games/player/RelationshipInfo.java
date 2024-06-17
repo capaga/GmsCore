@@ -1,12 +1,24 @@
 package com.google.android.gms.games.player;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+import com.google.android.gms.games.PlayerRelationshipInfoEntity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.microg.safeparcel.AutoSafeParcelable;
 
-public class RelationshipInfo {
+public class RelationshipInfo extends AutoSafeParcelable {
+    public static final SafeParcelableCreatorAndWriter<PlayerRelationshipInfoEntity> CREATOR = findCreator(PlayerRelationshipInfoEntity.class);
+
+    @Field(1)
+    @Player.PlayerFriendStatus
     private int friendStatus;
+    @Field(2)
     private String nickName;
+    @Field(3)
     private String invitationNickname;
+    @Field(4)
+    private String nicknameAbuseReportToken;
 
     public int getFriendStatus() {
         return friendStatus;

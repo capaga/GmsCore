@@ -60,8 +60,8 @@ public class GamesSignInActivity extends Activity {
         } else {
             Intent intent = new Intent();
             intent.putExtra(KEY_SIGN_IN_CONFIGURATION, signInConfiguration);
-//            intent.setClassName(this, "org.microg.gms.auth.signin.AuthSignInActivity");
-            intent.setClassName(this,"org.microg.common.activitys.SignInActivity");
+            intent.setClassName(this, "org.microg.gms.auth.signin.AuthSignInActivity");
+            //intent.setClassName(this,"org.microg.common.activitys.SignInActivity");
             startActivityForResult(intent, SIGN_IN_REQUEST_CODE);
         }
         return true;

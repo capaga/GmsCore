@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import com.google.android.gms.games.internal.IGamesCallbacks;
 import com.google.android.gms.common.data.DataHolder;
+import com.google.android.gms.games.internal.IGamesClient;
+import com.google.android.gms.games.player.PlayerEntity;
 
 interface IGamesService {
   void clientDisconnecting(long clientId) = 5000;
@@ -77,5 +79,34 @@ interface IGamesService {
   void setUseNewPlayerNotificationsFirstParty(boolean newPlayerStyle) = 5067;
   void searchForPlayersFirstParty(IGamesCallbacks callbacks, String query, int pageSize, boolean expandCachedData, boolean forceReload) = 5500;
   DataHolder getCurrentGame() = 5501;
+
+  void loadAchievementsV2(IGamesCallbacks callbacks, boolean forceReload) = 6000;
+
+  void submitLeaderboardScore(IGamesCallbacks callbacks, String leaderboardId, long score, @nullable String scoreTag) = 7001;
+  void setAchievementSteps(IGamesCallbacks callbacks, String id, int numSteps, IBinder windowToken, in Bundle extras) = 7002;
+
+  Intent getAllLeaderboardsIntent() = 9002;
+  Intent getAchievementsIntent() = 9004;
+  Intent getPlayerSearchIntent() = 9009;
+
+  void loadEvents(IGamesCallbacks callbacks, boolean forceReload) = 12015;
+  void incrementEvent(String eventId, int incrementAmount) = 12016;
+  //    void discardAndCloseSnapshot(in Contents contents) = 12018;
+  void loadEventsById(IGamesCallbacks callbacks, boolean forceReload, in String[] eventsIds) = 12030;
+  //    void resolveSnapshotConflict(IGamesCallbacks callbacks, String conflictId, String snapshotId, in SnapshotMetadataChangeEntity metadata, in Contents contents) = 12032;
+  int getMaxDataSize() = 12034;
+  int getMaxCoverImageSize() = 12035;
+
+  void registerEventClient(IGamesClient callback, long l) = 15500;
+  Intent getCompareProfileIntentForPlayer(in PlayerEntity player) = 15502;
+
+  void loadPlayerStats(IGamesCallbacks callbacks, boolean forceReload) = 17000;
+
+  Account getCurrentAccount() = 21000;
+
+  boolean isTelevision() = 22029;
+
+  Intent getCompareProfileIntentWithAlternativeNameHints(String otherPlayerId, String otherPlayerInGameName, String currentPlayerInGameName) = 25015;
+
   void reqServerSideAccess(IGamesCallbacks callbacks, String serverClientId, boolean forceRefreshToken) = 27002;
 }

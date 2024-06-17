@@ -89,6 +89,21 @@ public class GoogleSignInAccount extends AutoSafeParcelable {
         this.familyName = familyName;
     }
 
+    @Hide
+    public GoogleSignInAccount(@Nullable String id, @Nullable String tokenId, @Nullable String email, @Nullable String displayName, @Nullable Uri photoUrl, String serverAuthCode, long expirationTime, String obfuscatedIdentifier, Set<Scope> grantedScopes, @Nullable String givenName, @Nullable String familyName) {
+        this.id = id;
+        this.tokenId = tokenId;
+        this.email = email;
+        this.displayName = displayName;
+        this.photoUrl = photoUrl;
+        this.serverAuthCode = serverAuthCode;
+        this.expirationTime = expirationTime;
+        this.obfuscatedIdentifier = obfuscatedIdentifier;
+        this.grantedScopes = new ArrayList<>(grantedScopes);
+        this.givenName = givenName;
+        this.familyName = familyName;
+    }
+
     /**
      * A convenient wrapper for {@link #getEmail()} which returns an android.accounts.Account object. See {@link #getEmail()} doc for details.
      */

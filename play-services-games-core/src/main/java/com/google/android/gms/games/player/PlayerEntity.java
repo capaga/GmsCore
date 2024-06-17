@@ -1,41 +1,106 @@
 package com.google.android.gms.games.player;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelableCreatorAndWriter;
+import com.google.android.gms.games.CurrentPlayerInfo;
+import com.google.android.gms.games.CurrentPlayerInfoEntity;
 import com.google.android.gms.games.beans.FirstPartPlayer;
 import com.google.android.gms.games.beans.GamesPlayer;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.microg.gms.common.Hide;
+import org.microg.safeparcel.AutoSafeParcelable;
 
-public class PlayerEntity implements Player {
+@SuppressLint("ParcelCreator")
+public class PlayerEntity extends AutoSafeParcelable implements Player {
+    public static final SafeParcelableCreatorAndWriter<PlayerEntity> CREATOR = findCreator(PlayerEntity.class);
     private static final String TAG = PlayerEntity.class.getSimpleName();
+    @Field(1)
     private String playerId;
+    @Field(2)
     private String displayName;
+    @Field(3)
     private Uri iconImageUri;
+    @Field(4)
     private Uri hiResImageUri;
+    @Field(5)
     private long retrievedTimestamp;
+    @Field(6)
     private int mIsInCircles;
+    @Field(7)
     private long playedWithTimestamp;
-    private String title;
-    private MostRecentGameInfo mostRecentGameInfoEntity;
-    private LevelInfo levelInfo;
-    private boolean mIsProfileVisible;
-    private boolean mHasDebugAccess;
-    private String gamerTag;
-    private String name;
-    private Uri bannerImageLandscapeUri;
-    private Uri bannerImagePortraitUri;
-    private long totalUnlockedAchievement;
-    private RelationshipInfo relationshipInfo;
-    private boolean mIsAlwaysAutoSignIn;
+    @Field(8)
     private String iconImageUrl;
+    @Field(9)
     private String hiResImageUrl;
+    @Field(14)
+    private String title;
+    @Field(15)
+    private MostRecentGameInfo mostRecentGameInfoEntity;
+    @Field(16)
+    private LevelInfo levelInfo;
+    @Field(18)
+    private boolean mIsProfileVisible;
+    @Field(19)
+    private boolean mHasDebugAccess;
+    @Field(20)
+    private String gamerTag;
+    @Field(21)
+    private String name;
+    @Field(22)
+    private Uri bannerImageLandscapeUri;
+    @Field(23)
     private String bannerImageLandscapeUrl;
+    @Field(24)
+    private Uri bannerImagePortraitUri;
+    @Field(25)
     private String bannerImagePortraitUrl;
+    @Field(29)
+    private long totalUnlockedAchievement = -1;
+    @Field(33)
+    private RelationshipInfo relationshipInfo;
+    @Field(35)
+    private CurrentPlayerInfoEntity currentPlayerInfo;
+    @Field(36)
+    private boolean mIsAlwaysAutoSignIn;
+    @Field(37)
+    private String gamePlayerId;
 
     public PlayerEntity(){}
+
+    @Hide
+    public PlayerEntity(String playerId, String displayName, Uri iconImageUri, Uri hiResImageUri, long retrievedTimestamp, int isInCircles, long lastPlayedWithTimestamp, String iconImageUrl, String hiResImageUrl, String title, MostRecentGameInfo mostRecentGameInfo, LevelInfo levelInfo, boolean profileVisible, boolean hasDebugAccess, String gamerTag, String name, Uri bannerImageLandscapeUri, String bannerImageLandscapeUrl, Uri bannerImagePortraitUri, String bannerImagePortraitUrl, long totalUnlockedAchievement, RelationshipInfo relationshipInfo, CurrentPlayerInfoEntity currentPlayerInfo, boolean alwaysAutoSignIn, String gamePlayerId) {
+        this.playerId = playerId;
+        this.displayName = displayName;
+        this.iconImageUri = iconImageUri;
+        this.hiResImageUri = hiResImageUri;
+        this.retrievedTimestamp = retrievedTimestamp;
+        this.mIsInCircles = isInCircles;
+        this.playedWithTimestamp = lastPlayedWithTimestamp;
+        this.iconImageUrl = iconImageUrl;
+        this.hiResImageUrl = hiResImageUrl;
+        this.title = title;
+        this.mostRecentGameInfoEntity = mostRecentGameInfo;
+        this.levelInfo = levelInfo;
+        this.mIsProfileVisible = profileVisible;
+        this.mHasDebugAccess = hasDebugAccess;
+        this.gamerTag = gamerTag;
+        this.name = name;
+        this.bannerImageLandscapeUri = bannerImageLandscapeUri;
+        this.bannerImageLandscapeUrl = bannerImageLandscapeUrl;
+        this.bannerImagePortraitUri = bannerImagePortraitUri;
+        this.bannerImagePortraitUrl = bannerImagePortraitUrl;
+        this.totalUnlockedAchievement = totalUnlockedAchievement;
+        this.relationshipInfo = relationshipInfo;
+        this.currentPlayerInfo = currentPlayerInfo;
+        this.mIsAlwaysAutoSignIn = alwaysAutoSignIn;
+        this.gamePlayerId = gamePlayerId;
+    }
 
     public PlayerEntity(FirstPartPlayer firstPartPlayer) {
         playerId = firstPartPlayer.displayPlayer.playerId;
@@ -123,81 +188,81 @@ public class PlayerEntity implements Player {
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
         PlayerColumns playerColumns = PlayerColumns.DEFAULT;
-        contentValues.put(playerColumns.externalPlayerId, getPlayerId());
-        contentValues.put(playerColumns.profileName, getDisplayName());
-        contentValues.put(playerColumns.gamerTag, getGamerTag());
-        contentValues.put(playerColumns.realName, getName());
-        putUri(contentValues, playerColumns.profileIconImageUri, getIconImageUri());
-        contentValues.put(playerColumns.profileIconImageUrl, getIconImageUrl());
-        putUri(contentValues, playerColumns.profileHiResImageUri, getHiResImageUri());
-        contentValues.put(playerColumns.profileHiResImageUrl, getHiResImageUrl());
-        putUri(contentValues, playerColumns.bannerImageLandscapeUri, getBannerImageLandscapeUri());
-        contentValues.put(playerColumns.bannerImageLandscapeUrl, getBannerImageLandscapeUrl());
-        putUri(contentValues, playerColumns.bannerImagePortraitUri, getBannerImagePortraitUri());
-        contentValues.put(playerColumns.bannerImagePortraitUrl, getBannerImagePortraitUrl());
-        contentValues.put(playerColumns.lastUpdated, getRetrievedTimestamp());
-        contentValues.put(playerColumns.isInCircles, isInCircles());
-        contentValues.put(playerColumns.playedWithTimestamp, getPlayedWithTimestamp());
-        contentValues.put(playerColumns.playerTitle, getTitle());
-        contentValues.put(playerColumns.isProfileVisible, isProfileVisible());
-        contentValues.put(playerColumns.hasDebugAccess, hasDebugAccess());
-        contentValues.put(playerColumns.gamerFriendStatus, 0);
-        contentValues.put(playerColumns.gamerFriendUpdateTimestamp, 0L);
-        contentValues.put(playerColumns.isMuted, Boolean.FALSE);
-        contentValues.put(playerColumns.totalUnlockedAchievements, getTotalUnlockedAchievement());
-        contentValues.put(playerColumns.totalUnlockedAchievements, getTotalUnlockedAchievement());
-        contentValues.put(playerColumns.alwaysAutoSignIn, isAlwaysAutoSignIn());
-        contentValues.put(playerColumns.hasAllPublicAcls, isProfileVisible());
+        contentValues.put(PlayerColumns.externalPlayerId, getPlayerId());
+        contentValues.put(PlayerColumns.profileName, getDisplayName());
+        contentValues.put(PlayerColumns.gamerTag, getGamerTag());
+        contentValues.put(PlayerColumns.realName, getName());
+        putUri(contentValues, PlayerColumns.profileIconImageUri, getIconImageUri());
+        contentValues.put(PlayerColumns.profileIconImageUrl, getIconImageUrl());
+        putUri(contentValues, PlayerColumns.profileHiResImageUri, getHiResImageUri());
+        contentValues.put(PlayerColumns.profileHiResImageUrl, getHiResImageUrl());
+        putUri(contentValues, PlayerColumns.bannerImageLandscapeUri, getBannerImageLandscapeUri());
+        contentValues.put(PlayerColumns.bannerImageLandscapeUrl, getBannerImageLandscapeUrl());
+        putUri(contentValues, PlayerColumns.bannerImagePortraitUri, getBannerImagePortraitUri());
+        contentValues.put(PlayerColumns.bannerImagePortraitUrl, getBannerImagePortraitUrl());
+        contentValues.put(PlayerColumns.lastUpdated, getRetrievedTimestamp());
+        contentValues.put(PlayerColumns.isInCircles, isInCircles());
+        contentValues.put(PlayerColumns.playedWithTimestamp, getPlayedWithTimestamp());
+        contentValues.put(PlayerColumns.playerTitle, getTitle());
+        contentValues.put(PlayerColumns.isProfileVisible, isProfileVisible());
+        contentValues.put(PlayerColumns.hasDebugAccess, hasDebugAccess());
+        contentValues.put(PlayerColumns.gamerFriendStatus, 0);
+        contentValues.put(PlayerColumns.gamerFriendUpdateTimestamp, 0L);
+        contentValues.put(PlayerColumns.isMuted, Boolean.FALSE);
+        contentValues.put(PlayerColumns.totalUnlockedAchievements, getTotalUnlockedAchievement());
+        contentValues.put(PlayerColumns.totalUnlockedAchievements, getTotalUnlockedAchievement());
+        contentValues.put(PlayerColumns.alwaysAutoSignIn, isAlwaysAutoSignIn());
+        contentValues.put(PlayerColumns.hasAllPublicAcls, isProfileVisible());
         LevelInfo levelInfo = getLevelInfo();
         if (levelInfo == null) {
-            contentValues.putNull(playerColumns.currentLevel);
-            contentValues.putNull(playerColumns.currentLevelMinXp);
-            contentValues.putNull(playerColumns.currentLevelMaxXp);
-            contentValues.putNull(playerColumns.nextLevel);
-            contentValues.putNull(playerColumns.nextLevelMaxXp);
-            contentValues.put(playerColumns.lastLevelUpTimestamp, -1);
-            contentValues.put(playerColumns.currentXpTotal, -1L);
+            contentValues.putNull(PlayerColumns.currentLevel);
+            contentValues.putNull(PlayerColumns.currentLevelMinXp);
+            contentValues.putNull(PlayerColumns.currentLevelMaxXp);
+            contentValues.putNull(PlayerColumns.nextLevel);
+            contentValues.putNull(PlayerColumns.nextLevelMaxXp);
+            contentValues.put(PlayerColumns.lastLevelUpTimestamp, -1);
+            contentValues.put(PlayerColumns.currentXpTotal, -1L);
         } else {
-            contentValues.put(playerColumns.currentLevel, levelInfo.getCurrentLevel().getLevelNumber());
-            contentValues.put(playerColumns.currentLevelMinXp, levelInfo.getCurrentLevel().getMinXp());
-            contentValues.put(playerColumns.currentLevelMaxXp, levelInfo.getCurrentLevel().getMaxXp());
-            contentValues.put(playerColumns.nextLevel, levelInfo.getNextLevel().getLevelNumber());
-            contentValues.put(playerColumns.nextLevelMaxXp, levelInfo.getNextLevel().getMaxXp());
-            contentValues.put(playerColumns.lastLevelUpTimestamp, levelInfo.getLastLevelUpTimestamp());
-            contentValues.put(playerColumns.currentXpTotal, levelInfo.getCurrentXpTotal());
+            contentValues.put(PlayerColumns.currentLevel, levelInfo.getCurrentLevel().getLevelNumber());
+            contentValues.put(PlayerColumns.currentLevelMinXp, levelInfo.getCurrentLevel().getMinXp());
+            contentValues.put(PlayerColumns.currentLevelMaxXp, levelInfo.getCurrentLevel().getMaxXp());
+            contentValues.put(PlayerColumns.nextLevel, levelInfo.getNextLevel().getLevelNumber());
+            contentValues.put(PlayerColumns.nextLevelMaxXp, levelInfo.getNextLevel().getMaxXp());
+            contentValues.put(PlayerColumns.lastLevelUpTimestamp, levelInfo.getLastLevelUpTimestamp());
+            contentValues.put(PlayerColumns.currentXpTotal, levelInfo.getCurrentXpTotal());
         }
 
         MostRecentGameInfo mostRecentGameInfo = getMostRecentGameInfo();
         if (mostRecentGameInfo == null) {
-            contentValues.putNull(playerColumns.mostRecentExternalGameId);
-            contentValues.putNull(playerColumns.mostRecentGameName);
-            contentValues.putNull(playerColumns.mostRecentActivityTimestamp);
-            contentValues.putNull(playerColumns.mostRecentGameIconUri);
-            contentValues.putNull(playerColumns.mostRecentGameHiResUri);
-            contentValues.putNull(playerColumns.mostRecentGameFeaturedUri);
+            contentValues.putNull(PlayerColumns.mostRecentExternalGameId);
+            contentValues.putNull(PlayerColumns.mostRecentGameName);
+            contentValues.putNull(PlayerColumns.mostRecentActivityTimestamp);
+            contentValues.putNull(PlayerColumns.mostRecentGameIconUri);
+            contentValues.putNull(PlayerColumns.mostRecentGameHiResUri);
+            contentValues.putNull(PlayerColumns.mostRecentGameFeaturedUri);
         } else {
-            contentValues.put(playerColumns.mostRecentExternalGameId, mostRecentGameInfo.gameId);
-            contentValues.put(playerColumns.mostRecentGameName, mostRecentGameInfo.gameName);
-            contentValues.put(playerColumns.mostRecentActivityTimestamp, mostRecentGameInfo.activityTimestampMillis);
-            putUri(contentValues, playerColumns.mostRecentGameIconUri, mostRecentGameInfo.gameIconUri);
-            putUri(contentValues, playerColumns.mostRecentGameHiResUri, mostRecentGameInfo.gameHiResUri);
-            putUri(contentValues, playerColumns.mostRecentGameFeaturedUri, mostRecentGameInfo.gameFeatureUri);
+            contentValues.put(PlayerColumns.mostRecentExternalGameId, mostRecentGameInfo.gameId);
+            contentValues.put(PlayerColumns.mostRecentGameName, mostRecentGameInfo.gameName);
+            contentValues.put(PlayerColumns.mostRecentActivityTimestamp, mostRecentGameInfo.activityTimestampMillis);
+            putUri(contentValues, PlayerColumns.mostRecentGameIconUri, mostRecentGameInfo.gameIconUri);
+            putUri(contentValues, PlayerColumns.mostRecentGameHiResUri, mostRecentGameInfo.gameHiResUri);
+            putUri(contentValues, PlayerColumns.mostRecentGameFeaturedUri, mostRecentGameInfo.gameFeatureUri);
         }
 
         RelationshipInfo relationshipInfo = getRelationshipInfo();
         if (relationshipInfo == null) {
-            contentValues.putNull(playerColumns.playTogetherFriendStatus);
-            contentValues.putNull(playerColumns.playTogetherNickname);
-            contentValues.putNull(playerColumns.playTogetherInvitationNickname);
-            contentValues.putNull(playerColumns.nicknameAbuseReportToken);
+            contentValues.putNull(PlayerColumns.playTogetherFriendStatus);
+            contentValues.putNull(PlayerColumns.playTogetherNickname);
+            contentValues.putNull(PlayerColumns.playTogetherInvitationNickname);
+            contentValues.putNull(PlayerColumns.nicknameAbuseReportToken);
         } else {
-            contentValues.put(playerColumns.playTogetherFriendStatus, relationshipInfo.getFriendStatus());
-            contentValues.put(playerColumns.playTogetherNickname, relationshipInfo.getNickName());
-            contentValues.put(playerColumns.playTogetherInvitationNickname, relationshipInfo.getInvitationNickname());
-            contentValues.put(playerColumns.nicknameAbuseReportToken, relationshipInfo.getNickName());
+            contentValues.put(PlayerColumns.playTogetherFriendStatus, relationshipInfo.getFriendStatus());
+            contentValues.put(PlayerColumns.playTogetherNickname, relationshipInfo.getNickName());
+            contentValues.put(PlayerColumns.playTogetherInvitationNickname, relationshipInfo.getInvitationNickname());
+            contentValues.put(PlayerColumns.nicknameAbuseReportToken, relationshipInfo.getNickName());
         }
 
-        contentValues.putNull(playerColumns.friendsListVisibility);
+        contentValues.putNull(PlayerColumns.friendsListVisibility);
 
         Log.d(TAG, "contentValues: " + contentValues);
         return contentValues;
@@ -484,5 +549,28 @@ public class PlayerEntity implements Player {
     @Override
     public boolean isProfileVisible() {
         return mIsProfileVisible;
+    }
+
+    public long getLastPlayedWithTimestamp() {
+        return playedWithTimestamp;
+    }
+
+    @Hide
+    public boolean getHasDebugAccess() {
+        return mHasDebugAccess;
+    }
+
+    public CurrentPlayerInfo getCurrentPlayerInfo() {
+        return currentPlayerInfo;
+    }
+
+    @Override
+    public Player freeze() {
+        return null;
+    }
+
+    @Override
+    public boolean isDataValid() {
+        return false;
     }
 }

@@ -25,6 +25,10 @@ android {
     kotlinOptions {
         jvmTarget = 1.8
     }
+
+    buildFeatures{
+        aidl = true
+    }
 }
 
 dependencies {
@@ -34,7 +38,9 @@ dependencies {
     compileOnly project(path: ':play-services-api')
     implementation "com.squareup.wire:wire-runtime:$wireVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.android.volley:volley:$volleyVersion"
 
+    annotationProcessor project(':safe-parcel-processor')
 }
 
 wire {

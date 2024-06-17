@@ -4,97 +4,67 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public final class PlayerColumns {
-    private static final String TAG = PlayerColumns.class.getSimpleName();
-    public final String gamerTag;
-    public final String realName;
-    public final String bannerImageLandscapeUri;
-    public final String bannerImageLandscapeUrl;
-    public final String bannerImagePortraitUri;
-    public final String bannerImagePortraitUrl;
-    public final String gamerFriendStatus;
-    public final String gamerFriendUpdateTimestamp;
-    public final String isMuted;
-    public final String totalUnlockedAchievements;
-    public final String playTogetherFriendStatus;
-    public final String playTogetherNickname;
-    public final String playTogetherInvitationNickname;
-    public final String nicknameAbuseReportToken;
-    public final String friendsListVisibility;
-    public final String alwaysAutoSignIn;
-    public final String externalPlayerId;
-    public final String profileName;
-    public final String profileIconImageUri;
-    public final String profileIconImageUrl;
-    public final String profileHiResImageUri;
-    public final String profileHiResImageUrl;
-    public final String lastUpdated;
-    public final String isInCircles;
-    public final String playedWithTimestamp;
-    public final String currentXpTotal;
-    public final String currentLevel;
-    public final String currentLevelMinXp;
-    public final String currentLevelMaxXp;
-    public final String nextLevel;
-    public final String nextLevelMaxXp;
-    public final String lastLevelUpTimestamp;
-    public final String playerTitle;
-    public final String hasAllPublicAcls;
-    public final String isProfileVisible;
-    public final String mostRecentExternalGameId;
-    public final String mostRecentGameName;
-    public final String mostRecentActivityTimestamp;
-    public final String mostRecentGameIconUri;
-    public final String mostRecentGameHiResUri;
-    public final String mostRecentGameFeaturedUri;
-    public final String hasDebugAccess;
+    public static final String externalPlayerId = "external_player_id";
+    public static final String profileName = "profile_name";
+    public static final String profileIconImageId = "profile_icon_image_id";
+    public static final String profileIconImageUri = "profile_icon_image_uri";
+    public static final String profileIconImageUrl = "profile_icon_image_url";
+    public static final String profileHiResImageId = "profile_hi_res_image_id";
+    public static final String profileHiResImageUri = "profile_hi_res_image_uri";
+    public static final String profileHiResImageUrl = "profile_hi_res_image_url";
+    public static final String lastUpdated = "last_updated";
+    public static final String isInCircles = "is_in_circles";
+    public static final String playedWithTimestamp = "played_with_timestamp";
+    public static final String currentXpTotal = "current_xp_total";
+    public static final String currentLevel = "current_level";
+    public static final String currentLevelMinXp = "current_level_min_xp";
+    public static final String currentLevelMaxXp = "current_level_max_xp";
+    public static final String nextLevel = "next_level";
+    public static final String nextLevelMaxXp = "next_level_max_xp";
+    public static final String lastLevelUpTimestamp = "last_level_up_timestamp";
+    public static final String playerTitle = "player_title";
+    public static final String hasAllPublicAcls = "has_all_public_acls";
+    public static final String isProfileVisible = "is_profile_visible";
+    public static final String mostRecentExternalGameId = "most_recent_external_game_id";
+    public static final String mostRecentGameName = "most_recent_game_name";
+    public static final String mostRecentActivityTimestamp = "most_recent_activity_timestamp";
+    public static final String mostRecentGameIconId = "most_recent_game_icon_id";
+    public static final String mostRecentGameIconUri = "most_recent_game_icon_uri";
+    public static final String mostRecentGameHiResId = "most_recent_game_hi_res_id";
+    public static final String mostRecentGameHiResUri = "most_recent_game_hi_res_uri";
+    public static final String mostRecentGameFeaturedId = "most_recent_game_featured_id";
+    public static final String mostRecentGameFeaturedUri = "most_recent_game_featured_uri";
+    public static final String hasDebugAccess = "has_debug_access";
+    public static final String gamerTag = "gamer_tag";
+    public static final String realName = "real_name";
+    public static final String bannerImageLandscapeId = "banner_image_landscape_id";
+    public static final String bannerImageLandscapeUri = "banner_image_landscape_uri";
+    public static final String bannerImageLandscapeUrl = "banner_image_landscape_url";
+    public static final String bannerImagePortraitId = "banner_image_portrait_id";
+    public static final String bannerImagePortraitUri = "banner_image_portrait_uri";
+    public static final String bannerImagePortraitUrl = "banner_image_portrait_url";
+    public static final String gamerFriendStatus = "gamer_friend_status";
+    public static final String gamerFriendUpdateTimestamp = "gamer_friend_update_timestamp";
+    public static final String isMuted = "is_muted";
+    public static final String totalUnlockedAchievements = "total_unlocked_achievements";
+    public static final String playTogetherFriendStatus = "play_together_friend_status";
+    public static final String playTogetherNickname = "play_together_nickname";
+    public static final String playTogetherInvitationNickname = "play_together_invitation_nickname";
+    public static final String nicknameAbuseReportToken = "nickname_abuse_report_token";
+    public static final String friendsListVisibility = "friends_list_visibility";
+    public static final String alwaysAutoSignIn = "always_auto_sign_in";
+    public static final String profileCreationTimestamp = "profile_creation_timestamp";
+    public static final String gamePlayerId = "game_player_id";
 
+    private static final String TAG = PlayerColumns.class.getSimpleName();
     public final static PlayerColumns DEFAULT = new PlayerColumns();
 
     private PlayerColumns() {
-        this.externalPlayerId = "external_player_id";
-        this.profileName = "profile_name";
-        this.profileIconImageUri = "profile_icon_image_uri";
-        this.profileIconImageUrl = "profile_icon_image_url";
-        this.profileHiResImageUri = "profile_hi_res_image_uri";
-        this.profileHiResImageUrl = "profile_hi_res_image_url";
-        this.lastUpdated = "last_updated";
-        this.isInCircles = "is_in_circles";
-        this.playedWithTimestamp = "played_with_timestamp";
-        this.currentXpTotal = "current_xp_total";
-        this.currentLevel = "current_level";
-        this.currentLevelMinXp = "current_level_min_xp";
-        this.currentLevelMaxXp = "current_level_max_xp";
-        this.nextLevel = "next_level";
-        this.nextLevelMaxXp = "next_level_max_xp";
-        this.lastLevelUpTimestamp = "last_level_up_timestamp";
-        this.playerTitle = "player_title";
-        this.hasAllPublicAcls = "has_all_public_acls";
-        this.isProfileVisible = "is_profile_visible";
-        this.mostRecentExternalGameId = "most_recent_external_game_id";
-        this.mostRecentGameName = "most_recent_game_name";
-        this.mostRecentActivityTimestamp = "most_recent_activity_timestamp";
-        this.mostRecentGameIconUri = "most_recent_game_icon_uri";
-        this.mostRecentGameHiResUri = "most_recent_game_hi_res_uri";
-        this.mostRecentGameFeaturedUri = "most_recent_game_featured_uri";
-        this.hasDebugAccess = "has_debug_access";
-        this.gamerTag = "gamer_tag";
-        this.realName = "real_name";
-        this.bannerImageLandscapeUri = "banner_image_landscape_uri";
-        this.bannerImageLandscapeUrl = "banner_image_landscape_url";
-        this.bannerImagePortraitUri = "banner_image_portrait_uri";
-        this.bannerImagePortraitUrl = "banner_image_portrait_url";
-        this.gamerFriendStatus = "gamer_friend_status";
-        this.gamerFriendUpdateTimestamp = "gamer_friend_update_timestamp";
-        this.isMuted = "is_muted";
-        this.totalUnlockedAchievements = "total_unlocked_achievements";
-        this.playTogetherFriendStatus = "play_together_friend_status";
-        this.playTogetherNickname = "play_together_nickname";
-        this.playTogetherInvitationNickname = "play_together_invitation_nickname";
-        this.nicknameAbuseReportToken = "nickname_abuse_report_token";
-        this.friendsListVisibility = "friends_list_visibility";
-        this.alwaysAutoSignIn = "always_auto_sign_in";
     }
 
     public String[] getColumns() {
@@ -113,4 +83,20 @@ public final class PlayerColumns {
         }
         return null;
     }
+
+    public static final List<String> CURRENT_PLAYER_COLUMNS = Collections.unmodifiableList(Arrays.asList(
+            externalPlayerId,
+            profileIconImageId, profileHiResImageId, profileIconImageUri, profileIconImageUrl, profileHiResImageUri, profileHiResImageUrl,
+            profileName, lastUpdated, isInCircles, hasAllPublicAcls, hasDebugAccess, isProfileVisible,
+            currentXpTotal, currentLevel, currentLevelMinXp, currentLevelMaxXp, nextLevel, nextLevelMaxXp, lastLevelUpTimestamp,
+            playerTitle,
+            mostRecentExternalGameId, mostRecentGameName, mostRecentActivityTimestamp, mostRecentGameIconId, mostRecentGameIconUri, mostRecentGameHiResId, mostRecentGameHiResUri, mostRecentGameFeaturedId, mostRecentGameFeaturedUri,
+            gamerTag, realName,
+            bannerImageLandscapeId, bannerImageLandscapeUri, bannerImageLandscapeUrl, bannerImagePortraitId, bannerImagePortraitUri, bannerImagePortraitUrl,
+            totalUnlockedAchievements,
+            playTogetherFriendStatus, playTogetherNickname, playTogetherInvitationNickname,
+            profileCreationTimestamp, nicknameAbuseReportToken, friendsListVisibility, alwaysAutoSignIn,
+            gamerFriendStatus, gamerFriendUpdateTimestamp,
+            isMuted, gamePlayerId
+    ));
 }

@@ -47,7 +47,7 @@ public class GoogleSignInOptions extends AutoSafeParcelable {
      * NOT use {@link Builder#requestIdToken(String)} to request user's real Google identity assertion.
      */
     @NonNull
-    public static final GoogleSignInOptions DEFAULT_GAMES_SIGN_IN = null;
+    public static final GoogleSignInOptions DEFAULT_GAMES_SIGN_IN = new Builder().requestScopes(new Scope(Scopes.GAMES_LITE)).build();
 
     /**
      * Default configuration for Google Sign In. You can get a stable user ID and basic profile info back via {@link GoogleSignInAccount#getId()} after you

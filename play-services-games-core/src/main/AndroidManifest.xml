@@ -12,25 +12,30 @@
 
     <application>
         <!-- Games -->
-        <service android:name="com.google.android.gms.games.GamesAndroidStubService">
+        <service
+            android:name="org.microg.gms.games.GamesService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.games.service.START" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        <service android:name="com.google.android.gms.games.GamesConnectStubService">
+        <service android:name="org.microg.gms.games.GamesConnectService" android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.games.internal.connect.service.START" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <service
+            android:name="org.microg.gms.games.GamesConfigurationService"
+            android:exported="false" />
 
         <activity
-            android:name="org.microg.gms.games.signin.GamesSignInActivity"
+            android:name="org.microg.gms.games.GamesSignInActivity"
             android:enabled="true"
             android:exported="false"
             android:process=":ui"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+            android:theme="@style/Theme.Translucent"/>
 
         <provider
             android:authorities="com.google.android.gms.SharedData"
